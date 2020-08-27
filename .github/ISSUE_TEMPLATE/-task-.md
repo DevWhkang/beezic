@@ -1,6 +1,6 @@
 ---
 name: "[Task]"
-about: "[Task]"
+about: "[Front-end]"
 title: "[Task]"
 labels: ''
 assignees: DevWhkang
