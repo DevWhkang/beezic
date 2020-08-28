@@ -1,7 +1,7 @@
 ---
 name: "Task"
 about: "Task 관리 템플릿입니다."
-title: "Task"
+title: "[Task] "
 labels: ''
 assignees: 
 ---
