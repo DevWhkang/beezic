@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from '@emotion/native';
-import logo from '../../assets/beezic-logo.png';
-import brand from '../../assets/Beezic.png';
+import logo from '../../assets/Beezic_Logo.png';
 
-const View = styled.View`
+const Container = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,28 +10,24 @@ const View = styled.View`
 `;
 
 const Logo = styled.Image`
-  width: 200px;
+  width: 350px;
   height: 200px;
-`;
-
-const Brand = styled.Image`
-  width: 100%;
-  aspectRatio: 4;
-  margin-bottom: 150px;
+  margin-bottom: 220px;
 `;
 
 const MainText = styled.Text`
-  font-size: 24px;
+  font-size: 25px;
+  font-family: 'Jua-Regular';
+  color: #333;
 `;
 
 function Intro() {
   return (
-    <View>
+    <Container>
       <Logo source={logo} />
-      <Brand source={brand} />
       <MainText>판매도 구매도</MainText>
       <MainText>대신 해드릴게요.</MainText>
-    </View>
+    </Container>
   );
 }
 
