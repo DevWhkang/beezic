@@ -9,6 +9,11 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.35",
+    "@emotion/native": "^10.0.27",
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/react-native-fontawesome": "^0.2.5",
     "@react-native-firebase/app": "^8.4.0",
     "mobx": "^5.15.6",
     "mobx-react": "^6.3.0",

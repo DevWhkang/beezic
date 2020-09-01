@@ -9,17 +9,10 @@
  */
 
 import React from 'react';
-import {
-  View,
-  Text,
-} from 'react-native';
+import Intro from './src/view/screens/Intro.tsx';
 
 const App = () => (
-  <View>
-    <Text>
-      Hello World!
-    </Text>
-  </View>
+  <Intro />
 );
 
 export default App;
