@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from 'react-native';
-import styled from '@emotion/native';
+import styled, { css } from '@emotion/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const InputAreaView = styled.View`
   flex-direction: row;
@@ -16,11 +17,23 @@ const InputCheck = styled.TextInput`
   margin-right: 10;
   margin-top:10;
   flex: 1;
+  & > ::placeholder{
+    font-family: 'Jua-Regular';
+    font-size: 20px;
+  }
 `;
 
 const ButtonView = styled.View`
   margin-right: 10;
   margin-top: 10;
+`;
+
+const PlusText = styled.Text`
+  margin-top: 5px;
+`;
+
+const plusIconStyle = css`
+  color: #D2691E;
 `;
 
 type Props = {
@@ -47,7 +60,9 @@ const CheckInsert = ({ addCheckItems }: Props) => {
         autoCorrect={false}
       />
       <ButtonView>
-        <Button title="ADD" onPress={addCheckItemsHandler} />
+        <PlusText onPress={addCheckItemsHandler}>
+          <FontAwesomeIcon icon={faPlus} style={plusIconStyle} size={20} />
+        </PlusText>
       </ButtonView>
     </InputAreaView>
   );

@@ -21,14 +21,15 @@ const CircleView = styled.View`
   width: 30;
   height: 30;
   border-radius: 15px;
-  border-color: #D2691E;
+  border-color: #F4A460;
   border-width: 2px;
   margin-right: 15;
 `;
 
 const DiscriptionText = styled.Text`
   flex: 5;
-  font-size: 15;
+  font-size: 20;
+  font-family: 'Jua-Regular';
   margin-right: 10;
 `;
 
@@ -39,6 +40,7 @@ const TrashIconText = styled.Text`
 const checkIconStyle = css`
   margin-left: 3px;
   margin-top: 2px;
+  color: #D2691E;
 `;
 
 const trashIconStyle = css`
