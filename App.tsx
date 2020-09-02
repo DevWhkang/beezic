@@ -9,10 +9,12 @@
  */
 
 import React from 'react';
-import Intro from './src/view/screens/Intro.tsx';
+// import Intro from './src/view/screens/Intro.tsx';
+import SignUp from './src/view/screens/Sign_up.tsx';
 
 const App = () => (
-  <Intro />
+  // <Intro />
+  <SignUp />
 );
 
 export default App;

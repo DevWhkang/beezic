@@ -65,8 +65,8 @@ const TextInput = ({
         style={TextInputStyle}
         placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
         title={!!title}
-        value={text}
-        onChange={onChange}
+        // value={text}
+        // onChange={onChange}
       />
       {!!title && (
       <Button
