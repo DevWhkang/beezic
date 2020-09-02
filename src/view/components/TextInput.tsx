@@ -1,64 +1,96 @@
 import React from 'react';
-import styled from '@emotion/native';
-import { Alert } from 'react-native';
+import styled, { css } from '@emotion/native';
+import Button from './Button.tsx';
 
-const Container = styled.View`
+type TextInputProps = {
+  label: string,
+  placeholder?: string,
+  title?: string,
+  viewStyle?: object,
+  labelStyle?: object,
+  TextInputStyle?: object,
+  background?: object,
+  foreground?: object,
+  onPress?: object,
+}
+
+const Container = styled.View<TextInputProps>`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  align-self: center;
+  margin-bottom: 35px;
+
 `;
 
-const MiddleContainer = styled.View`
-  margin-bottom: 50px;
-  justify-content: space-around;
+const Label = styled.Text<TextInputProps>`
+  width: 100%;
+  margin-left: 50px;
+  font-size: 20px;
+  font-family: 'BMEULJIRO';
 `;
 
-const TextName = styled.Text`
-  font-size: 15px;
-  font-family: 'Jua-Regular';
-  color: #333;
-  margin-left: 30px;
-  margin-bottom: 5px;
+const FlexBox = styled.View<TextInputProps>`
+  display: flex;
+  flex-direction: row;
 `;
 
-const TextInputBox = styled.TextInput`
-  height: 40px;
-  width: 270px
-  max-width: 270px;
-  border-Color: #aaa;
-  border-Width: 1px;
-  margin-left: 30px;
-  border-radius: 15px;
-  background-color: #DADADA;
+const Input = styled.TextInput<TextInputProps>`
+  flex-shrink: 1;
+  height: 50px;
+  border: 2px solid #888;
+  border-radius: 100px;
+  width: 100%;
+  ${(props) => props.title && `
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 80%;
+  `};
+  padding: 0 20px;
+  font-size: 16px;
 `;
 
-const ButtonStlye = styled.TouchableOpacity`
-  width: 100px;
-  height: 40px;
-  border-radius: 15px;
+const buttonBackground = css`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 `;
 
-const Button = styled.Button`
-  color: #aaa;
-`;
+const TextInput = ({
+  viewStyle, label, labelStyle, placeholder,
+  TextInputStyle, title, background, foreground, onPress,
+}: TextInputProps) => (
+  <Container style={viewStyle}>
+    <Label style={labelStyle}>{label}</Label>
+    <FlexBox>
+      <Input
+        style={TextInputStyle}
+        placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
+        title={!!title}
+        // value={text}
+        // onChange={onChange}
+      />
+      {!!title && (
+      <Button
+        title={title}
+        background={Object.assign(background, buttonBackground)}
+        foreground={foreground}
+        onPress={onPress}
+      />
+      )}
+    </FlexBox>
+  </Container>
+);
 
-const UseTextInput = ({ textName, buttonName }:props) => {
-  const [value, onChangeText] = React.useState('이곳에 입력 하세요');
-  return (
-    <Container>
-      <TextName>{textName}</TextName>
-      <MiddleContainer>
-        <TextInputBox
-          onChangeText={(text) => onChangeText(text)}
-          value={value}
-        />
-        <ButtonStlye>
-          <Button
-            title={buttonName}
-            onPress={() => Alert.alert('button pressed')}
-          />
-        </ButtonStlye>
-      </MiddleContainer>
-    </Container>
-  );
+TextInput.defaultProps = {
+  placeholder: '',
+  title: '',
+  viewStyle: css``,
+  labelStyle: css``,
+  TextInputStyle: css``,
+  background: css``,
+  foreground: css``,
+  onPress: () => {},
 };
 
-export default UseTextInput;
+export default TextInput;

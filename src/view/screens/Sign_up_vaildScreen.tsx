@@ -1,12 +1,20 @@
 import React from 'react';
 import styled from '@emotion/native';
-import TextBox from '../components/TextInput.tsx';
+import TextInput from '../components/TextInput.tsx';
+import Button from '../components/Button.tsx';
+import LinkText from '../components/LinkText.tsx';
+import OauthIcons from '../components/OAuthIcons.tsx';
 
 const Container = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 80px;
+`;
+
+const Bottom = styled.View`
+  margin-top: 30px;
+  margin-bottom: 10px;
 `;
 
 const TitleText = styled.Text`
@@ -24,9 +32,14 @@ function vaildScreen() {
     <>
       <Container>
         <TitleText>Sign Up</TitleText>
+        <TextInput label="Email" title="Send Code" />
+        <TextInput label="Verify Code" title="Submit" />
       </Container>
-      <TextBox textName="Email" buttonName="Send Code" />
-      <TextBox textName="Verify Code" buttonName="Submit" />
+      <Bottom>
+        <Button title="Next" />
+        <LinkText content="Already have an account ?" />
+      </Bottom>
+      <OauthIcons />
     </>
   );
 }

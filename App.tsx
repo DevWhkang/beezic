@@ -9,12 +9,12 @@
  */
 
 import React from 'react';
-import Intro from './src/view/screens/Intro.tsx';
-// import VaildScreen from './src/view/screens/Sign_up_vaildScreen.tsx';
+// import Intro from './src/view/screens/Intro.tsx';
+import VaildScreen from './src/view/screens/Sign_up_vaildScreen.tsx';
 
 const App = () => (
-  // <VaildScreen />
-  <Intro />
+  <VaildScreen />
+  // <Intro />
 );
 
 export default App;

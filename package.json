@@ -12,6 +12,7 @@
     "@emotion/core": "^10.0.35",
     "@emotion/native": "^10.0.27",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-native-fontawesome": "^0.2.5",
     "@react-native-firebase/app": "^8.4.0",
@@ -35,6 +36,7 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
+    "react-native-svg": "^12.1.0",
     "typescript": "^3.8.3"
   }
 }
