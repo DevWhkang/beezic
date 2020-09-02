@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from '@emotion/native';
 import Button from './Button.tsx';
 
@@ -6,6 +6,7 @@ type TextInputProps = {
   label: string,
   placeholder?: string,
   title?: string,
+  password?: boolean,
   viewStyle?: object,
   labelStyle?: object,
   TextInputStyle?: object,
@@ -55,34 +56,39 @@ const buttonBackground = css`
 `;
 
 const TextInput = ({
-  viewStyle, label, labelStyle, placeholder,
+  viewStyle, label, labelStyle, placeholder, password,
   TextInputStyle, title, background, foreground, onPress,
-}: TextInputProps) => (
-  <Container style={viewStyle}>
-    <Label style={labelStyle}>{label}</Label>
-    <FlexBox>
-      <Input
-        style={TextInputStyle}
-        placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
-        title={!!title}
-        value={text}
-        onChange={onChange}
-      />
-      {!!title && (
-      <Button
-        title={title}
-        background={Object.assign(background, buttonBackground)}
-        foreground={foreground}
-        onPress={onPress}
-      />
-      )}
-    </FlexBox>
-  </Container>
-);
+}: TextInputProps) => {
+  const [value, setValue] = useState('');
+  return (
+    <Container style={viewStyle}>
+      <Label style={labelStyle}>{label}</Label>
+      <FlexBox>
+        <Input
+          style={TextInputStyle}
+          placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
+          title={!!title}
+          value={value}
+          onChangeText={(text) => setValue(text)}
+          secureTextEntry={password}
+        />
+        {!!title && (
+        <Button
+          title={title}
+          background={Object.assign(background, buttonBackground)}
+          foreground={foreground}
+          onPress={onPress}
+        />
+        )}
+      </FlexBox>
+    </Container>
+  );
+};
 
 TextInput.defaultProps = {
   placeholder: '',
   title: '',
+  password: false,
   viewStyle: css``,
   labelStyle: css``,
   TextInputStyle: css``,
