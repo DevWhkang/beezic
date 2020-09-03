@@ -9,7 +9,7 @@ type TextInputProps = {
   password?: boolean,
   viewStyle?: object,
   labelStyle?: object,
-  TextInputStyle?: object,
+  textInputStyle?: object,
   background?: object,
   foreground?: object,
   onPress?: object,
@@ -46,7 +46,7 @@ const Input = styled.TextInput<TextInputProps>`
     border-bottom-right-radius: 0;
     width: 80%;
   `};
-  padding: 0 20px;
+  padding: 10px 25px;
   font-size: 16px;
 `;
 
@@ -57,7 +57,7 @@ const buttonBackground = css`
 
 const TextInput = ({
   viewStyle, label, labelStyle, placeholder, password,
-  TextInputStyle, title, background, foreground, onPress,
+  textInputStyle, title, background, foreground, onPress,
 }: TextInputProps) => {
   const [value, setValue] = useState('');
   return (
@@ -65,7 +65,7 @@ const TextInput = ({
       <Label style={labelStyle}>{label}</Label>
       <FlexBox>
         <Input
-          style={TextInputStyle}
+          style={textInputStyle}
           placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
           title={!!title}
           value={value}
@@ -91,7 +91,7 @@ TextInput.defaultProps = {
   password: false,
   viewStyle: css``,
   labelStyle: css``,
-  TextInputStyle: css``,
+  textInputStyle: css``,
   background: css``,
   foreground: css``,
   onPress: () => {},

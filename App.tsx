@@ -10,11 +10,11 @@
 
 import React from 'react';
 // import Intro from './src/view/screens/Intro.tsx';
-import CheckList from './src/view/screens/checkList.tsx';
+import SignIn from './src/view/screens/SignIn.tsx';
 
 const App = () => (
   // <Intro />
-  <CheckList />
+  <SignIn />
 );
 
 export default App;
