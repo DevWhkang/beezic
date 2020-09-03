@@ -9,13 +9,14 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.35",
+    "@emotion/native": "^10.0.27",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-native-fontawesome": "^0.2.5",
-    "@emotion/core": "^10.0.35",
-    "@emotion/native": "^10.0.27",
     "@react-native-firebase/app": "^8.4.0",
+    "@react-native-firebase/firestore": "^7.7.0",
     "mobx": "^5.15.6",
     "mobx-react": "^6.3.0",
     "react": "16.13.1",
@@ -37,8 +38,8 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
-    "reactotron-react-native": "^5.0.0",
     "react-native-svg": "^12.1.0",
+    "reactotron-react-native": "^5.0.0",
     "typescript": "^3.8.3"
   }
 }
