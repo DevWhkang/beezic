@@ -24,7 +24,7 @@ const Text = styled.Text<ButtonProps>`
   font-family: 'Jua-Regular';
   font-size: 26.6px;
   font-weight: 600;
-  margin: 10px;
+  margin: 10px 20px;
   align-self: center;
 `;
 
