@@ -12,19 +12,22 @@ const Container = styled.View`
   margin-top: 80px;
 `;
 
-const Bottom = styled.View`
-  margin-top: 30px;
-  margin-bottom: 10px;
-`;
-
 const TitleText = styled.Text`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 50px;
+  font-size: 60px;
   font-family: 'Jua-Regular';
   color: #333;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
+`;
+
+const Magin = styled.View`
+  margin-bottom: 30px;
+`;
+
+const SmallMagin = styled.View`
+  margin-bottom: 10px;
 `;
 
 function vaildScreen() {
@@ -32,13 +35,11 @@ function vaildScreen() {
     <>
       <Container>
         <TitleText>Sign Up</TitleText>
-        <TextInput label="Email" title="Send Code" />
-        <TextInput label="Verify Code" title="Submit" />
       </Container>
-      <Bottom>
-        <Button title="Next" />
-        <LinkText content="Already have an account ?" />
-      </Bottom>
+      <Magin><TextInput label="Email" title="Send Code" /></Magin>
+      <Magin><TextInput label="Verify Code" title="Submit" /></Magin>
+      <Button title="Next" />
+      <SmallMagin><LinkText content="Already have an account ?" /></SmallMagin>
       <OauthIcons />
     </>
   );
