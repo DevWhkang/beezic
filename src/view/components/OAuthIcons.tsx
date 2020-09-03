@@ -1,39 +1,35 @@
 import React from 'react';
 import styled from '@emotion/native';
-import PropTypes from 'prop-types';
-import googleIcon from '../../assets/Icons/google-oauth-icon.png';
-import facebookIcon from '../../assets/Icons/facebook-oauth-icon.png';
-import twitterIcon from '../../assets/Icons/twitter-oauth-icon.png';
-import instagramIcon from '../../assets/Icons/instagram-oauth-icon.png';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import {
+  faGoogle, faFacebookF, faTwitter, faInstagram,
+} from '@fortawesome/free-brands-svg-icons';
 
-const Container = styled.View`
+type OAuthIconsProps = {
+  style?: object,
+  size?: number,
+}
+
+const Container = styled.View<OAuthIconsProps>`
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
+  align-self: center;
+  width: 200px;
 `;
 
-const Icon = styled.Image`
-  width: 25px;
-  height: 25px;
-  margin: 0 10px;
-`;
-
-function OAuthIcons({ style }) {
-  return (
-    <Container style={style}>
-      <Icon source={googleIcon} />
-      <Icon source={facebookIcon} />
-      <Icon source={twitterIcon} />
-      <Icon source={instagramIcon} />
-    </Container>
-  );
-}
+const OAuthIcons = ({ style, size }: OAuthIconsProps) => (
+  <Container style={style}>
+    <FontAwesomeIcon icon={faGoogle} size={size} />
+    <FontAwesomeIcon icon={faFacebookF} size={size} />
+    <FontAwesomeIcon icon={faTwitter} size={size} />
+    <FontAwesomeIcon icon={faInstagram} size={size} />
+  </Container>
+);
 
 OAuthIcons.defaultProps = {
   style: {},
-};
-
-OAuthIcons.propTypes = {
-  style: PropTypes.shape({}),
+  size: 25,
 };
 
 export default OAuthIcons;

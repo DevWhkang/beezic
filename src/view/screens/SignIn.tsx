@@ -13,8 +13,9 @@ const View = styled.View`
 
 const Header = styled.Text`
   font-size: 64px;
-  margin-top: 50px;
+  margin-top: 60px;
   margin-bottom: 30px;
+  font-family: 'BMDOHYEON'
 `;
 
 const emailInputStyle = css`
@@ -22,11 +23,11 @@ const emailInputStyle = css`
 `;
 
 const passwordInputStyle = css`
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 `;
 
 const buttonStyle = css`
-  margin-bottom: 45px;
+  margin-bottom: 30px;
   background-color: #fc8a3d;
 `;
 
