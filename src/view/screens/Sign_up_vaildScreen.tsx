@@ -29,6 +29,10 @@ const VaildText = styled.Text`
 `;
 
 const Magin = styled.View`
+  margin-bottom: 35px;
+`;
+
+const SmallMagin = styled.View`
   margin-bottom: 10px;
 `;
 
@@ -46,7 +50,7 @@ function vaildScreen({ isVerified } : props) {
         }
       </VaildText>
       <Button title="Next" />
-      <Magin><LinkText content="Already have an account ?" /></Magin>
+      <SmallMagin><LinkText content="Already have an account ?" /></SmallMagin>
       <OauthIcons />
     </>
   );

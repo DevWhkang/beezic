@@ -21,8 +21,6 @@ const Container = styled.View<TextInputProps>`
   align-items: center;
   width: 80%;
   align-self: center;
-  margin-bottom: 35px;
-
 `;
 
 const Label = styled.Text<TextInputProps>`
