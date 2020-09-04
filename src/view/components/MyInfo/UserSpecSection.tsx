@@ -1,7 +1,8 @@
 import React from 'react';
-import styled from '@emotion/native';
+import styled, { css } from '@emotion/native';
+import { Text } from 'react-native';
 
-const UserSpecSection = styled.View`
+const UserSpecSectionWrapper = styled.View`
   margin: 0 0 10px 5px;
 `;
 const UserInfoTitle = styled.Text`
@@ -11,12 +12,40 @@ const UserInfoTitle = styled.Text`
 const UserInfoBody = styled.Text`
   font-size: 18px;
 `;
-export default (props: object) => {
-  const { userInfo: { title, info } } = props;
-  return (
-    <UserSpecSection>
-      <UserInfoTitle>{title}</UserInfoTitle>
-      <UserInfoBody>{info}</UserInfoBody>
-    </UserSpecSection>
-  );
+const EditUserInfoBtn = styled.TouchableOpacity`
+  position: absolute;
+  top: -10;
+  right: 10;
+  width: 30px;
+  height: 30px;
+`;
+const EditBtnStyle = css`
+  font-size: 20px;
+`;
+
+type UserSpecProps = {
+  userInfo: {title: string, info: string},
+  edit?: boolean,
+  onPress?: Function
 };
+const UserSpecSection = ({ userInfo: { title, info }, edit, onPress }: UserSpecProps) => (
+  <UserSpecSectionWrapper>
+    <UserInfoTitle>
+      {title}
+    </UserInfoTitle>
+    <UserInfoBody>{info}</UserInfoBody>
+    {edit
+      ? (
+        <EditUserInfoBtn onPress={onPress}>
+          <Text style={EditBtnStyle}>{' 📝 '}</Text>
+        </EditUserInfoBtn>
+      )
+      : null}
+  </UserSpecSectionWrapper>
+);
+
+UserSpecSection.defaultProps = {
+  onPress: () => {},
+  edit: false,
+};
+export default UserSpecSection;
