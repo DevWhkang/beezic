@@ -12,7 +12,7 @@ const HeaderMenu = styled.Text`
   flex-direction: row;
 `;
 
-function HambergerMenu() {
+function HamburgerMenu(): JSX.Element {
   return (
     <HeaderMenu containerStyle={{ backgroundColor: 'white' }}>
       <TouchableOpacity onPress={() => Alert.alert('Navi로 이동하면됨')}>
@@ -26,4 +26,4 @@ function HambergerMenu() {
   );
 }
 
-export default HambergerMenu;
+export default HamburgerMenu;

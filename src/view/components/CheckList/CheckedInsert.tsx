@@ -3,7 +3,7 @@ import styled, { css } from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useObserver } from 'mobx-react';
-import checkListStore from '../../../viewModel/store.ts';
+import checkListStore from '../../../viewModel/store';
 
 const InputAreaView = styled.View`
   flex-direction: row;
@@ -38,7 +38,7 @@ const plusIconStyle = css`
   color: #D2691E;
 `;
 
-const CheckInsert = () => {
+const CheckInsert = (): JSX.Element => {
   const onChangeHandler = (eventDescription) => {
     checkListStore.setDescription(eventDescription);
   };

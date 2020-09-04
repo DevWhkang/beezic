@@ -11,7 +11,7 @@ const UserInfoTitle = styled.Text`
 const UserInfoBody = styled.Text`
   font-size: 18px;
 `;
-export default (props: object) => {
+export default (props: Record<string, unknown>): JSX.Element => {
   const { userInfo: { title, info } } = props;
   return (
     <UserSpecSection>

@@ -1,21 +1,22 @@
 import { observable } from 'mobx';
-import { setCheckListDoc } from '../model/checkListModel.ts';
+import { setCheckListDoc } from '../model/checkListModel';
 
-interface checkListStore{
+interface CheckListStore{
   description: string;
-  newCheckItem: object;
+  newCheckItem: Record<string, unknown>;
   checkItems: [];
   setDescription: (text: string) => void;
   setNewCheckItem: () => void;
   addCheckItems: () => void;
+  removeCheckItem: (id: number) => void;
 }
 
-const checkListStore: checkListStore = observable({
+const checkListStore: CheckListStore = observable({
   description: '',
   newCheckItem: {},
   checkItems: [],
 
-  setDescription(text) {
+  setDescription(text: string) {
     this.description = text;
   },
 
@@ -35,7 +36,7 @@ const checkListStore: checkListStore = observable({
     this.newCheckItem = {};
   },
 
-  removeCheckItem(id) {
+  removeCheckItem(id: number) {
     this.checkItems = this.checkItems.filter((item) => item.id !== id);
     setCheckListDoc(this.checkItems);
   },

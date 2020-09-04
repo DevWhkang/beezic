@@ -4,7 +4,7 @@ import styled, { css } from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useObserver } from 'mobx-react';
-import checkListStore from '../../../viewModel/store.ts';
+import checkListStore from '../../../viewModel/store';
 
 const ItemContainer = styled.View`
   flex: 1;
@@ -52,9 +52,9 @@ const trashIconStyle = css`
 type Props = {
   id: number;
   description: string;
-}
+};
 
-const CheckedListItem = ({ id, description } : Props) => {
+const CheckedListItem = ({ id, description }: Props): JSX.Element => {
   const removeHandler = () => {
     checkListStore.removeCheckItem(id);
   };

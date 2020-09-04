@@ -3,7 +3,7 @@ import styled from '@emotion/native';
 import { Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import UserSpecSection from './UserSpecSection.tsx';
+import UserSpecSection from './UserSpecSection';
 
 // User
 const UserInfoWrapper = styled.View`
@@ -52,7 +52,8 @@ const SeeAllTransaction = styled.TouchableOpacity`
   margin:0 0 10px 0;
 `;
 
-export default (props: any) => {
+// FIXME naming function으로 수정하고 type 및 defaultProps 추가 요망
+export default (props: any): JSX.Element => {
   const { userData: { userName, userEmail, transactions } } = props;
   return (
     <>

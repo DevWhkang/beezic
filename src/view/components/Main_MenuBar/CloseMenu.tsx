@@ -12,7 +12,7 @@ const HeaderMenu = styled.Text`
   flex-direction: row;
 `;
 
-function CloseMenu() {
+function CloseMenu(): JSX.Element {
   return (
     <HeaderMenu containerStyle={{ backgroundColor: 'white' }}>
       <TouchableOpacity onPress={() => Alert.alert('Main으로 이동하면됨')}>

@@ -21,7 +21,7 @@ const MainText = styled.Text`
   color: #333;
 `;
 
-function Intro() {
+function Intro(): JSX.Element {
   return (
     <Container>
       <Logo source={logo} />
