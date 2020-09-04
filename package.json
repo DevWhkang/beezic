@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-native-fontawesome": "^0.2.5",
     "@react-native-firebase/app": "^8.4.0",
+    "@react-native-firebase/firestore": "^7.7.0",
     "mobx": "^5.15.6",
     "mobx-react": "^6.3.0",
     "react": "16.13.1",

@@ -3,6 +3,8 @@ import { TouchableOpacity } from 'react-native';
 import styled, { css } from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { useObserver } from 'mobx-react';
+import checkListStore from '../../../viewModel/store.ts';
 
 const ItemContainer = styled.View`
   flex: 1;
@@ -26,7 +28,7 @@ const CircleView = styled.View`
   margin-right: 15;
 `;
 
-const DiscriptionText = styled.Text`
+const DescriptionText = styled.Text`
   flex: 5;
   font-size: 20;
   font-family: 'Jua-Regular';
@@ -49,30 +51,29 @@ const trashIconStyle = css`
 
 type Props = {
   id: number;
-  discription: string;
-  removeCheckItem: (id: number) => void;
+  description: string;
 }
 
-const CheckedListItem = ({ id, discription, removeCheckItem } : Props) => {
-  const removeCheckItemHandler = () => {
-    removeCheckItem(id);
+const CheckedListItem = ({ id, description } : Props) => {
+  const removeHandler = () => {
+    checkListStore.removeCheckItem(id);
   };
 
-  return (
+  return useObserver(() => (
     <ItemContainer>
       <TouchableOpacity>
         <CircleView>
           <FontAwesomeIcon icon={faCheck} style={checkIconStyle} size={20} />
         </CircleView>
       </TouchableOpacity>
-      <DiscriptionText>{discription}</DiscriptionText>
+      <DescriptionText>{description}</DescriptionText>
       <TouchableOpacity>
-        <TrashIconText onPress={removeCheckItemHandler}>
+        <TrashIconText onPress={removeHandler}>
           <FontAwesomeIcon icon={faTrashAlt} style={trashIconStyle} size={20} />
         </TrashIconText>
       </TouchableOpacity>
     </ItemContainer>
-  );
+  ));
 };
 
 export default CheckedListItem;

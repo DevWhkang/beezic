@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SafeAreaView, Image } from 'react-native';
 import styled from '@emotion/native';
-import CheckedInsert from '../components/checkedInsert.tsx';
-import CheckedList from '../components/checkedlist.tsx';
+import { useObserver } from 'mobx-react';
+import CheckedInsert from '../components/CheckList/checkedInsert.tsx';
+import CheckedList from '../components/CheckList/checkedlist.tsx';
 import carroLogo from '../../assets/Beezic_Logo_carrot.png';
+import checkListStore from '../../viewModel/store.ts';
 
 const TitleText = styled.Text`
   font-size: 50;
@@ -21,36 +23,35 @@ const CheckAreaView = styled.View`
   margin-right: 10;
 `;
 
-const CheckList = () => {
-  const [checkItems, setCheckItems] = useState([]);
+const EmptyText = styled.Text`
+  font-size: 150px;
+  margin-left: 100px;
+  margin-top: 100px;
+  font-family: 'Jua-Regular';
+  color: #c8c8c8;
+`;
 
-  const addCheckItems = (text: string): void => {
-    if (text) {
-      setCheckItems([
-        { id: Math.floor(Math.random() * 100) + 1, discription: text, checked: false },
-        ...checkItems,
-      ]);
-    }
-  };
+const UserCheckText = styled.Text`
+  font-size: 25;
+  font-family: 'Jua-Regular';
+  margin-left: 10;
+  margin-top: 20;
+  margin-bottom: 20;
+`;
 
-  const removeCheckItem = (id: number): void => {
-    const list = [...checkItems];
-    list.splice(id, 1);
-    setCheckItems(list);
-  };
-
-  return (
-    <SafeAreaView>
-      <TitleText>
-        Check List
-        <Image source={carroLogo} />
-      </TitleText>
-      <CheckAreaView>
-        <CheckedInsert addCheckItems={addCheckItems} />
-        <CheckedList checkItems={checkItems} removeCheckItem={removeCheckItem} />
-      </CheckAreaView>
-    </SafeAreaView>
-  );
-};
+const CheckList = () => useObserver(() => (
+  <SafeAreaView>
+    <TitleText>
+      Check List
+      <Image source={carroLogo} />
+    </TitleText>
+    <CheckAreaView>
+      <CheckedInsert />
+      <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
+      {checkListStore.checkItems.length !== 0
+        ? <CheckedList /> : <EmptyText>텅...</EmptyText>}
+    </CheckAreaView>
+  </SafeAreaView>
+));
 
 export default CheckList;

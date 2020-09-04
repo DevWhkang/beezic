@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useObserver } from 'mobx-react';
+import checkListStore from '../../../viewModel/store.ts';
 
 const InputAreaView = styled.View`
   flex-direction: row;
@@ -36,36 +38,32 @@ const plusIconStyle = css`
   color: #D2691E;
 `;
 
-type Props = {
-  addCheckItems: () => void;
-}
-
-const CheckInsert = ({ addCheckItems }: Props) => {
-  const [newCheckItem, setNewCheckItem] = useState('');
-
-  const newCheckItemInputHandler = (checkItem) => {
-    setNewCheckItem(checkItem);
+const CheckInsert = () => {
+  const onChangeHandler = (eventDescription) => {
+    checkListStore.setDescription(eventDescription);
   };
-  const addCheckItemsHandler = () => {
-    addCheckItems(newCheckItem);
-    setNewCheckItem('');
+  const addButtonHandler = () => {
+    if (checkListStore.description) {
+      checkListStore.addCheckItems();
+      checkListStore.setDescription('');
+    }
   };
 
-  return (
+  return useObserver(() => (
     <InputAreaView>
       <InputCheck
         placeholder="직거래 할 때 체크해야 할 것을 알려주세요."
-        onChangeText={newCheckItemInputHandler}
-        value={newCheckItem}
+        onChangeText={onChangeHandler}
+        value={checkListStore.description}
         autoCorrect={false}
       />
       <ButtonView>
-        <PlusText onPress={addCheckItemsHandler}>
+        <PlusText onPress={addButtonHandler}>
           <FontAwesomeIcon icon={faPlus} style={plusIconStyle} size={20} />
         </PlusText>
       </ButtonView>
     </InputAreaView>
-  );
+  ));
 };
 
 export default CheckInsert;
