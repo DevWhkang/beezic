@@ -4,7 +4,7 @@ import styled from '@emotion/native';
 type LinkTextProps = {
   content: string,
   size: number,
-}
+};
 
 const Text = styled.TextInput<LinkTextProps>`
   border-bottom-width: 1px;
@@ -14,7 +14,7 @@ const Text = styled.TextInput<LinkTextProps>`
   align-self: center;
 `;
 
-const LinkText = ({ content, size }: LinkTextProps) => (
+const LinkText = ({ content, size }: LinkTextProps): JSX.Element => (
   <Text editable={false} value={content} style={{ fontSize: size }} />
 );
 

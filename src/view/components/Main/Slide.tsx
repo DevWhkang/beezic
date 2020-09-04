@@ -47,7 +47,7 @@ const MarginTop = styled.View`
   margin-bottom: 30px;
 `;
 
-function Slide({ Username }: props) {
+function Slide({ Username }: props): JSX.Element {
   return (
     <Box>
       <Swiper showsButtons style={Wrapper}>

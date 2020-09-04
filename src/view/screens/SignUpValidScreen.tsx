@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/native';
-import TextInput from '../components/TextInput.tsx';
-import Button from '../components/Button.tsx';
-import LinkText from '../components/LinkText.tsx';
-import OauthIcons from '../components/OAuthIcons.tsx';
+import TextInput from '../components/TextInput';
+import Button from '../components/Button';
+import LinkText from '../components/LinkText';
+import OauthIcons from '../components/OAuthIcons';
 
 const Container = styled.View`
   display: flex;
@@ -22,7 +22,7 @@ const TitleText = styled.Text`
   margin-bottom: 80px;
 `;
 
-const VaildText = styled.Text`
+const ValidText = styled.Text`
   text-align: center;
   font-size: 15px;
   margin-bottom:15px;
@@ -36,7 +36,7 @@ const SmallMargin = styled.View`
   margin-bottom: 10px;
 `;
 
-function vaildScreen({ isVerified } : props) {
+function validScreen({ isVerified } : props): JSX.Element {
   return (
     <>
       <Container>
@@ -44,11 +44,11 @@ function vaildScreen({ isVerified } : props) {
       </Container>
       <Margin><TextInput label="Email" title="Send Code" /></Margin>
       <Margin><TextInput label="Verify Code" title="Submit" /></Margin>
-      <VaildText>
+      <ValidText>
         {
-          isVerified ? 'Verified!' : '' // verrify 인증이 여부로 text 표현 수정사항
+          isVerified ? 'Verified!' : '' // verify 인증이 여부로 text 표현 수정사항
         }
-      </VaildText>
+      </ValidText>
       <Button title="Next" />
       <SmallMargin><LinkText content="Already have an account ?" /></SmallMargin>
       <OauthIcons />
@@ -56,4 +56,4 @@ function vaildScreen({ isVerified } : props) {
   );
 }
 
-export default vaildScreen;
+export default validScreen;

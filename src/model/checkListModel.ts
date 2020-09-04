@@ -1,26 +1,27 @@
+/* eslint-disable no-console */
 import firestore from '@react-native-firebase/firestore';
 
-interface params{
+interface Params{
   callback: (checkItems: []) => void;
 }
 
-const getCheckListDoc = async (callback: params) => {
+const getCheckListDoc = async (callback: Params): void => {
   const checkListDoc = await firestore()
     .collection('user-check-list')
     .doc('AZP6tBePcPVj49OKJuIK')
     .get()
-    .then((item) => item.data());
+    .then((item) => item.data())
+    .catch(console.error);
 
   callback(checkListDoc.userDescription);
 };
 
-const setCheckListDoc = async (checkItems: array) => {
+const setCheckListDoc = (checkItems: Array<Record<string, unknown>>): void => {
   firestore()
     .collection('user-check-list')
     .doc('AZP6tBePcPVj49OKJuIK')
-    .update({
-      userDescription: checkItems,
-    });
+    .update({ userDescription: checkItems })
+    .catch(console.error);
 };
 
 export { setCheckListDoc, getCheckListDoc };

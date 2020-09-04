@@ -9,7 +9,7 @@ const HeaderTopWrapper = styled.Text`
   flex-direction: row;
 `;
 
-export default () => (
+export default (): JSX.Element => (
   <HeaderTopWrapper>
     <FontAwesomeIcon
       color="#fc8a3d"
