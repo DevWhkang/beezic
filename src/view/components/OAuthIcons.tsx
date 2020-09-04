@@ -6,9 +6,9 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 type OAuthIconsProps = {
-  style?: object,
+  style?: Record<string, string>,
   size?: number,
-}
+};
 
 const Container = styled.View<OAuthIconsProps>`
   display: flex;
@@ -18,7 +18,7 @@ const Container = styled.View<OAuthIconsProps>`
   width: 200px;
 `;
 
-const OAuthIcons = ({ style, size }: OAuthIconsProps) => (
+const OAuthIcons = ({ style, size }: OAuthIconsProps): JSX.Element => (
   <Container style={style}>
     <FontAwesomeIcon icon={faGoogle} size={size} />
     <FontAwesomeIcon icon={faFacebookF} size={size} />

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
-import TextInput from '../components/TextInput.tsx';
-import Button from '../components/Button.tsx';
-import LinkText from '../components/LinkText.tsx';
-import OAuthIcons from '../components/OAuthIcons.tsx';
+import TextInput from '../components/TextInput';
+import Button from '../components/Button';
+import LinkText from '../components/LinkText';
+import OAuthIcons from '../components/OAuthIcons';
 
 const View = styled.View`
   display: flex;
@@ -35,7 +35,7 @@ const oauthStyle = css`
   margin-top: 45px;
 `;
 
-const SignIn = () => (
+const SignIn = (): JSX.Element => (
   <View>
     <Header>Welcome!</Header>
     <TextInput

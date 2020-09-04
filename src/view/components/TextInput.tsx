@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import styled, { css } from '@emotion/native';
-import Button from './Button.tsx';
+import Button from './Button';
 
 type TextInputProps = {
   label: string,
   placeholder?: string,
   title?: string,
   password?: boolean,
-  viewStyle?: object,
-  labelStyle?: object,
-  textInputStyle?: object,
-  background?: object,
-  foreground?: object,
-  onPress?: object,
-}
+  viewStyle?: Record<string, string>,
+  labelStyle?: Record<string, string>,
+  textInputStyle?: Record<string, string>,
+  background?: Record<string, string>,
+  foreground?: Record<string, string>,
+  onPress?: Record<string, string>,
+};
 
 const Container = styled.View<TextInputProps>`
   display: flex;
@@ -41,7 +41,7 @@ const Input = styled.TextInput<TextInputProps>`
   border: 2px solid #888;
   border-radius: 100px;
   width: 100%;
-  ${(props) => props.title && `
+  ${(props: TextInputProps) => props.title && `
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     width: 80%;
@@ -58,7 +58,7 @@ const buttonBackground = css`
 const TextInput = ({
   viewStyle, label, labelStyle, placeholder, password,
   textInputStyle, title, background, foreground, onPress,
-}: TextInputProps) => {
+}: TextInputProps): JSX.Element => {
   const [value, setValue] = useState('');
   return (
     <Container style={viewStyle}>

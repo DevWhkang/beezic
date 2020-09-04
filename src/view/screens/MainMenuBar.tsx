@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/native';
-import CloseMenu from '../components/Main_MenuBar/CloseMenu.tsx';
-import LinkText from '../components/LinkText.tsx';
+import CloseMenu from '../components/Main_MenuBar/CloseMenu';
+import LinkText from '../components/LinkText';
 
 const Container = styled.View`
   display: flex;
@@ -14,7 +14,7 @@ const MarginBottom = styled.View`
   margin-bottom: 50px;
 `;
 
-function MainMenu() {
+function MainMenu(): JSX.Element {
   return (
     <>
       <CloseMenu />

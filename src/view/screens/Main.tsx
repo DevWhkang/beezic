@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/native';
 import { Alert } from 'react-native';
-import Hamberger from '../components/Main/HambergerMenu.tsx';
-import Silde from '../components/Main/Slide.tsx';
-import Button from '../components/Button.tsx';
+import Hamburger from '../components/Main/HamburgerMenu';
+import Slide from '../components/Main/Slide';
+import Button from '../components/Button';
 import logo from '../../assets/Beezic_Logo.png';
 
 const HeaderWrapper = styled.View`
@@ -27,16 +27,16 @@ const Logo = styled.Image`
   margin-left: 80px;
   margin-top: 20px;
 `;
-function Main() {
+function Main(): JSX.Element {
   return (
     <>
       <Margin>
         <HeaderWrapper>
-          <Hamberger />
+          <Hamburger />
           <Logo source={logo} />
         </HeaderWrapper>
       </Margin>
-      <Margin><Silde Username="임진성" /></Margin>
+      <Margin><Slide Username="임진성" /></Margin>
       <Button
         title="비직하기"
         onPress={() => Alert.alert('비직하기로 이동')}

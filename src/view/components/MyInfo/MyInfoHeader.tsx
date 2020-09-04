@@ -3,8 +3,8 @@ import { Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/native';
-import HeaderTopBack from './HeaderTopBack.tsx';
-import HeaderTopMenu from './HeaderTopMenu.tsx';
+import HeaderTopBack from './HeaderTopBack';
+import HeaderTopMenu from './HeaderTopMenu';
 
 const HeaderWrapper = styled.View`
   height: 150px;
@@ -34,7 +34,8 @@ const UserName = styled.Text`
   font-size: 30px;
 `;
 
-export default (props: any) => {
+// FIXME naming function으로 수정하고 type 및 defaultProps 추가 요망
+export default (props: any): JSX.Element => {
   const { isLastPage, userData: { userName } } = props;
 
   return (

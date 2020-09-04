@@ -1,8 +1,8 @@
 import React from 'react';
-import MyInfoHeader from '../components/MyInfo/MyInfoHeader.tsx';
-import MyInfoMainBody from '../components/MyInfo/MyInfoMainBody.tsx';
+import MyInfoHeader from '../components/MyInfo/MyInfoHeader';
+import MyInfoMainBody from '../components/MyInfo/MyInfoMainBody';
 
-const MyInfo: React.FunctionComponent<MyInfoProps> = () => {
+const MyInfo: React.FunctionComponent<MyInfoProps> = (): JSX.Element => {
   const userData = {
     userName: '임진성',
     userEmail: 'realcastlee@gmail.com',

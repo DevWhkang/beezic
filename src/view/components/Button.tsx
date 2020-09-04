@@ -3,12 +3,12 @@ import styled, { css } from '@emotion/native';
 
 type ButtonProps = {
   title: string,
-  background?: object,
-  foreground?: object,
-  onPress?: object,
-}
+  background?: Record<string, string>,
+  foreground?: Record<string, string>,
+  onPress?: () => void,
+};
 
-const TouchableButton = styled.TouchableOpacity<ButtonProps>`
+const TouchableButton = styled.TouchableOpacity`
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -19,7 +19,7 @@ const TouchableButton = styled.TouchableOpacity<ButtonProps>`
   align-self: center;
 `;
 
-const Text = styled.Text<ButtonProps>`
+const Text = styled.Text`
   color: white;
   font-family: 'Jua-Regular';
   font-size: 26.6px;
@@ -30,7 +30,7 @@ const Text = styled.Text<ButtonProps>`
 
 const Button = ({
   title, background, foreground, onPress,
-}: ButtonProps) => (
+}: ButtonProps): JSX.Element => (
   <TouchableButton
     style={background}
     onPress={onPress}

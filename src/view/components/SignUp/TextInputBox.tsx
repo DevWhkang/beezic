@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 type TextBoxProps = {
   textName: string,
   buttonName: string,
-}
+};
 
 const Container = styled.View`
   display: flex;
@@ -35,7 +35,7 @@ const TextInputBox = styled.TextInput`
   background-color: #DADADA;
 `;
 
-const ButtonStlye = styled.TouchableOpacity`
+const ButtonStyle = styled.TouchableOpacity`
   width: 100px;
   height: 40px;
   border-radius: 15px;
@@ -45,7 +45,7 @@ const Button = styled.Button`
   color: #aaa;
 `;
 
-const UseTextInput = ({ textName, buttonName }:TextBoxProps) => {
+const UseTextInput = ({ textName, buttonName }: TextBoxProps): JSX.Element => {
   const [value, onChangeText] = React.useState('이곳에 입력 하세요');
   return (
     <Container>
@@ -55,12 +55,12 @@ const UseTextInput = ({ textName, buttonName }:TextBoxProps) => {
           onChangeText={(text) => onChangeText(text)}
           value={value}
         />
-        <ButtonStlye>
+        <ButtonStyle>
           <Button
             title={buttonName}
             onPress={() => Alert.alert('button pressed')}
           />
-        </ButtonStlye>
+        </ButtonStyle>
       </MiddleContainer>
     </Container>
   );

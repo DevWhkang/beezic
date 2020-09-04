@@ -2,10 +2,10 @@ import React from 'react';
 import { SafeAreaView, Image } from 'react-native';
 import styled from '@emotion/native';
 import { useObserver } from 'mobx-react';
-import CheckedInsert from '../components/CheckList/checkedInsert.tsx';
-import CheckedList from '../components/CheckList/checkedlist.tsx';
-import carroLogo from '../../assets/Beezic_Logo_carrot.png';
-import checkListStore from '../../viewModel/store.ts';
+import CheckedInsert from '../components/CheckList/CheckedInsert';
+import CheckedList from '../components/CheckList/CheckedList';
+import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
+import checkListStore from '../../viewModel/store';
 
 const TitleText = styled.Text`
   font-size: 50;
@@ -39,11 +39,11 @@ const UserCheckText = styled.Text`
   margin-bottom: 20;
 `;
 
-const CheckList = () => useObserver(() => (
+const CheckList = (): JSX.Element => useObserver(() => (
   <SafeAreaView>
     <TitleText>
       Check List
-      <Image source={carroLogo} />
+      <Image source={carrotLogo} />
     </TitleText>
     <CheckAreaView>
       <CheckedInsert />
