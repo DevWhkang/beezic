@@ -20,7 +20,8 @@
     "mobx-react": "^6.3.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
-    "react-native-svg": "^12.1.0"
+    "react-native-svg": "^12.1.0",
+    "react-native-swiper": "^1.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -37,8 +38,8 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
-    "reactotron-react-native": "^5.0.0",
     "react-native-svg": "^12.1.0",
+    "reactotron-react-native": "^5.0.0",
     "typescript": "^3.8.3"
   }
 }
