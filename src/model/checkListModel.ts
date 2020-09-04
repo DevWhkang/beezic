@@ -16,12 +16,11 @@ const getCheckListDoc = async (callback: Params): void => {
   callback(checkListDoc.userDescription);
 };
 
-const setCheckListDoc = (checkItems: array): void => {
-  const userDescription = [checkItems] as [array];
+const setCheckListDoc = (checkItems: Array<Record<string, unknown>>): void => {
   firestore()
     .collection('user-check-list')
     .doc('AZP6tBePcPVj49OKJuIK')
-    .update({ userDescription })
+    .update({ userDescription: checkItems })
     .catch(console.error);
 };
 
