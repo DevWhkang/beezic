@@ -2,6 +2,11 @@ import React from 'react';
 import styled from '@emotion/native';
 import { Alert } from 'react-native';
 
+type TextBoxProps = {
+  textName: string,
+  buttonName: string,
+}
+
 const Container = styled.View`
   display: flex;
 `;
@@ -40,7 +45,7 @@ const Button = styled.Button`
   color: #aaa;
 `;
 
-const UseTextInput = ({ textName, buttonName }:props) => {
+const UseTextInput = ({ textName, buttonName }:TextBoxProps) => {
   const [value, onChangeText] = React.useState('이곳에 입력 하세요');
   return (
     <Container>

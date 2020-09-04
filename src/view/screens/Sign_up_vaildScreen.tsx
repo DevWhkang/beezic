@@ -28,11 +28,11 @@ const VaildText = styled.Text`
   margin-bottom:15px;
 `;
 
-const Magin = styled.View`
+const Margin = styled.View`
   margin-bottom: 35px;
 `;
 
-const SmallMagin = styled.View`
+const SmallMargin = styled.View`
   margin-bottom: 10px;
 `;
 
@@ -42,15 +42,15 @@ function vaildScreen({ isVerified } : props) {
       <Container>
         <TitleText>Sign Up</TitleText>
       </Container>
-      <Magin><TextInput label="Email" title="Send Code" /></Magin>
-      <Magin><TextInput label="Verify Code" title="Submit" /></Magin>
+      <Margin><TextInput label="Email" title="Send Code" /></Margin>
+      <Margin><TextInput label="Verify Code" title="Submit" /></Margin>
       <VaildText>
         {
           isVerified ? 'Verified!' : '' // verrify 인증이 여부로 text 표현 수정사항
         }
       </VaildText>
       <Button title="Next" />
-      <SmallMagin><LinkText content="Already have an account ?" /></SmallMagin>
+      <SmallMargin><LinkText content="Already have an account ?" /></SmallMargin>
       <OauthIcons />
     </>
   );
