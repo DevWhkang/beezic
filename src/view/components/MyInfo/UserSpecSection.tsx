@@ -26,9 +26,13 @@ const EditBtnStyle = css`
 type UserSpecProps = {
   userInfo: {title: string, info: string},
   edit?: boolean,
-  onPress?: Function
+  onPress?: ()=>void;
 };
-const UserSpecSection = ({ userInfo: { title, info }, edit, onPress }: UserSpecProps) => (
+const UserSpecSection = ({
+  userInfo: { title, info },
+  edit,
+  onPress,
+}: UserSpecProps): JSX.Element => (
   <UserSpecSectionWrapper>
     <UserInfoTitle>
       {title}
@@ -45,7 +49,7 @@ const UserSpecSection = ({ userInfo: { title, info }, edit, onPress }: UserSpecP
 );
 
 UserSpecSection.defaultProps = {
-  onPress: () => {},
+  onPress: null,
   edit: false,
 };
 export default UserSpecSection;
