@@ -11,7 +11,13 @@ type UserDataProps = {
   userData: { userName:string, userEmail:string },
   edit? : boolean
 };
-const EditMyInfoMainBody = ({ userData: { userName, userEmail }, edit }: UserDataProps) => (
+const EditMyInfoMainBody = ({
+  userData: {
+    userName,
+    userEmail,
+  },
+  edit,
+}: UserDataProps): JSX.Element => (
   <>
     <UserInfoWrapper>
       <UserSpecSection edit={edit} userInfo={{ title: '👤 Username', info: userName }} />
