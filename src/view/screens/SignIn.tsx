@@ -15,7 +15,7 @@ const Header = styled.Text`
   font-size: 64px;
   margin-top: 60px;
   margin-bottom: 30px;
-  font-family: 'BMDOHYEON'
+  font-family: 'BMDOHYEON';
 `;
 
 const emailInputStyle = css`
