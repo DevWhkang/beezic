@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import UserSpecSection from './UserSpecSection';
 
-// User
 const UserInfoWrapper = styled.View`
   padding: 10px 5px;
 `;
@@ -17,7 +16,6 @@ const EditMyInfoBtn = styled.TouchableOpacity`
   margin: 5px;
 `;
 
-// Transaction
 const MyTransactionSectionWrapper = styled.View`
   flex:1;
   align-items: center;
@@ -52,46 +50,54 @@ const SeeAllTransaction = styled.TouchableOpacity`
   margin:0 0 10px 0;
 `;
 
-// FIXME naming function으로 수정하고 type 및 defaultProps 추가 요망
-export default (props: any): JSX.Element => {
-  const { userData: { userName, userEmail, transactions } } = props;
-  return (
-    <>
-      <UserInfoWrapper>
-        <UserSpecSection userInfo={{ title: '👤 Username', info: userName }} />
-        <UserSpecSection userInfo={{ title: '📬 Email', info: userEmail }} />
-        <EditMyInfoBtn>
-          <Text style={{ fontSize: 19, color: 'black' }}>내 정보 수정하기</Text>
-        </EditMyInfoBtn>
-      </UserInfoWrapper>
-
-      <MyTransactionSectionTitle>
-        나의 직거래
-      </MyTransactionSectionTitle>
-      <MyTransactionSectionWrapper>
-        <MyTransactionList
-          nestedScrollEnabled
-        >
-          {transactions.map((e) => (
-            <MyTransactionBtn
-              key={e.id}
-            >
-              <MyTransactionTitle>
-                {e.title}
-                {' '}
-                <FontAwesomeIcon
-                  color="white"
-                  icon={faArrowRight}
-                />
-              </MyTransactionTitle>
-
-            </MyTransactionBtn>
-          ))}
-        </MyTransactionList>
-        <SeeAllTransaction>
-          <Text style={{ fontSize: 18, color: '#ff8a3d' }}>See All</Text>
-        </SeeAllTransaction>
-      </MyTransactionSectionWrapper>
-    </>
-  );
+type MyInfoMainBodyPropTypes = {
+  userData: { userName: string, userEmail: string, transactions:[]}
 };
+
+const MyInfoMainBody = ({
+  userData: {
+    userName,
+    userEmail,
+    transactions,
+  },
+}: MyInfoMainBodyPropTypes): JSX.Element => (
+  <>
+    <UserInfoWrapper>
+      <UserSpecSection userInfo={{ title: '👤 Username', info: userName }} />
+      <UserSpecSection userInfo={{ title: '📬 Email', info: userEmail }} />
+      <EditMyInfoBtn>
+        <Text style={{ fontSize: 19, color: 'black' }}>내 정보 수정하기</Text>
+      </EditMyInfoBtn>
+    </UserInfoWrapper>
+
+    <MyTransactionSectionTitle>
+      나의 직거래
+    </MyTransactionSectionTitle>
+    <MyTransactionSectionWrapper>
+      <MyTransactionList
+        nestedScrollEnabled
+      >
+        {transactions.map(({ id, title }):[JSX.Element] => (
+          <MyTransactionBtn
+            key={id}
+          >
+            <MyTransactionTitle>
+              {title}
+              {' '}
+              <FontAwesomeIcon
+                color="white"
+                icon={faArrowRight}
+              />
+            </MyTransactionTitle>
+
+          </MyTransactionBtn>
+        ))}
+      </MyTransactionList>
+      <SeeAllTransaction>
+        <Text style={{ fontSize: 18, color: '#ff8a3d' }}>See All</Text>
+      </SeeAllTransaction>
+    </MyTransactionSectionWrapper>
+  </>
+);
+
+export default MyInfoMainBody;
