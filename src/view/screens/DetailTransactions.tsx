@@ -2,15 +2,15 @@ import React from 'react';
 import styled, { css } from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import DDTSlide from '../components/DDT/DDTSilde';
-import HambergerMenu from '../components/Main/HamburgerMenu';
+import HamburgerMenu from '../components/Main/HamburgerMenu';
 
 /*
  * TODO: Props로 username, location, 거래시간 등 받아서 표기할게 많음 Component DDTSlide.tsx 파일도 포함
  */
 type DDTPageProps = {
-  Username: string
+  username: string
 };
 
 const HeaderBottomWrapper = styled.View`
@@ -40,13 +40,13 @@ const MarginTop = styled.View`
   margin-top: 30px;
 `;
 
-function DDTPage({ Username }: DDTPageProps) {
+function DDTPage({ username }: DDTPageProps): JSX.Element {
   return (
     <>
-      <HambergerMenu />
+      <HamburgerMenu />
       <HeaderBottomWrapper>
         <ProfileTitle>
-          {Username}
+          {username}
           <Text style={NameTextCSS}>
             님의 직거래 신청 정보
             {'  '}
@@ -59,7 +59,7 @@ function DDTPage({ Username }: DDTPageProps) {
         </ProfileTitle>
       </HeaderBottomWrapper>
       <MarginTop>
-        <DDTSlide />
+        <DDTSlide beezicler="강원형" />
       </MarginTop>
     </>
   );

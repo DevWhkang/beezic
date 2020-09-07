@@ -8,8 +8,8 @@ import { faUserTie } from '@fortawesome/free-solid-svg-icons';
  * TODO: Props로 username, location, 거래시간 등 받아서 표기할게 많음 Component DDTSlide.tsx 파일도 포함
  */
 type DDTSlideProps = {
-  Username: string,
-  Beezicler: string,
+  username: string,
+  beezicler: string,
 };
 
 const Wrapper = css`
@@ -61,7 +61,7 @@ const MarginTopText = css`
   margin-top: 30px;
 `;
 
-function DDTSlide({ Username, Beezicler }: DDTSlideProps): JSX.Element {
+function DDTSlide({ username, beezicler }: DDTSlideProps): JSX.Element {
   return (
     <Box>
       <Swiper showsButtons style={Wrapper}>
@@ -91,14 +91,14 @@ function DDTSlide({ Username, Beezicler }: DDTSlideProps): JSX.Element {
               {' '}
               안녕하세요
               {' '}
-              {Username}
+              {username}
               {' '}
               님
             </MiddleText>
             <LowText>
               중고 직거래 전문 비직러
               {' '}
-              {Beezicler}
+              {beezicler}
               {' '}
               입니다
               {'\n'}
