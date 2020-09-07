@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/native';
 
-const HeaderTopWrapper = styled.Text`
+const HeaderTopWrapper = styled.TouchableOpacity`
   padding: 10px;
   padding-top: 20px;
   display: flex;
   flex-direction: row;
 `;
 
-export default (): JSX.Element => (
+const HeaderTopBack = (): JSX.Element => (
   <HeaderTopWrapper>
     <FontAwesomeIcon
       color="#fc8a3d"
@@ -20,3 +20,5 @@ export default (): JSX.Element => (
 
   </HeaderTopWrapper>
 );
+
+export default HeaderTopBack;
