@@ -1,8 +1,8 @@
 import React from 'react';
-import MyInfoHeader from '../components/MyInfo/MyInfoHeader.tsx';
-import EditMyInfoMainBody from '../components/MyInfo/EditMyInfoMainBody.tsx';
+import MyInfoHeader from '../components/MyInfo/MyInfoHeader';
+import EditMyInfoMainBody from '../components/MyInfo/EditMyInfoMainBody';
 
-const EditMyInfo = () => {
+const EditMyInfo = (): JSX.Element => {
   const userData = {
     userName: '임진성',
     userEmail: 'realcastlee@gmail.com',
