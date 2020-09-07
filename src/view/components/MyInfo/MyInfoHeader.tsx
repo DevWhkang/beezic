@@ -1,5 +1,4 @@
 import React from 'react';
-import { Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/native';
@@ -25,44 +24,46 @@ const HeaderBottomWrapper = styled.View`
   flex-direction: row;
 `;
 
-// 텍스트 컴포넌트
 const ProfileTitle = styled.Text`
   font-size: 30px;
   font-weight: bold;
 `;
+
 const UserName = styled.Text`
   font-size: 30px;
 `;
 
-// FIXME naming function으로 수정하고 type 및 defaultProps 추가 요망
-export default (props: any): JSX.Element => {
-  const { isLastPage, userData: { userName } } = props;
+const UserIconWrapper = styled.TouchableOpacity`
+  align-self: center;
+  margin-left: auto;
+`;
 
-  return (
-    <HeaderWrapper>
-      {
-        isLastPage
-          ? <HeaderTopBack />
-          : <HeaderTopMenu />
-      }
-      <HeaderBottomWrapper>
-        <ProfileTitle>Profile</ProfileTitle>
-        <UserName>
-          {`| ${userName}님`}
-        </UserName>
-        <Text
-          style={{
-            alignSelf: 'center',
-            marginLeft: 'auto',
-          }}
-        >
-          <FontAwesomeIcon
-            color="#fc8a3d"
-            size={50}
-            icon={faUserCircle}
-          />
-        </Text>
-      </HeaderBottomWrapper>
-    </HeaderWrapper>
-  );
+type MyInfoPropTypes = {
+  isLastPage: boolean,
+  userData: {userName: string},
 };
+
+const MyInfoHeader = ({
+  isLastPage,
+  userData: { userName },
+}: MyInfoPropTypes): JSX.Element => (
+  <HeaderWrapper>
+    {isLastPage
+      ? <HeaderTopBack />
+      : <HeaderTopMenu />}
+    <HeaderBottomWrapper>
+      <ProfileTitle>Profile</ProfileTitle>
+      <UserName>
+        {`| ${userName}님`}
+      </UserName>
+      <UserIconWrapper>
+        <FontAwesomeIcon
+          color="#fc8a3d"
+          size={50}
+          icon={faUserCircle}
+        />
+      </UserIconWrapper>
+    </HeaderBottomWrapper>
+  </HeaderWrapper>
+);
+export default MyInfoHeader;
