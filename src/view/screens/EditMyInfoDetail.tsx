@@ -3,6 +3,7 @@ import styled from '@emotion/native';
 import MyInfoHeader from '../components/MyInfo/MyInfoHeader';
 import EditUsername from '../components/MyInfo/EditUsername';
 import EditEmail from '../components/MyInfo/EditEmail';
+import EditPassword from '../components/MyInfo/EditPassword';
 
 type EditMyInfoDetailPropTypes = {
   isLastPage: boolean,
@@ -27,6 +28,9 @@ const EditMyInfoDetail = ({
     ),
     email: (
       <EditEmail textInputSettings={textInputSettings} />
+    ),
+    password: (
+      <EditPassword textInputSettings={textInputSettings} />
     ),
   };
   return (
