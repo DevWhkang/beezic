@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/native';
 import MyInfoHeader from '../components/MyInfo/MyInfoHeader';
 import EditUsername from '../components/MyInfo/EditUsername';
+import EditEmail from '../components/MyInfo/EditEmail';
 
 type EditMyInfoDetailPropTypes = {
   isLastPage: boolean,
@@ -23,6 +24,9 @@ const EditMyInfoDetail = ({
   const cases = {
     username: (
       <EditUsername textInputSettings={textInputSettings} />
+    ),
+    email: (
+      <EditEmail textInputSettings={textInputSettings} />
     ),
   };
   return (
