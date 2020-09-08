@@ -20,9 +20,9 @@ const EditMyInfoMainBody = ({
 }: UserDataProps): JSX.Element => (
   <>
     <UserInfoWrapper>
-      <UserSpecSection edit={edit} userInfo={{ title: '👤 Username', info: userName }} />
-      <UserSpecSection edit={edit} userInfo={{ title: '📬 Email', info: userEmail }} />
-      <UserSpecSection edit={edit} userInfo={{ title: '🔑 Password', info: '********' }} />
+      <UserSpecSection edit={edit} userInfo={{ title: '👤 Username', info: userName, userName }} />
+      <UserSpecSection edit={edit} userInfo={{ title: '📬 Email', info: userEmail, userName }} />
+      <UserSpecSection edit={edit} userInfo={{ title: '🔑 Password', info: '********', userName }} password/>
     </UserInfoWrapper>
   </>
 );
