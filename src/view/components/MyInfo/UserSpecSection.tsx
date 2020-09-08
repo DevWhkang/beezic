@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
 import { Text } from 'react-native';
+import EditMyInfoDetail from '../../screens/EditMyInfoDetail';
 
 const UserSpecSectionWrapper = styled.View`
   margin: 0 0 10px 5px;
@@ -24,29 +25,56 @@ const EditBtnStyle = css`
 `;
 
 type UserSpecProps = {
-  userInfo: {title: string, info: string},
+  userInfo: {title: string, info: string, userName: string},
   edit?: boolean,
   onPress?: ()=>void;
 };
+
 const UserSpecSection = ({
-  userInfo: { title, info },
+  userInfo: { title, info, userName },
   edit,
   onPress,
-}: UserSpecProps): JSX.Element => (
-  <UserSpecSectionWrapper>
-    <UserInfoTitle>
-      {title}
-    </UserInfoTitle>
-    <UserInfoBody>{info}</UserInfoBody>
-    {edit
-      ? (
-        <EditUserInfoBtn onPress={onPress}>
-          <Text style={EditBtnStyle}>{' 📝 '}</Text>
-        </EditUserInfoBtn>
-      )
-      : null}
-  </UserSpecSectionWrapper>
-);
+}: UserSpecProps): JSX.Element => {
+  const screenFor = title.split(' ')[1].toLowerCase();
+  const textInputSettings = {
+    labelStyle: css``,
+    textInputStyle: css``,
+    viewStyle: css``,
+    background: css`
+      background: #ff8a3d;
+    `,
+    label: screenFor,
+    placeholder: info,
+  };
+
+  return (
+    <>
+      <UserSpecSectionWrapper>
+        <UserInfoTitle>
+          {title}
+        </UserInfoTitle>
+        <UserInfoBody>{info}</UserInfoBody>
+        {edit
+          ? (
+            <EditUserInfoBtn onPress={onPress || (() => {
+              /* FIXME 네비게이션 적용하여 클릭이벤트로 다음과 같은 방식으로 네비게이팅 해야함
+                <EditMyInfoDetail
+                  isLastPage
+                  userName={userName}
+                  screenFor={screenFor}
+                  textInputSettings={textInputSettings}
+                />
+              */
+            })}
+            >
+              <Text style={EditBtnStyle}>{' 📝 '}</Text>
+            </EditUserInfoBtn>
+          )
+          : null}
+      </UserSpecSectionWrapper>
+    </>
+  );
+};
 
 UserSpecSection.defaultProps = {
   onPress: null,
