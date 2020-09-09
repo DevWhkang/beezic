@@ -44,3 +44,7 @@ const checkListStore: CheckListStore = observable({
 });
 
 export default checkListStore;
+
+// this.setState((previousState) => ({
+//   messages: GiftedChat.append(previousState.messages, messages),
+// }));
