@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native';
 import styled from '@emotion/native';
 import { useObserver } from 'mobx-react';
 import CheckedListItem from './CheckedListItem';
-import checkListStore from '../../../viewModel/store';
+import checkListStore from '../../../viewModel/CheckListStore';
 
 const ScrollForm = styled.View`
   height: 400px;

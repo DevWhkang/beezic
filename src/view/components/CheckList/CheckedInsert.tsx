@@ -3,7 +3,7 @@ import styled, { css } from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useObserver } from 'mobx-react';
-import checkListStore from '../../../viewModel/store';
+import checkListStore from '../../../viewModel/CheckListStore';
 
 const InputAreaView = styled.View`
   flex-direction: row;

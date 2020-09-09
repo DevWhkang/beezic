@@ -1,11 +1,14 @@
 import React from 'react';
-import { SafeAreaView, Image } from 'react-native';
+import {
+  SafeAreaView, Image, TouchableWithoutFeedback, Keyboard,
+} from 'react-native';
 import styled from '@emotion/native';
+
 import { useObserver } from 'mobx-react';
 import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
-import checkListStore from '../../viewModel/store';
+import checkListStore from '../../viewModel/CheckListStore';
 
 const TitleText = styled.Text`
   font-size: 50;
@@ -40,18 +43,20 @@ const UserCheckText = styled.Text`
 `;
 
 const CheckList = (): JSX.Element => useObserver(() => (
-  <SafeAreaView>
-    <TitleText>
-      Check List
-      <Image source={carrotLogo} />
-    </TitleText>
-    <CheckAreaView>
-      <CheckedInsert />
-      <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
-      {checkListStore.checkItems.length !== 0
-        ? <CheckedList /> : <EmptyText>텅...</EmptyText>}
-    </CheckAreaView>
-  </SafeAreaView>
+  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <SafeAreaView>
+      <TitleText>
+        Check List
+        <Image source={carrotLogo} />
+      </TitleText>
+      <CheckAreaView>
+        <CheckedInsert />
+        <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
+        {checkListStore.checkItems.length !== 0
+          ? <CheckedList /> : <EmptyText>텅...</EmptyText>}
+      </CheckAreaView>
+    </SafeAreaView>
+  </TouchableWithoutFeedback>
 ));
 
 export default CheckList;
