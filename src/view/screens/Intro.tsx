@@ -1,5 +1,7 @@
-import React from 'react';
-import styled from '@emotion/native';
+import React, { useEffect } from 'react';
+import styled, { css } from '@emotion/native';
+import { Animated } from 'react-native';
+import { faBox } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/Beezic_Logo.png';
 
 const Container = styled.View`
@@ -20,14 +22,46 @@ const MainText = styled.Text`
   font-family: 'Jua-Regular';
   color: #333;
 `;
+type IntroPropTypes = {
+  loadingStateHandler: ()=>void,
+  loginStateHandler: () => void,
+};
 
-function Intro(): JSX.Element {
+function Intro({ loadingStateHandler, loginStateHandler }:IntroPropTypes): JSX.Element {
+  const animation = new Animated.Value(1);
+  const startAnimation = () => {
+    Animated.timing(animation, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const animationStyle = {
+    opacity: animation,
+  };
+
+  useEffect(() => {
+    (new Promise((res) => {
+      startAnimation();
+      setTimeout(() => {
+        res();
+      }, 1000);
+    }).then(() => {
+      // TODO 나중에 여기서 로그인 상태확인 후 아래 메소드 처리
+      loadingStateHandler(false);
+    }));
+  });
   return (
-    <Container>
-      <Logo source={logo} />
-      <MainText>판매도 구매도</MainText>
-      <MainText>대신 해드릴게요.</MainText>
-    </Container>
+    <>
+      <Animated.View style={[animationStyle]}>
+        <Container>
+          <Logo source={logo} />
+          <MainText>판매도 구매도</MainText>
+          <MainText>대신 해드릴게요.</MainText>
+        </Container>
+      </Animated.View>
+    </>
   );
 }
 

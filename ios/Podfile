@@ -8,6 +8,10 @@ target 'beezic' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-dialogflow', :path => '../node_modules/react-native-dialogflow'
+
+  pod 'react-native-voice', :path => '../node_modules/react-native-voice'
+
   target 'beezicTests' do
     inherit! :complete
     # Pods for testing

@@ -4,7 +4,7 @@ import styled, { css } from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useObserver } from 'mobx-react';
-import checkListStore from '../../../viewModel/store';
+import checkListStore from '../../../viewModel/CheckListStore';
 
 const ItemContainer = styled.View`
   flex: 1;
