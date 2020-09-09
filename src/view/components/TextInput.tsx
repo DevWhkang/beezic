@@ -7,12 +7,14 @@ type TextInputProps = {
   placeholder?: string,
   title?: string,
   password?: boolean,
+  defaultValue?: string,
   viewStyle?: Record<string, string>,
   labelStyle?: Record<string, string>,
   textInputStyle?: Record<string, string>,
   background?: Record<string, string>,
   foreground?: Record<string, string>,
   onPress?: Record<string, string>,
+  onChangeText?: (text) => void,
 };
 
 const Container = styled.View<TextInputProps>`
@@ -56,10 +58,14 @@ const buttonBackground = css`
 `;
 
 const TextInput = ({
-  viewStyle, label, labelStyle, placeholder, password,
-  textInputStyle, title, background, foreground, onPress,
+  viewStyle, label, labelStyle, placeholder, password, defaultValue,
+  textInputStyle, title, background, foreground, onPress, onChangeText,
 }: TextInputProps): JSX.Element => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(defaultValue);
+  const onChangeHandler = (text) => {
+    setValue(text);
+    onChangeText(text);
+  };
   return (
     <Container style={viewStyle}>
       <Label style={labelStyle}>{label}</Label>
@@ -68,8 +74,8 @@ const TextInput = ({
           style={textInputStyle}
           placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
           title={!!title}
-          value={value}
-          onChangeText={(text) => setValue(text)}
+          value={value || defaultValue}
+          onChangeText={onChangeHandler}
           secureTextEntry={password}
         />
         {!!title && (
@@ -89,12 +95,14 @@ TextInput.defaultProps = {
   placeholder: '',
   title: '',
   password: false,
+  defaultValue: '',
   viewStyle: css``,
   labelStyle: css``,
   textInputStyle: css``,
   background: css``,
   foreground: css``,
-  onPress: () => {},
+  onPress: () => { },
+  onChangeText: () => { },
 };
 
 export default TextInput;
