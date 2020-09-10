@@ -3,6 +3,7 @@ import styled from '@emotion/native';
 import { Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { useNavigation } from '@react-navigation/native';
 import UserSpecSection from './UserSpecSection';
 
 const UserInfoWrapper = styled.View`
@@ -52,6 +53,7 @@ const SeeAllTransaction = styled.TouchableOpacity`
 
 type MyInfoMainBodyPropTypes = {
   userData: { userName: string, userEmail: string, transactions:[]}
+  onPress: () =>void
 };
 
 const MyInfoMainBody = ({
@@ -60,44 +62,48 @@ const MyInfoMainBody = ({
     userEmail,
     transactions,
   },
-}: MyInfoMainBodyPropTypes): JSX.Element => (
-  <>
-    <UserInfoWrapper>
-      <UserSpecSection userInfo={{ title: '👤 Username', info: userName }} />
-      <UserSpecSection userInfo={{ title: '📬 Email', info: userEmail }} />
-      <EditMyInfoBtn>
-        <Text style={{ fontSize: 19, color: 'black' }}>내 정보 수정하기</Text>
-      </EditMyInfoBtn>
-    </UserInfoWrapper>
+  onPress,
+}: MyInfoMainBodyPropTypes): JSX.Element => {
+  const navigation = useNavigation();
+  return (
+    <>
+      <UserInfoWrapper>
+        <UserSpecSection userInfo={{ title: '👤 Username', info: userName }} />
+        <UserSpecSection userInfo={{ title: '📬 Email', info: userEmail }} />
+        <EditMyInfoBtn onPress={() => navigation.navigate('EditMyinfo')}>
+          <Text style={{ fontSize: 19, color: 'black' }}>내 정보 수정하기</Text>
+        </EditMyInfoBtn>
+      </UserInfoWrapper>
 
-    <MyTransactionSectionTitle>
-      나의 직거래
-    </MyTransactionSectionTitle>
-    <MyTransactionSectionWrapper>
-      <MyTransactionList
-        nestedScrollEnabled
-      >
-        {transactions.map(({ id, title }):[JSX.Element] => (
-          <MyTransactionBtn
-            key={id}
-          >
-            <MyTransactionTitle>
-              {title}
-              {' '}
-              <FontAwesomeIcon
-                color="white"
-                icon={faArrowRight}
-              />
-            </MyTransactionTitle>
+      <MyTransactionSectionTitle>
+        나의 직거래
+      </MyTransactionSectionTitle>
+      <MyTransactionSectionWrapper>
+        <MyTransactionList
+          nestedScrollEnabled
+        >
+          {transactions.map(({ id, title }):[JSX.Element] => (
+            <MyTransactionBtn
+              key={id}
+            >
+              <MyTransactionTitle>
+                {title}
+                {' '}
+                <FontAwesomeIcon
+                  color="white"
+                  icon={faArrowRight}
+                />
+              </MyTransactionTitle>
 
-          </MyTransactionBtn>
-        ))}
-      </MyTransactionList>
-      <SeeAllTransaction>
-        <Text style={{ fontSize: 18, color: '#ff8a3d' }}>See All</Text>
-      </SeeAllTransaction>
-    </MyTransactionSectionWrapper>
-  </>
-);
+            </MyTransactionBtn>
+          ))}
+        </MyTransactionList>
+        <SeeAllTransaction>
+          <Text style={{ fontSize: 18, color: '#ff8a3d' }}>See All</Text>
+        </SeeAllTransaction>
+      </MyTransactionSectionWrapper>
+    </>
+  );
+};
 
 export default MyInfoMainBody;

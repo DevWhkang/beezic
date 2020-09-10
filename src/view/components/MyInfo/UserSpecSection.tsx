@@ -58,12 +58,12 @@ const UserSpecSection = ({
           ? (
             <EditUserInfoBtn onPress={onPress || (() => {
               /* FIXME 네비게이션 적용하여 클릭이벤트로 다음과 같은 방식으로 네비게이팅 해야함
-                <EditMyInfoDetail
-                  isLastPage
-                  userName={userName}
-                  screenFor={screenFor}
-                  textInputSettings={textInputSettings}
-                />
+              <EditMyInfoDetail
+                isLastPage
+                userName={userName}
+                screenFor={screenFor}
+                textInputSettings={textInputSettings}
+              />;
               */
             })}
             >
