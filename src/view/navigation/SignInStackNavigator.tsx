@@ -6,7 +6,7 @@ import SignUp from '../screens/SignUp';
 
 const Stack = createStackNavigator();
 
-const SigninStackNavigator = ():JSX.Element => (
+const SignInStackNavigator = ():JSX.Element => (
   <Stack.Navigator initialRouteName="SignIn" headerMode="none">
     <Stack.Screen name="SignIn" component={SignIn} />
     <Stack.Screen name="SignUp" component={SignUp} />
@@ -14,4 +14,4 @@ const SigninStackNavigator = ():JSX.Element => (
   </Stack.Navigator>
 );
 
-export default SigninStackNavigator;
+export default SignInStackNavigator;

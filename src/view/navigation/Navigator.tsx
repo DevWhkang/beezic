@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Intro from '../screens/Intro';
 import Main from '../screens/Main';
-import SigninStackNavigator from './SigninStackNavigator';
+import SignInStackNavigator from './SignInStackNavigator';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +27,7 @@ const Navigator = ():JSX.Element => {
         <NavigationContainer>
           {isLogin
             ? <MainStackNavigator />
-            : <SigninStackNavigator /> }
+            : <SignInStackNavigator /> }
         </NavigationContainer>
       )
   );
