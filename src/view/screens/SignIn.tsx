@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
+import { useNavigation } from '@react-navigation/native';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
@@ -35,24 +36,35 @@ const oauthStyle = css`
   margin-top: 45px;
 `;
 
-const SignIn = (): JSX.Element => (
-  <View>
-    <Header>Welcome!</Header>
-    <TextInput
-      label="Email"
-      placeholder="Enter your email address"
-      textInputStyle={emailInputStyle}
-    />
-    <TextInput
-      label="Password"
-      placeholder="Enter your password"
-      textInputStyle={passwordInputStyle}
-      password
-    />
-    <Button title="Sign In" background={buttonStyle} />
-    <LinkText content="Create an account?" />
-    <OAuthIcons style={oauthStyle} />
-  </View>
-);
+const SignIn = (): JSX.Element => {
+  const navigation = useNavigation();
+  return (
+    <View>
+      <Header>Welcome!</Header>
+      <TextInput
+        label="Email"
+        placeholder="Enter your email address"
+        textInputStyle={emailInputStyle}
+      />
+      <TextInput
+        label="Password"
+        placeholder="Enter your password"
+        textInputStyle={passwordInputStyle}
+        password
+      />
+      <Button
+        // TODO 여기에 로그인 로직 처리
+        onPress={() => null}
+        title="Sign In"
+        background={buttonStyle}
+      />
+      <LinkText
+        content="Create an account?"
+        onPress={() => navigation.navigate('SignUp')}
+      />
+      <OAuthIcons style={oauthStyle} />
+    </View>
+  );
+};
 
 export default SignIn;

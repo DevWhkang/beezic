@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from '@emotion/native';
+import { useNavigation } from '@react-navigation/native';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
 import OauthIcons from '../components/OAuthIcons';
+import HeaderTopBack from '../components/MyInfo/HeaderTopBack';
 
 const Container = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 80px;
 `;
 
 const TitleText = styled.Text`
@@ -36,9 +37,11 @@ const SmallMargin = styled.View`
   margin-bottom: 10px;
 `;
 
-function validScreen({ isVerified } : props): JSX.Element {
+function SignUpValidation({ isVerified } : props): JSX.Element {
+  const navigation = useNavigation();
   return (
     <>
+      <HeaderTopBack />
       <Container>
         <TitleText>Sign Up</TitleText>
       </Container>
@@ -49,11 +52,11 @@ function validScreen({ isVerified } : props): JSX.Element {
           isVerified ? 'Verified!' : '' // verify 인증이 여부로 text 표현 수정사항
         }
       </ValidText>
-      <Button title="Next" />
-      <SmallMargin><LinkText content="Already have an account ?" /></SmallMargin>
+      <Button onPress={() => navigation.navigate('SignIn')} title="Next" />
+      <SmallMargin><LinkText onPress={() => navigation.navigate('SignIn')} content="Already have an account ?" /></SmallMargin>
       <OauthIcons />
     </>
   );
 }
 
-export default validScreen;
+export default SignUpValidation;
