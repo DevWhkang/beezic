@@ -53,9 +53,8 @@ const SignIn = (): JSX.Element => {
         password
       />
       <Button
-        onPress={
-          // TODO 여기에 로그인 로직 처리
-        }
+        // TODO 여기에 로그인 로직 처리
+        onPress={() => null}
         title="Sign In"
         background={buttonStyle}
       />
