@@ -1,5 +1,5 @@
 // App.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
   View,
   // TouchableWithoutFeedback,
@@ -68,29 +68,48 @@ const TransactionInfo = (): JSX.Element => {
 
   const renderBubble = (props) => {
     const { currentMessage } = props;
-    if (currentMessage.text.includes('장소')) {
-      return (
-        <View>
-          <BubbleRender {...props} />
-          <AddressSearchModal buttonTextType="장소" />
-        </View>
-      );
-    }
-    if (currentMessage.text.includes('픽업지')) {
-      return (
-        <View>
-          <BubbleRender {...props} />
-          <AddressSearchModal buttonTextType="픽업지" />
-        </View>
-      );
-    }
-    if (currentMessage.text.includes('입수')) {
-      return (
-        <View>
-          <BubbleRender {...props} />
-          <Finish />
-        </View>
-      );
+
+    if (currentMessage._id === ChatBotStore.messages.length) {
+      if (currentMessage.text.includes('직거래 장소를 알려주세요')) {
+        return (
+          <View>
+            <BubbleRender {...props} />
+            <AddressSearchModal buttonTextType="직거래 장소" subTextType="직거래 장소" />
+          </View>
+        );
+      }
+      if (currentMessage.text.includes('직거래 장소를 다시 선택')) {
+        return (
+          <View>
+            <BubbleRender {...props} />
+            <AddressSearchModal buttonTextType="다시" subTextType="직거래 장소" />
+          </View>
+        );
+      }
+      if (currentMessage.text.includes('픽업지는 어디인가요')) {
+        return (
+          <View>
+            <BubbleRender {...props} />
+            <AddressSearchModal buttonTextType="픽업지" subTextType="픽업지" />
+          </View>
+        );
+      }
+      if (currentMessage.text.includes('픽업지 장소를 다시 선택')) {
+        return (
+          <View>
+            <BubbleRender {...props} />
+            <AddressSearchModal buttonTextType="다시" subTextType="픽업지" />
+          </View>
+        );
+      }
+      if (currentMessage.text.includes('입수')) {
+        return (
+          <View>
+            <BubbleRender {...props} />
+            <Finish />
+          </View>
+        );
+      }
     }
     return <BubbleRender {...props} />;
   };

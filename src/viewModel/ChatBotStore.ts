@@ -1,31 +1,35 @@
 import { observable } from 'mobx';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { setReservationListDoc, getReservationListDoc } from '../model/chatbotModel';
 
-interface IUser{
+interface IUser {
   _id: number;
   name: string;
   avatar: string;
 }
 
-interface IMessage{
+interface IMessage {
   _id: number;
   text: string;
   user: IUser<string, unknown>;
 }
 
-interface IMessages{
+interface IMessages {
   messages: IMessage[];
   modalVisible: boolean;
   jibunAddress: string;
   roadAddress: string;
   detailAddress: string;
-  totalAddress: Record<string, unknown>;
+  totalAddress: Record<string, Record<string, string>>;
+  userFinalData: Record<string, unknown>;
   setMessages: (messages: Record<string, unknown>) => void;
   setAddress: (address: string) => void;
   setDetailAddress: (detailAddress: string) => void;
   setTotalAddress: () => void;
   setModalVisible: () => void;
   initAddress: () => void;
+  setUserFinalData: (finalData: Record<string, unknown>) => void;
+  addReservation: () => void;
 }
 
 const ChatBotStore: IMessages = observable({
@@ -35,7 +39,19 @@ const ChatBotStore: IMessages = observable({
   jibunAddress: '',
   roadAddress: '',
   detailAddress: '',
-  totalAddress: {},
+  totalAddress: {
+    location: {
+      jibunAddress: '',
+      roadAddress: '',
+      detailAddress: '',
+    },
+    pickup: {
+      jibunAddress: '',
+      roadAddress: '',
+      detailAddress: '',
+    },
+  },
+  userFinalData: {},
 
   // Action
   setModalVisible() {
@@ -55,17 +71,51 @@ const ChatBotStore: IMessages = observable({
     this.detailAddress = detailAddress;
   },
 
-  setTotalAddress() {
-    this.totalAddress.roadAddress = this.roadAddress;
-    this.totalAddress.jibunAddress = this.jibunAddress;
-    this.totalAddress.detailAddress = this.detailAddress;
+  setTotalAddress(type: string) {
+    if (type === '직거래 장소' && type !== '픽업지') {
+      this.totalAddress.location.roadAddress = this.roadAddress;
+      this.totalAddress.location.jibunAddress = this.jibunAddress;
+      this.totalAddress.location.detailAddress = this.detailAddress;
+    }
+    if (type !== '직거래 장소' && type === '픽업지') {
+      this.totalAddress.pickup.roadAddress = this.roadAddress;
+      this.totalAddress.pickup.jibunAddress = this.jibunAddress;
+      this.totalAddress.pickup.detailAddress = this.detailAddress;
+    }
+    console.log(this.totalAddress);
+  },
+
+  setUserFinalData(finalData: Record<string, unknown>) {
+    this.userFinalData = finalData;
+  },
+
+  addReservation() {
+    // db에서 data를 get -> [{}, ...]
+    getReservationListDoc((dataArray: []) => {
+      // userFinalData 만들기
+      ChatBotStore.setUserFinalData({
+        id: dataArray.length + 1,
+        user: {
+          id: 1,
+          username: 'kang',
+          email: 'kwh@gmail.com',
+        },
+        transactionInfo: ChatBotStore.totalAddress,
+        checklist: {
+          checkItems: [],
+        },
+      });
+      // db에서 가져온 예약 db에 붙이기
+      dataArray.push(ChatBotStore.userFinalData);
+      // 새롭게 추가된 예약 data 배열(list)를 db로 전송
+      setReservationListDoc(dataArray);
+    });
   },
 
   initAddress() {
     this.jibunAddress = '';
     this.roadAddress = '';
     this.detailAddress = '';
-    this.totalAddress = {};
   },
 
 });

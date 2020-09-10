@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/native';
 import bee from '../../../assets/bee.png';
 import StaffAssignment from '../../screens/StaffAssignment';
+import ChatBotStore from '../../../viewModel/ChatBotStore';
 
 const FinishImage = styled.Image`
   margin-top: 10px;
@@ -26,16 +27,12 @@ const FinishText = styled.Text`
   text-decoration-line: underline;
 `;
 
-const ChangeView = styled.View`
-  flex: 1;
-`;
-
 const Finish = (): JSX.Element => {
-  const onFinish = () => (
-    <ChangeView>
-      <StaffAssignment />
-    </ChangeView>
-  );
+  const onFinish = () => {
+    // viewModel의 Action 사용
+    ChatBotStore.addReservation();
+  };
+
   return (
     <Container>
       <FinishImage source={bee} />
