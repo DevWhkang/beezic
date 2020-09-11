@@ -34,6 +34,7 @@ const UserStore = observable({
       const { email, password } = UserStore as Record<string, string>;
       const { user }: unknown = await AuthModel.signIn(email, password);
       const { emailVerified }: Record<string, boolean> = user as unknown;
+      // TODO 이메일 인증 기능 추가
       // if (emailVerified) {
       if (!emailVerified) {
         UserStore.user = user as Record<string, unknown>;

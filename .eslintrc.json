@@ -15,6 +15,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "props": false,
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "import/no-extraneous-dependencies": "off",

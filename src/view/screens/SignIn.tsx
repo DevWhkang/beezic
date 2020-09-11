@@ -3,6 +3,7 @@ import styled, { css } from '@emotion/native';
 import { Text } from 'react-native';
 import { useObserver } from 'mobx-react';
 import { UserStore, ErrorStore } from '../../viewModel';
+import { useNavigation } from '@react-navigation/native';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
@@ -43,6 +44,8 @@ const errorTextStyle = css`
 `;
 
 const SignIn = (): JSX.Element => {
+  const navigation = useNavigation();
+
   const onChangeEmail = (email: string) => {
     UserStore.email = email;
   };
@@ -51,8 +54,9 @@ const SignIn = (): JSX.Element => {
   };
 
   const onClickButton = (): void => {
+    ErrorStore.reset();
     UserStore.in(() => {
-      // TODO Write Navigator Code: Main
+      navigation.navigate('Main');
     });
   };
 
@@ -60,8 +64,8 @@ const SignIn = (): JSX.Element => {
     ErrorStore.reset();
     UserStore.checkSignIn((isSignedIn) => {
       if (isSignedIn) UserStore.out();
+      navigation.navigate('SignUp');
     });
-    // TODO Write Navigator Code: SignUp
   };
 
   return useObserver(() => (

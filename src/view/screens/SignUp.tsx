@@ -1,12 +1,14 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
-import { ScrollView } from 'react-native';
 import { useObserver } from 'mobx-react';
+import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { UserStore, ErrorStore } from '../../viewModel';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
 import OauthIcons from '../components/OAuthIcons';
+import HeaderTopBack from '../components/MyInfo/HeaderTopBack';
 
 const Container = styled.View`
   display: flex;
@@ -50,6 +52,7 @@ const oauthStyle = css`
 `;
 
 const SignUp = (): JSX.Element => {
+  const navigation = useNavigation();
   const onChangeEmail = (email: string) => {
     UserStore.email = email;
   };
@@ -67,7 +70,7 @@ const SignUp = (): JSX.Element => {
     ErrorStore.reset();
     if (!ErrorStore.error) {
       UserStore.up(() => {
-        // TODO Write Navigator Code: Main
+        navigation.navigate('Main');
       });
     }
   };
@@ -75,7 +78,7 @@ const SignUp = (): JSX.Element => {
   const onLinkButton = () => {
     UserStore.resetInputValue();
     ErrorStore.reset();
-    // TODO Write Navigetor Code: SignIn
+    navigation.navigate('SignIn');
   };
 
   return useObserver(() => (

@@ -7,7 +7,7 @@ interface IBotAdmin {
   avatar: unknown;
 }
 
-const BOT_ADMIN : IBotAdmin = {
+const BOT_ADMIN: IBotAdmin = {
   _id: 3,
   name: 'Beezic Bot',
   avatar: ChatImage,
@@ -43,15 +43,24 @@ const dialogflowMessage = (text: string) => ({
 });
 
 // 직거래 장소를 확인하는 Message
-const ConfirmMessage = () => ({
-  _id: ChatBotStore.messages.length + 1,
-  text:
-  `${ChatBotStore.totalAddress.roadAddress}\
-  \n${ChatBotStore.totalAddress.detailAddress}\
-  \n\n위 주소가 맞나요?`,
-  createdAt: new Date(),
-  user: BOT_ADMIN,
-});
+const ConfirmMessage = (currentType) => {
+  let confirmText;
+  if (currentType === '다시') {
+    confirmText = `${currentType} 선택한 주소가 맞나요?`
+  } else {
+    confirmText = `${currentType}가 맞나요?`
+  }
+  return ({
+    _id: ChatBotStore.messages.length + 1,
+    text:
+      `${ChatBotStore.roadAddress}\
+  \n${ChatBotStore.detailAddress}\
+  \n\n${confirmText}`,
+    createdAt: new Date(),
+    user: BOT_ADMIN,
+  });
+}
+
 
 export {
   initMessages,
