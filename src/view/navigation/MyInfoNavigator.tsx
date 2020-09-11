@@ -16,11 +16,11 @@ const MyInfoStackNavigator = ():JSX.Element => (
     <Stack.Screen name="DetailDirectTransactions" component={DetailDirectTransactions} />
   </Stack.Navigator>
 );
-
-const MyInfoNavigator = ():JSX.Element => (
+// Test 용 네비 App 에서 test 가능
+const TestMtInfoNavi = ():JSX.Element => (
   <NavigationContainer>
     <MyInfoStackNavigator />
   </NavigationContainer>
 );
 
-export default MyInfoNavigator;
+export default MyInfoStackNavigator;

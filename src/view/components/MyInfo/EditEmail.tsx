@@ -1,5 +1,7 @@
 import React from 'react';
-import { css } from '@emotion/native';
+import styled, { css } from '@emotion/native';
+import { Keyboard } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import TextInput from '../TextInput';
 import Button from '../Button';
 
@@ -15,7 +17,16 @@ type EditEmailPropTypes = {
   }
 };
 const buttonStyle = css`
+  margin-top: 30px;
+  margin-right:10px;
   background: #ff8a3d;
+`;
+
+const FlatButton = styled.View`
+  position: relative;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
 `;
 
 const EditEmail = ({
@@ -28,32 +39,33 @@ const EditEmail = ({
     background,
     onPress,
   },
-}: EditEmailPropTypes):JSX.Element => (
-  <>
-    <TextInput
-      labelStyle={labelStyle}
-      textInputStyle={textInputStyle}
-      viewStyle={viewStyle}
-      label={label}
-      title="보내기"
-      placeholder={placeholder}
-      background={background}
-      onPress={onPress}
-    />
-    <TextInput
-      labelStyle={labelStyle}
-      textInputStyle={textInputStyle}
-      viewStyle={viewStyle}
-      label="Verification Code"
-      title="확인"
-      placeholder="Verification Code"
-      background={background}
-      onPress={onPress}
-    />
-    <Button
-      title="바꾸기"
-      background={buttonStyle}
-    />
-  </>
-);
+}: EditEmailPropTypes):JSX.Element => {
+  const navigation = useNavigation();
+  return (
+    <>
+      <TextInput
+        labelStyle={labelStyle}
+        textInputStyle={textInputStyle}
+        viewStyle={viewStyle}
+        label={label}
+        title="보내기"
+        placeholder={placeholder}
+        background={background}
+        onPress={Keyboard.dismiss}
+      />
+      <FlatButton>
+        <Button
+          title="바꾸기"
+          background={buttonStyle}
+          onPress={Keyboard.dismiss}
+        />
+        <Button
+          title="취소하기"
+          background={buttonStyle}
+          onPress={() => navigation.goBack()}
+        />
+      </FlatButton>
+    </>
+  );
+};
 export default EditEmail;

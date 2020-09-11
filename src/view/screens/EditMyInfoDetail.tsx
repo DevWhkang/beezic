@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from '@emotion/native';
+import { useRoute } from '@react-navigation/native';
+import { TouchableWithoutFeedback, Keyboard, SafeAreaView } from 'react-native';
 import MyInfoHeader from '../components/MyInfo/MyInfoHeader';
 import EditUsername from '../components/MyInfo/EditUsername';
 import EditEmail from '../components/MyInfo/EditEmail';
@@ -7,9 +9,6 @@ import EditPassword from '../components/MyInfo/EditPassword';
 
 type EditMyInfoDetailPropTypes = {
   isLastPage: boolean,
-  userName: string,
-  screenFor: string,
-  textInputSettings: Record<string, unknown>,
 };
 
 const EditScreenWrapper = styled.View`
@@ -18,10 +17,9 @@ const EditScreenWrapper = styled.View`
 
 const EditMyInfoDetail = ({
   isLastPage,
-  userName,
-  screenFor,
-  textInputSettings,
 }: EditMyInfoDetailPropTypes):JSX.Element => {
+  const route = useRoute();
+  const { screenForId, textInputSettings, userName } = route.params;
   const cases = {
     username: (
       <EditUsername textInputSettings={textInputSettings} />
@@ -35,13 +33,17 @@ const EditMyInfoDetail = ({
   };
   return (
     <>
-      <MyInfoHeader
-        isLastPage={isLastPage}
-        userData={{ userName }}
-      />
-      <EditScreenWrapper>
-        {cases[screenFor]}
-      </EditScreenWrapper>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView>
+          <MyInfoHeader
+            isLastPage={isLastPage}
+            userData={{ userName }}
+          />
+          <EditScreenWrapper>
+            {cases[screenForId]}
+          </EditScreenWrapper>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
     </>
   );
 };

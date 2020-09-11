@@ -1,5 +1,7 @@
 import React from 'react';
-import { css } from '@emotion/native';
+import styled, { css } from '@emotion/native';
+import { Keyboard } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import TextInput from '../TextInput';
 import Button from '../Button';
 
@@ -15,7 +17,16 @@ type EditUsernamePropTypes = {
   }
 };
 const buttonStyle = css`
+    margin-top: 30px;
     background: #ff8a3d;
+    margin-right:10px;
+`;
+
+const FlatButton = styled.View`
+  position: relative;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
 `;
 
 const EditUsername = ({
@@ -28,22 +39,33 @@ const EditUsername = ({
     background,
     onPress,
   },
-}: EditUsernamePropTypes):JSX.Element => (
-  <>
-    <TextInput
-      labelStyle={labelStyle}
-      textInputStyle={textInputStyle}
-      viewStyle={viewStyle}
-      label={label}
-      placeholder={placeholder}
-      background={background}
-      onPress={onPress}
-    />
+}: EditUsernamePropTypes):JSX.Element => {
+  const navigation = useNavigation();
+  return (
+    <>
+      <TextInput
+        labelStyle={labelStyle}
+        textInputStyle={textInputStyle}
+        viewStyle={viewStyle}
+        label={label}
+        placeholder={placeholder}
+        background={background}
+        onPress={onPress}
+      />
 
-    <Button
-      title="바꾸기"
-      background={buttonStyle}
-    />
-  </>
-);
+      <FlatButton>
+        <Button
+          title="바꾸기"
+          background={buttonStyle}
+          onPress={Keyboard.dismiss}
+        />
+        <Button
+          title="취소하기"
+          background={buttonStyle}
+          onPress={() => navigation.goBack()}
+        />
+      </FlatButton>
+    </>
+  );
+};
 export default EditUsername;

@@ -7,6 +7,10 @@ const UserInfoWrapper = styled.View`
   margin: 10% 8%;
 `;
 
+const Margin = styled.View`
+  margin-bottom: 30px;
+`;
+
 type UserDataProps = {
   userData: { userName:string, userEmail:string },
   edit? : boolean
@@ -20,9 +24,15 @@ const EditMyInfoMainBody = ({
 }: UserDataProps): JSX.Element => (
   <>
     <UserInfoWrapper>
-      <UserSpecSection edit={edit} userInfo={{ title: '👤 Username', info: userName, userName }} />
-      <UserSpecSection edit={edit} userInfo={{ title: '📬 Email', info: userEmail, userName }} />
-      <UserSpecSection edit={edit} userInfo={{ title: '🔑 Password', info: '********', userName }} password />
+      <Margin>
+        <UserSpecSection edit={edit} userInfo={{ title: '👤 Username', info: userName, userName }} />
+      </Margin>
+      <Margin>
+        <UserSpecSection edit={edit} userInfo={{ title: '📬 Email', info: userEmail, userName }} />
+      </Margin>
+      <Margin>
+        <UserSpecSection edit={edit} userInfo={{ title: '🔑 Password', info: '********', userName }} password />
+      </Margin>
     </UserInfoWrapper>
   </>
 );

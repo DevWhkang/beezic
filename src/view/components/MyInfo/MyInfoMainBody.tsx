@@ -53,7 +53,6 @@ const SeeAllTransaction = styled.TouchableOpacity`
 
 type MyInfoMainBodyPropTypes = {
   userData: { userName: string, userEmail: string, transactions:[]}
-  onPress: () =>void
 };
 
 const MyInfoMainBody = ({
@@ -62,7 +61,6 @@ const MyInfoMainBody = ({
     userEmail,
     transactions,
   },
-  onPress,
 }: MyInfoMainBodyPropTypes): JSX.Element => {
   const navigation = useNavigation();
   return (
@@ -85,6 +83,7 @@ const MyInfoMainBody = ({
           {transactions.map(({ id, title }):[JSX.Element] => (
             <MyTransactionBtn
               key={id}
+              onPress={() => navigation.navigate('DetailDirectTransactions')}
             >
               <MyTransactionTitle>
                 {title}
@@ -99,7 +98,8 @@ const MyInfoMainBody = ({
           ))}
         </MyTransactionList>
         <SeeAllTransaction>
-          <Text style={{ fontSize: 18, color: '#ff8a3d' }}>See All</Text>
+          {/* 이 부분 없으면 스크롤뷰 깔끔하게 안나옴 그래서 따로 공백 표기해둠 */}
+          <Text style={{ fontSize: 18, color: '#ff8a3d' }}>{' '}</Text>
         </SeeAllTransaction>
       </MyTransactionSectionWrapper>
     </>
