@@ -1,10 +1,15 @@
 import React from 'react';
-import styled from '@emotion/native';
+import styled, { css } from '@emotion/native';
 
 type LinkTextProps = {
   content: string,
-  size: number,
+  style?: Record<string, string>,
+  onPress?: () => void,
 };
+
+const TouchableButton = styled.TouchableOpacity`
+
+`;
 
 const Text = styled.TextInput<LinkTextProps>`
   border-bottom-width: 1px;
@@ -14,8 +19,23 @@ const Text = styled.TextInput<LinkTextProps>`
   align-self: center;
 `;
 
-const LinkText = ({ content, size }: LinkTextProps): JSX.Element => (
-  <Text editable={false} value={content} style={{ fontSize: size }} />
-);
+const LinkText = ({
+  content, style, onPress,
+}: LinkTextProps): JSX.Element => {
+  const linkHandler = () => {
+    onPress();
+  };
+
+  return (
+    <TouchableButton onPress={linkHandler} activeOpacity={0.6}>
+      <Text editable={false} value={content} style={style} />
+    </TouchableButton>
+  );
+};
+
+LinkText.defaultProps = {
+  style: css``,
+  onPress: () => { },
+};
 
 export default LinkText;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from '@emotion/native';
 import { Text } from 'react-native';
 import { useObserver } from 'mobx-react';
-import userStore from '../../viewModel/UserStore';
+import { UserStore, ErrorStore } from '../../viewModel';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
@@ -38,17 +38,30 @@ const oauthStyle = css`
   margin-top: 45px;
 `;
 
+const errorTextStyle = css`
+  color: red;
+`;
+
 const SignIn = (): JSX.Element => {
-  const onChangeEmail = (email: string): void => {
-    userStore.email = email;
+  const onChangeEmail = (email: string) => {
+    UserStore.email = email;
   };
-
   const onChangePassword = (password: string) => {
-    userStore.password = password;
+    UserStore.password = password;
   };
 
-  const onClickButton = () => {
-    userStore.validateUser();
+  const onClickButton = (): void => {
+    UserStore.in(() => {
+      // TODO Write Navigator Code: Main
+    });
+  };
+
+  const onLinkButton = (): void => {
+    ErrorStore.reset();
+    UserStore.checkSignIn((isSignedIn) => {
+      if (isSignedIn) UserStore.out();
+    });
+    // TODO Write Navigator Code: SignUp
   };
 
   return useObserver(() => (
@@ -56,24 +69,12 @@ const SignIn = (): JSX.Element => {
       <Header>Welcome!</Header>
       <TextInput
         label="Email"
-        // defaultValue={(() => {
-        //   // DELETE ME
-        //   const email = 'dev.jinyongp@gmail.com';
-        //   userStore.email = email;
-        //   return email;
-        // })()}
         onChangeText={onChangeEmail}
         placeholder="Enter your email address"
         textInputStyle={emailInputStyle}
       />
       <TextInput
         label="Password"
-        // defaultValue={(() => {
-        //   // DELETE ME
-        //   const password = 'beezic!@#';
-        //   userStore.password = password;
-        //   return password;
-        // })()}
         onChangeText={onChangePassword}
         placeholder="Enter your password"
         textInputStyle={passwordInputStyle}
@@ -83,25 +84,19 @@ const SignIn = (): JSX.Element => {
         title="Sign In"
         background={buttonStyle}
         onPress={onClickButton}
-        disabled={!(userStore.email && userStore.password)}
+        disabled={!(UserStore.email && UserStore.password)}
       />
-      {userStore.isLogin && (
+      {(!ErrorStore.error && UserStore.isLogin) && (
         // FIXME 모달
         <Text>로그인 성공</Text>
       )}
-      {userStore.error['[auth/user-not-found]'] && (
-        // FIXME 모달
-        <Text>사용자 없음</Text>
+      {!!ErrorStore.error && (
+        <Text style={errorTextStyle}>{ErrorStore.short}</Text>
       )}
-      {userStore.error['[auth/invalid-email]'] && (
-        // FIXME 모달
-        <Text>옳지 않은 이메일 형식</Text>
-      )}
-      {userStore.error['[auth/wrong-password]'] && (
-        // FIXME 모달
-        <Text>패스워드 틀림</Text>
-      )}
-      <LinkText content="Create an account?" />
+      <LinkText
+        content="Create an account"
+        onPress={onLinkButton}
+      />
       <OAuthIcons style={oauthStyle} />
     </View>
   ));

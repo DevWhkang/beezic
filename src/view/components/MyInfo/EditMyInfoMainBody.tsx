@@ -22,7 +22,7 @@ const EditMyInfoMainBody = ({
     <UserInfoWrapper>
       <UserSpecSection edit={edit} userInfo={{ title: '👤 Username', info: userName, userName }} />
       <UserSpecSection edit={edit} userInfo={{ title: '📬 Email', info: userEmail, userName }} />
-      <UserSpecSection edit={edit} userInfo={{ title: '🔑 Password', info: '********', userName }} password/>
+      <UserSpecSection edit={edit} userInfo={{ title: '🔑 Password', info: '********', userName }} password />
     </UserInfoWrapper>
   </>
 );

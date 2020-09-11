@@ -1,84 +1,150 @@
 import { observable } from 'mobx';
-import { signIn } from '../model/userModel';
+import AuthModel from '../model/AuthModel';
+import ErrorStore from './ErrorStore';
 
-interface UserStore {
-  isLogin: boolean,
-  userInfo: {
-    uid: string,
-    email: string,
-    displayName: string,
-    password: string,
-  },
-  user: Record<string, unknown>,
-  error: {
-    '[auth/wrong-password]': boolean,
-    '[auth/user-not-found]': boolean,
-    '[auth/email-already-in-use]': boolean,
-    '[auth/invalid-email]': boolean,
-    'unexpected-error-occurred': boolean,
-  }
-  setUserInfo: (info: UserStore) => void,
-  validateUser: () => void,
-}
+const UserStore = observable({
 
-type InputValue = {
-  email: string,
-  password: string,
-};
+  /* States */
 
-const userStore: UserStore = observable({
+  email: '',
+  username: '',
+  password: '',
+  passwordCheck: '',
+
   isLogin: false,
-  userInfo: {
-    uid: '',
-    email: '',
-    displayName: '',
-    password: '',
-  },
-  error: {
-    '[auth/wrong-password]': false,
-    '[auth/user-not-found]': false,
-    '[auth/email-already-in-use]': false,
-    '[auth/invalid-email]': false,
-    'unexpected-error-occurred': false,
-  },
   user: null,
 
-  // async createAccount() {
+  /* Store Handler */
+
+  async checkSignIn(callback?: (isSignIn: boolean) => void): void {
+    try {
+      const user = await AuthModel.checkUserAuthentication();
+      if (user) {
+        UserStore.user = user;
+        UserStore.isLogin = true;
+      }
+      if (callback) callback(!!user);
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
+  async in(callback?: () => void): void {
+    try {
+      const { email, password } = UserStore as Record<string, string>;
+      const { user }: unknown = await AuthModel.signIn(email, password);
+      const { emailVerified }: Record<string, boolean> = user as unknown;
+      // if (emailVerified) {
+      if (!emailVerified) {
+        UserStore.user = user as Record<string, unknown>;
+        UserStore.isLogin = true;
+        ErrorStore.reset();
+        if (callback) callback();
+      }
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
+  async out(): void {
+    try {
+      const user = await AuthModel.signOut();
+      console.log('Sign Out: ', user);
+      UserStore.user = null;
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
+  async up(callback?: () => void): void {
+    try {
+      const { email, password, username } = UserStore;
+      const userCredential = await AuthModel.signUp(email, password);
+      await AuthModel.updateUserProfile({ displayName: username });
+      const { user } = userCredential;
+      console.log('Sign Up: ', user);
+      if (callback) callback();
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
+  async delete(callback?: () => void): void {
+    try {
+      await AuthModel.deleteCurrentUser();
+      if (callback) callback();
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
+  async sendLink(callback?: () => void): void {
+    try {
+      const userCredential = await AuthModel.signUp(
+        UserStore.email,
+        'beezic-temporary-password',
+      );
+      const { user } = userCredential;
+      user.sendEmailVerification();
+      ErrorStore.reset();
+      console.log(`Verification email is sent to ${UserStore.email}`);
+      if (callback) callback();
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
+  async checkVerification(): void {
+    try {
+      // 현재 sign in 상태인 유저의 verification 여부를 확인한다.
+      UserStore.user = await AuthModel.checkUserAuthentication();
+      console.log(UserStore.user);
+    } catch {
+      UserStore.user = null;
+    }
+  },
+
+  isVerified(isTouched: boolean): boolean {
+    return isTouched
+      && !!UserStore.user
+      && UserStore.user.emailVerified;
+  },
+
+  checkPassword(): boolean {
+    return (UserStore.password === UserStore.passwordCheck);
+  },
+
+  checkIfAllValuesFilled(): boolean {
+    return !!(UserStore.email
+      && UserStore.username
+      && UserStore.password
+      && UserStore.passwordCheck
+    );
+  },
+
+  resetInputValue() {
+    UserStore.email = '';
+    UserStore.password = '';
+    UserStore.displayName = '';
+  },
+
+  // // Sign Up
+  // async register(callback) {
   //   try {
-  //     const uid = await signUp(this.userInfo);
-  //     this.setUserInfo({ uid });
+  //     const { inputValue: { email } } = UserStore;
+  //     const userCredential: unknown = await signUp(email, 'beezic-temporary-password');
+  //     const { user }: Record<string, unknown> = userCredential;
+  //     console.log('Sign Up: ', user);
+  //     UserStore.user = user;
+  //     UserStore.isLogin = true;
+  //     ErrorStore.reset();
+  //     UserStore.verify();
+  //     callback();
   //   } catch (error) {
-  //     console.log('Sign Up Failed!');
-  //     // TODO Error Handling
+  //     ErrorStore.handle(error);
   //   }
   // },
 
-  async validateUser() {
-    try {
-      const { email, password }: InputValue = this;
-      const userCredential = await signIn(email, password);
-      console.log('Sign In 성공', userCredential);
-      const { user }: {
-        user: Record<string, unknown>;
-      } = userCredential;
-      // TODO user.emailVerified가 true일 경우만 허용하도록 변경
-      userStore.user = user;
-      userStore.uid = user.uid;
-      userStore.isLogin = true;
-      userStore.error['[auth/email-already-in-use]'] = false;
-      userStore.error['[auth/invalid-email]'] = false;
-      userStore.error['[auth/user-not-found]'] = false;
-      userStore.error['[auth/wrong-password]'] = false;
-    } catch (error) {
-      const { message }: { message: string; } = error as unknown;
-      if (message.includes('auth')) {
-        console.error(`Sign Error: ${message}`);
-        const shortMessage = message.match(/\[.*\]/g)[0];
-        userStore.error[shortMessage] = true;
-        userStore.isLogin = false;
-      }
-    }
-  },
 });
 
-export default userStore;
+export default UserStore;

@@ -15,6 +15,7 @@ type TextInputProps = {
   foreground?: Record<string, string>,
   onPress?: Record<string, string>,
   onChangeText?: (text) => void,
+  disabled?: boolean,
 };
 
 const Container = styled.View<TextInputProps>`
@@ -58,8 +59,9 @@ const buttonBackground = css`
 `;
 
 const TextInput = ({
-  viewStyle, label, labelStyle, placeholder, password, defaultValue,
-  textInputStyle, title, background, foreground, onPress, onChangeText,
+  label, placeholder, password, defaultValue,
+  title, background, foreground, onPress, onChangeText, disabled,
+  textInputStyle, viewStyle, labelStyle,
 }: TextInputProps): JSX.Element => {
   const [value, setValue] = useState(defaultValue);
   const onChangeHandler = (text) => {
@@ -84,6 +86,7 @@ const TextInput = ({
           background={Object.assign(background, buttonBackground)}
           foreground={foreground}
           onPress={onPress}
+          disabled={disabled}
         />
         )}
       </FlexBox>
@@ -103,6 +106,7 @@ TextInput.defaultProps = {
   foreground: css``,
   onPress: () => { },
   onChangeText: () => { },
+  disabled: false,
 };
 
 export default TextInput;

@@ -29,7 +29,6 @@ const Logo = styled.Image`
 `;
 function Main(): JSX.Element {
   return (
-    <>
       <Margin>
         <HeaderWrapper>
           <Hamburger />
@@ -41,7 +40,6 @@ function Main(): JSX.Element {
         title="비직하기"
         onPress={() => Alert.alert('비직하기로 이동')}
       />
-    </>
   );
 }
 
