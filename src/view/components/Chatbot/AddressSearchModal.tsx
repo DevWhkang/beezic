@@ -96,21 +96,24 @@ const ButtonAreaInModal = styled.View`
   flex-direction: row;
 `;
 
-const AddressSearchModal = ({ buttonTextType }): JSX.Element => {
+const AddressSearchModal = ({ buttonTextType, subTextType }): JSX.Element => {
   const buttonType = () => {
     let TextType;
-    if (buttonTextType === '장소') {
+    if (buttonTextType === '직거래 장소') {
       TextType = '직거래 장소';
-      return TextType;
     }
     if (buttonTextType === '픽업지') {
       TextType = '픽업지';
+    }
+    if (buttonTextType === '다시') {
+      TextType = '다시';
     }
     return TextType;
   };
 
   const toggleModal = () => {
     ChatBotStore.setModalVisible();
+    ChatBotStore.initAddress();
   };
 
   const handleAddress = (data) => {
@@ -123,25 +126,21 @@ const AddressSearchModal = ({ buttonTextType }): JSX.Element => {
 
   const onSubmit = () => {
     if (ChatBotStore.roadAddress && ChatBotStore.detailAddress) {
-      ChatBotStore.setTotalAddress();
-      ChatBotStore.setMessages(ConfirmMessage());
-      ChatBotStore.initAddress();
+      const currentType = buttonType();
+      ChatBotStore.setTotalAddress(subTextType);
+      ChatBotStore.setMessages(ConfirmMessage(currentType));
       ChatBotStore.setModalVisible();
     }
   };
 
   return useObserver(() => (
     <View style={ModalFormStyle}>
-      <ButtonView>
-        {buttonTextType
-        && (
-        <SubmitText onPress={toggleModal}>
-          {buttonType()}
-          {' '}
-          주소 찾기
+      {buttonTextType &&
+        <ButtonView>
+          <SubmitText onPress={toggleModal}>
+            {buttonType()}{' '}주소 찾기
         </SubmitText>
-        )}
-      </ButtonView>
+        </ButtonView>}
       <Modal isVisible={ChatBotStore.modalVisible}>
         <View style={ModalFormStyle}>
           <Postcode
@@ -150,7 +149,7 @@ const AddressSearchModal = ({ buttonTextType }): JSX.Element => {
             onSelected={(data) => handleAddress(data)}
           />
           {ChatBotStore.roadAddress.length > 0
-        && (<AddressDisplayForm>{ChatBotStore.roadAddress}</AddressDisplayForm>)}
+            && (<AddressDisplayForm>{ChatBotStore.roadAddress}</AddressDisplayForm>)}
           <InputDetailAddress
             placeholder="  상세주소를 입력 해주세요. (지하철역, 동, 호수 등)"
             onChangeText={handleDetailAddress}
