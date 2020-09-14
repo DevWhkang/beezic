@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled, { css } from '@emotion/native';
 import { Animated } from 'react-native';
 import { faBox } from '@fortawesome/free-solid-svg-icons';
+import UserStore from '../../viewModel/UserStore';
 import logo from '../../assets/Beezic_Logo.png';
 
 const Container = styled.View`
@@ -49,6 +50,14 @@ function Intro({ loadingStateHandler, loginStateHandler }:IntroPropTypes): JSX.E
       }, 1000);
     }).then(() => {
       // TODO 나중에 여기서 로그인 상태확인 후 아래 메소드 처리
+
+      UserStore.checkSignIn((isSignedIn) => {
+        if (isSignedIn) {
+          // TODO Write Navigator Code: Main
+        } else {
+          // TODO Write Navigator Code: SignIn
+        }
+      });
       loadingStateHandler(false);
     }));
   });

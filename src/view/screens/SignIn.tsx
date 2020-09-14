@@ -1,5 +1,8 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
+import { Text } from 'react-native';
+import { useObserver } from 'mobx-react';
+import { UserStore, ErrorStore } from '../../viewModel';
 import { useNavigation } from '@react-navigation/native';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
@@ -36,35 +39,71 @@ const oauthStyle = css`
   margin-top: 45px;
 `;
 
+const errorTextStyle = css`
+  color: red;
+`;
+
 const SignIn = (): JSX.Element => {
   const navigation = useNavigation();
-  return (
+
+  const onChangeEmail = (email: string) => {
+    UserStore.email = email;
+  };
+  const onChangePassword = (password: string) => {
+    UserStore.password = password;
+  };
+
+  const onClickButton = (): void => {
+    ErrorStore.reset();
+    UserStore.in(() => {
+      navigation.navigate('Main');
+    });
+  };
+
+  const onLinkButton = (): void => {
+    ErrorStore.reset();
+    UserStore.checkSignIn((isSignedIn) => {
+      if (isSignedIn) UserStore.out();
+      navigation.navigate('SignUp');
+    });
+  };
+
+  return useObserver(() => (
     <View>
       <Header>Welcome!</Header>
       <TextInput
         label="Email"
+        onChangeText={onChangeEmail}
         placeholder="Enter your email address"
         textInputStyle={emailInputStyle}
       />
       <TextInput
         label="Password"
+        onChangeText={onChangePassword}
         placeholder="Enter your password"
         textInputStyle={passwordInputStyle}
         password
       />
       <Button
-        // TODO 여기에 로그인 로직 처리
-        onPress={() => null}
         title="Sign In"
         background={buttonStyle}
+        onPress={onClickButton}
+        disabled={!(UserStore.email && UserStore.password)}
       />
+      {(!ErrorStore.error && UserStore.isLogin) && (
+        // FIXME 모달
+        <Text>로그인 성공</Text>
+      )}
+      {!!ErrorStore.error && (
+        <Text style={errorTextStyle}>{ErrorStore.short}</Text>
+      )}
       <LinkText
-        content="Create an account?"
-        onPress={() => navigation.navigate('SignUp')}
+        content="Create an account"
+        onPress={onLinkButton}
       />
       <OAuthIcons style={oauthStyle} />
     </View>
-  );
+  ));
 };
 
 export default SignIn;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
 import { Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import EditMyInfoDetail from '../../screens/EditMyInfoDetail';
 
 const UserSpecSectionWrapper = styled.View`
@@ -19,6 +20,7 @@ const EditUserInfoBtn = styled.TouchableOpacity`
   right: 10;
   width: 30px;
   height: 30px;
+  margin-top: 20px;
 `;
 const EditBtnStyle = css`
   font-size: 20px;
@@ -46,7 +48,7 @@ const UserSpecSection = ({
     label: screenFor,
     placeholder: info,
   };
-
+  const navigation = useNavigation();
   return (
     <>
       <UserSpecSectionWrapper>
@@ -57,14 +59,11 @@ const UserSpecSection = ({
         {edit
           ? (
             <EditUserInfoBtn onPress={onPress || (() => {
-              /* FIXME 네비게이션 적용하여 클릭이벤트로 다음과 같은 방식으로 네비게이팅 해야함
-                <EditMyInfoDetail
-                  isLastPage
-                  userName={userName}
-                  screenFor={screenFor}
-                  textInputSettings={textInputSettings}
-                />
-              */
+              navigation.navigate('EditInfoDetail', {
+                userName,
+                screenForId: screenFor,
+                textInputSettings,
+              });
             })}
             >
               <Text style={EditBtnStyle}>{' 📝 '}</Text>
