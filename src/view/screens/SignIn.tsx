@@ -60,9 +60,9 @@ const SignIn = (): JSX.Element => {
     });
   };
 
-  const onLinkButton = (): void => {
+  const onLinkButton = async (): void => {
     ErrorStore.reset();
-    UserStore.checkSignIn((isSignedIn) => {
+    await UserStore.checkSignIn((isSignedIn) => {
       if (isSignedIn) UserStore.out();
       navigation.navigate('SignUp');
     });

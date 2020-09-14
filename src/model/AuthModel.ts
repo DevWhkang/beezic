@@ -60,7 +60,7 @@ export default {
     return new Promise((resolve) => {
       auth().onAuthStateChanged((user: Record<string, unknown>) => {
         console.log('AuthModel: ', user);
-        if (user) resolve(user);
+        resolve(user);
       });
     });
   },
