@@ -7,6 +7,7 @@ import {
   // TouchableOpacity,
   // Button, Text, Modal,
   // TouchableHighlight,
+  TouchableWithoutFeedback, Keyboard,
 } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import { useObserver } from 'mobx-react';
@@ -16,10 +17,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 import ChatBotStore from '../../viewModel/ChatBotStore';
 import dialogflowConfig from '../../../dialogflowENV';
-import { initMessages, dialogflowMessage } from '../components/Chatbot/BotMessages';
+import {
+  initMessages, dialogflowMessage, ConfirmMessage, ConfirmAliasMessage,
+} from '../components/Chatbot/BotMessages';
 import BubbleRender from '../components/Chatbot/BubbleRender';
 import AddressSearchModal from '../components/Chatbot/AddressSearchModal';
 import Finish from '../components/Chatbot/Finish';
+import UploadImageModal from '../components/Chatbot/UploadImageModal';
+import InputAlias from '../components/Chatbot/InputAlias';
 
 const chatbotStyles = css`
   flex: 1;
@@ -102,11 +107,28 @@ const TransactionInfo = (): JSX.Element => {
           </View>
         );
       }
-      if (currentMessage.text.includes('입수')) {
+      if (currentMessage.text.includes('사진을 업로드')) {
         return (
           <View>
             <BubbleRender {...props} />
-            <Finish />
+            <UploadImageModal buttonTextType="사진 업로드 하기" subTextType="업로드" />
+          </View>
+        );
+      }
+      if (currentMessage.text.includes('직거래의 별명')) {
+        if (currentMessage.text.includes('입수')) {
+          return (
+            <View>
+              <BubbleRender {...props} />
+              <Finish />
+            </View>
+          );
+        }
+        return (
+          <View>
+            <BubbleRender {...props} />
+            {ChatBotStore.confirmAlias === ''
+            && <InputAlias />}
           </View>
         );
       }

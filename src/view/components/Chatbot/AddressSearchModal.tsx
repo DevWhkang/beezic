@@ -135,12 +135,16 @@ const AddressSearchModal = ({ buttonTextType, subTextType }): JSX.Element => {
 
   return useObserver(() => (
     <View style={ModalFormStyle}>
-      {buttonTextType &&
+      {buttonTextType
+        && (
         <ButtonView>
           <SubmitText onPress={toggleModal}>
-            {buttonType()}{' '}주소 찾기
-        </SubmitText>
-        </ButtonView>}
+            {buttonType()}
+            {' '}
+            주소 찾기
+          </SubmitText>
+        </ButtonView>
+        )}
       <Modal isVisible={ChatBotStore.modalVisible}>
         <View style={ModalFormStyle}>
           <Postcode
