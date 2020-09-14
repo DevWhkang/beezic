@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { useObserver } from 'mobx-react';
 import Intro from '../screens/Intro';
 import SignInStackNavigator from './SignInStackNavigator';
 import MainDrawerNavigator from './MainDrawerNavigator';
 import { UserStore } from '../../viewModel';
-import { useObserver } from 'mobx-react';
 
 const Navigator = ():JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,7 +12,7 @@ const Navigator = ():JSX.Element => {
   return useObserver(() => (
     isLoading
       ? (
-        <Intro loadingStateHandler={setIsLoading}  />
+        <Intro loadingStateHandler={setIsLoading} />
       )
       : (
         <NavigationContainer>
@@ -21,7 +21,7 @@ const Navigator = ():JSX.Element => {
             : <SignInStackNavigator /> }
         </NavigationContainer>
       )
-  )) 
+  ));
 };
 
 export default Navigator;

@@ -65,14 +65,14 @@ const spin = () => {
 };
 
 const StaffAssignment = (): JSX.Element => {
+  const navigation = useNavigation();
   useEffect(() => {
     spin();
     pulse();
   });
   setTimeout(() => {
-    navigation.navigate('CheckList')
+    navigation.navigate('CheckList');
   }, 5000);
-  const navigation = useNavigation();
   return (
     <Container>
       <Logo source={logo} />

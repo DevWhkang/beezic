@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import styled, { css } from '@emotion/native';
+import styled from '@emotion/native';
 import { Animated } from 'react-native';
-import { faBox } from '@fortawesome/free-solid-svg-icons';
 import UserStore from '../../viewModel/UserStore';
 import logo from '../../assets/Beezic_Logo.png';
-import { log } from 'react-native-reanimated';
 
 const Container = styled.View`
   display: flex;
@@ -51,9 +49,9 @@ function Intro({ loadingStateHandler }:IntroPropTypes): JSX.Element {
     }).then(() => {
       UserStore.checkSignIn((isSignedIn) => {
         if (isSignedIn) {
-          UserStore.isLogin=true;
+          UserStore.isLogin = true;
         } else {
-          UserStore.isLogin=false;
+          UserStore.isLogin = false;
         }
       });
       loadingStateHandler(false);

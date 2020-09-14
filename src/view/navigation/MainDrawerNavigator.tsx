@@ -10,7 +10,7 @@ const MainDrawerNavigator = ():JSX.Element => (
   <Drawer.Navigator initialRouteName="MainStackNavigator" drawerContent={MainMenu}>
     <Drawer.Screen name="MainMenu" component={MainMenu} />
     <Drawer.Screen name="MainStackNavigator" component={MainStackNavigator} />
-    <Drawer.Screen name='MyInfoStackNavigator' component={MyInfoStackNavigator}/>
+    <Drawer.Screen name="MyInfoStackNavigator" component={MyInfoStackNavigator} />
   </Drawer.Navigator>
 );
 
