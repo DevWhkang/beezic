@@ -6,6 +6,7 @@ type ButtonProps = {
   background?: Record<string, string>,
   foreground?: Record<string, string>,
   onPress?: () => void,
+  disabled?: boolean,
 };
 
 const TouchableButton = styled.TouchableOpacity`
@@ -17,6 +18,7 @@ const TouchableButton = styled.TouchableOpacity`
   border-radius: 100px;
   /* width: 100px; */
   align-self: center;
+  opacity: ${(props: ButtonProps) => (props.disabled ? '0.5' : '1')}
 `;
 
 const Text = styled.Text`
@@ -29,12 +31,13 @@ const Text = styled.Text`
 `;
 
 const Button = ({
-  title, background, foreground, onPress,
+  title, background, foreground, onPress, disabled,
 }: ButtonProps): JSX.Element => (
   <TouchableButton
+    disabled={disabled}
     style={background}
     onPress={onPress}
-    activeOpacity={0.5} // default: 0.2
+    activeOpacity={0.5}
   >
     <Text
       style={foreground}
@@ -48,7 +51,8 @@ const Button = ({
 Button.defaultProps = {
   background: css``,
   foreground: css``,
-  onPress: () => {},
+  onPress: () => { },
+  disabled: false,
 };
 
 export default Button;
