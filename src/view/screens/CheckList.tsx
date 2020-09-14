@@ -9,6 +9,7 @@ import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
 import checkListStore from '../../viewModel/CheckListStore';
+import { useNavigation } from '@react-navigation/native';
 
 const TitleText = styled.Text`
   font-size: 50;
@@ -42,7 +43,13 @@ const UserCheckText = styled.Text`
   margin-bottom: 20;
 `;
 
-const CheckList = (): JSX.Element => useObserver(() => (
+const CheckList = (): JSX.Element => {
+  const navigation = useNavigation();
+  //FIXME 버튼 생성후 Main으로 네비게이팅 예정
+  setTimeout(() => {
+    navigation.navigate('Main')
+  }, 5000);
+  return useObserver(() => (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SafeAreaView>
       <TitleText>
@@ -57,6 +64,6 @@ const CheckList = (): JSX.Element => useObserver(() => (
       </CheckAreaView>
     </SafeAreaView>
   </TouchableWithoutFeedback>
-));
+));}
 
 export default CheckList;

@@ -3,6 +3,7 @@ import styled from '@emotion/native';
 import bee from '../../../assets/bee.png';
 import StaffAssignment from '../../screens/StaffAssignment';
 import ChatBotStore from '../../../viewModel/ChatBotStore';
+import { useNavigation } from '@react-navigation/native';
 
 const FinishImage = styled.Image`
   margin-top: 10px;
@@ -28,9 +29,11 @@ const FinishText = styled.Text`
 `;
 
 const Finish = (): JSX.Element => {
+  const navigation = useNavigation();
   const onFinish = () => {
     // viewModel의 Action 사용
     ChatBotStore.addReservation();
+    navigation.navigate('StaffAssignment')
   };
 
   return (
