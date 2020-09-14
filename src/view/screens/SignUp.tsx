@@ -7,7 +7,7 @@ import { UserStore, ErrorStore } from '../../viewModel';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
-import OauthIcons from '../components/OAuthIcons';
+import OAuthIcons from '../components/OAuthIcons';
 import HeaderTopBack from '../components/MyInfo/HeaderTopBack';
 
 const Container = styled.View`
@@ -22,15 +22,6 @@ const TitleText = styled.Text`
   font-family: 'Jua-Regular';
   color: #333;
   margin-bottom: 20px;
-`;
-
-const ErrorMessage = styled.Text`
-  font-size: 16px;
-  font-family: 'BMHANNA_11yrs';
-  color: #fc8a3d;
-  right: 60px;
-  margin-top: 3px;
-  align-self: flex-end;
 `;
 
 const InputStyle = css`
@@ -89,40 +80,33 @@ const SignUp = (): JSX.Element => {
         onChangeText={onChangeEmail}
         placeholder="이메일을 작성해주세요!"
         label="Email"
+        message={ErrorStore.message('email', '이메일 형식이 아니에요!')}
       />
-      <ErrorMessage>
-        {ErrorStore.message('email', '이메일 형식이 아니에요!')}
-      </ErrorMessage>
       <TextInput
         viewStyle={InputStyle}
         onChangeText={onChangeUsername}
         placeholder="이름도 좋고 별명도 좋아요!"
         label="Username"
       />
-      <ErrorMessage>{' '}</ErrorMessage>
       <TextInput
         viewStyle={InputStyle}
         onChangeText={onChangePassword}
         placeholder="6자리 이상 작성해주세요!"
         label="Password"
+        message={ErrorStore.message('password', '비밀번호가 너무 짧아요!')}
         password
       />
-      <ErrorMessage>
-        {ErrorStore.message('password', '비밀번호가 너무 짧아요!')}
-      </ErrorMessage>
       <TextInput
         viewStyle={InputStyle}
         onChangeText={onChangePasswordCheck}
         label="Check Password"
         placeholder="한 번 더 작성해주세요!"
-        password
-      />
-      <ErrorMessage>
-        {((UserStore.password && UserStore.passwordCheck))
+        message={((UserStore.password && UserStore.passwordCheck))
           && (UserStore.checkPassword()
             ? '제대로 작성하셨네요!'
             : '음... 다시 한 번 작성해주실래요?')}
-      </ErrorMessage>
+        password
+      />
       <Button
         title="Sign up"
         background={buttonStyle}
@@ -137,7 +121,7 @@ const SignUp = (): JSX.Element => {
         onPress={onLinkButton}
         style={linkStyle}
       />
-      <OauthIcons
+      <OAuthIcons
         style={oauthStyle}
       />
     </ScrollView>

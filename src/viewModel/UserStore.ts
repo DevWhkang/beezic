@@ -6,12 +6,20 @@ const UserStore = observable({
 
   /* States */
 
+  // Input Values
   email: '',
   username: '',
   password: '',
   passwordCheck: '',
 
+  previousEmail: '',
+  previousUsername: '',
+  previousPassword: '',
+
+  // Login 여부
   isLogin: false,
+
+  // 현재 사용자의 정보를 담은 객체
   user: null,
 
   /* Store Handler */
@@ -19,26 +27,41 @@ const UserStore = observable({
   async checkSignIn(callback?: (isSignIn: boolean) => void): void {
     try {
       const user = await AuthModel.checkUserAuthentication();
-      if (user) {
-        UserStore.user = user;
-        UserStore.isLogin = true;
-      }
+      console.log('Check User Sign In: ', user);
+      UserStore.user = user || null;
+      UserStore.isLogin = !!user;
+      ErrorStore.reset();
       if (callback) callback(!!user);
     } catch (error) {
       ErrorStore.handle(error);
     }
   },
 
+  setPreviousInfo(info: Record<string, string>): void {
+    const { email, username, password } = info;
+    if (email) UserStore.previousEmail = email;
+    if (username) UserStore.previousUsername = username;
+    if (password) UserStore.previousPassword = password;
+  },
+
+  clearPreviousInfo(): void {
+    UserStore.previousEmail = '';
+    UserStore.previousUsername = '';
+    UserStore.previousPassword = '';
+  },
+
   async in(callback?: () => void): void {
     try {
       const { email, password } = UserStore as Record<string, string>;
-      const { user }: unknown = await AuthModel.signIn(email, password);
+      const { user } = await AuthModel.signIn(email, password);
       const { emailVerified }: Record<string, boolean> = user as unknown;
       // TODO 이메일 인증 기능 추가
       // if (emailVerified) {
       if (!emailVerified) {
         UserStore.user = user as Record<string, unknown>;
         UserStore.isLogin = true;
+        const { displayName }: { displayName: string } = user as unknown;
+        UserStore.setPreviousInfo({ email, password, username: displayName });
         ErrorStore.reset();
         if (callback) callback();
       }
@@ -52,6 +75,8 @@ const UserStore = observable({
       const user = await AuthModel.signOut();
       console.log('Sign Out: ', user);
       UserStore.user = null;
+      UserStore.isLogin = false;
+      UserStore.clearPreviousInfo();
     } catch (error) {
       ErrorStore.handle(error);
     }
@@ -59,10 +84,13 @@ const UserStore = observable({
 
   async up(callback?: () => void): void {
     try {
-      const { email, password, username } = UserStore;
+      const { email, password, username: displayName } = UserStore;
       const userCredential = await AuthModel.signUp(email, password);
-      await AuthModel.updateUserProfile({ displayName: username });
+      await AuthModel.updateUserProfile({ displayName });
       const { user } = userCredential;
+      UserStore.user = user as Record<string, unknown>;
+      UserStore.isLogin = true;
+      UserStore.setPreviousInfo({ email, password, username: displayName });
       console.log('Sign Up: ', user);
       if (callback) callback();
     } catch (error) {
@@ -73,10 +101,34 @@ const UserStore = observable({
   async delete(callback?: () => void): void {
     try {
       await AuthModel.deleteCurrentUser();
+      UserStore.isLogin = false;
+      UserStore.user = null;
+      UserStore.clearPreviousInfo();
       if (callback) callback();
     } catch (error) {
       ErrorStore.handle(error);
     }
+  },
+
+  async updateUsername(displayName: string) {
+    try {
+      const beforeUser: Record<string, string> = AuthModel.getCurrentUser();
+      await AuthModel.updateUserProfile({ displayName });
+      UserStore.setPreviousInfo({ username: displayName });
+      const afterUser: Record<string, string> = AuthModel.getCurrentUser();
+      console.log(
+        (`Updating Username
+        Before: ${beforeUser.displayName}
+        After: ${afterUser.displayName}
+        `).replace(/  +/g, ''),
+      );
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
+  compareUsername(): boolean {
+    return UserStore.previousUsername === UserStore.username;
   },
 
   async sendLink(callback?: () => void): void {
@@ -85,7 +137,7 @@ const UserStore = observable({
         UserStore.email,
         'beezic-temporary-password',
       );
-      const { user } = userCredential;
+      const { user }: Record<string, () => void> = userCredential;
       user.sendEmailVerification();
       ErrorStore.reset();
       console.log(`Verification email is sent to ${UserStore.email}`);
@@ -128,23 +180,6 @@ const UserStore = observable({
     UserStore.password = '';
     UserStore.displayName = '';
   },
-
-  // // Sign Up
-  // async register(callback) {
-  //   try {
-  //     const { inputValue: { email } } = UserStore;
-  //     const userCredential: unknown = await signUp(email, 'beezic-temporary-password');
-  //     const { user }: Record<string, unknown> = userCredential;
-  //     console.log('Sign Up: ', user);
-  //     UserStore.user = user;
-  //     UserStore.isLogin = true;
-  //     ErrorStore.reset();
-  //     UserStore.verify();
-  //     callback();
-  //   } catch (error) {
-  //     ErrorStore.handle(error);
-  //   }
-  // },
 
 });
 

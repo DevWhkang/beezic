@@ -1,7 +1,8 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
-import { Keyboard } from 'react-native';
+import { useObserver } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
+import { UserStore } from '../../../viewModel';
 import TextInput from '../TextInput';
 import Button from '../Button';
 
@@ -39,9 +40,24 @@ const EditUsername = ({
     background,
     onPress,
   },
-}: EditUsernamePropTypes):JSX.Element => {
+}: EditUsernamePropTypes): JSX.Element => {
   const navigation = useNavigation();
-  return (
+
+  const onChangeText = (username: string) => {
+    UserStore.username = username;
+  };
+
+  const onUpdateButton = async () => {
+    await UserStore.updateUsername(UserStore.username);
+    navigation.goBack();
+  };
+
+  const onCancelButton = (): void => {
+    UserStore.username = '';
+    navigation.goBack();
+  };
+
+  return useObserver(() => (
     <>
       <TextInput
         labelStyle={labelStyle}
@@ -51,21 +67,29 @@ const EditUsername = ({
         placeholder={placeholder}
         background={background}
         onPress={onPress}
+        onChangeText={onChangeText}
+        message={
+          (UserStore.compareUsername() && UserStore.username)
+            ? '기존 이름과 달라야 해요!'
+            : ' '
+        }
+        regex={/[a-zA-Z0-9]/gi}
       />
 
       <FlatButton>
         <Button
           title="바꾸기"
           background={buttonStyle}
-          onPress={Keyboard.dismiss}
+          disabled={!UserStore.username || UserStore.compareUsername()}
+          onPress={onUpdateButton}
         />
         <Button
           title="취소하기"
           background={buttonStyle}
-          onPress={() => navigation.goBack()}
+          onPress={onCancelButton}
         />
       </FlatButton>
     </>
-  );
+  ));
 };
 export default EditUsername;
