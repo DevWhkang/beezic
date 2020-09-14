@@ -31,7 +31,7 @@ function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
         </MarginBottom>
         <MarginBottom>
           <LinkText 
-          onPress={() => navigation.navigate('MyInfoNavigator', {screen:'MyInfo'})}
+          onPress={() => navigation.navigate('MyInfoStackNavigator', {screen:'MyInfo'})}
           content="My Page" size={20} />
         </MarginBottom>
         <MarginBottom>
