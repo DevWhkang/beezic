@@ -36,7 +36,7 @@ const checkListStore: ICheckListStore = observable({
       dataArray.forEach((reservation: Record<string, Record<string, unknown>>) => {
         // 디비에서 가져온 데이터에서 로그인된 해당 유저의 예약 정보만을 가져온다.
         if (reservation.user.id === 1 && reservation.id === ChatBotStore.userFinalData.id) {
-          reservation.checklist.checkItems = this.checkItems;
+          reservation.checklist = this.checkItems;
         }
       });
       // 수정된 데이터를 디비에 업데이트하기
@@ -55,7 +55,7 @@ const checkListStore: ICheckListStore = observable({
         // 디비에서 가져온 데이터에서 로그인된 해당 유저의 예약 정보만을 가져온다.
         if (reservation.user.id === 1 && reservation.id === ChatBotStore.userFinalData.id) {
           // 지워진 리스트를 업데이트
-          reservation.checklist.checkItems = this.checkItems;
+          reservation.checklist = this.checkItems;
         }
       });
       // 수정된 데이터를 디비에 업데이트하기

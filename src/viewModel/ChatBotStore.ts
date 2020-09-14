@@ -22,6 +22,12 @@ interface IMessages {
   detailAddress: string;
   totalAddress: Record<string, Record<string, string>>;
   userFinalData: Record<string, unknown>;
+  isCurrentImage: boolean;
+  currentImage: Record<string, unknown>;
+  itemImages: [],
+  cameraModalVisible: boolean;
+  alias: string;
+  confirmAlias: string;
   setMessages: (messages: Record<string, unknown>) => void;
   setAddress: (address: string) => void;
   setDetailAddress: (detailAddress: string) => void;
@@ -30,10 +36,18 @@ interface IMessages {
   initAddress: () => void;
   setUserFinalData: (finalData: Record<string, unknown>) => void;
   addReservation: () => void;
+  setCurrentImage: (image: Record<string, unknown>) => void;
+  setItemImages: () => void;
+  initCurrentImage: () => void;
+  removeItemImage: (key: string) => void;
+  setCameraModalVisible: () => void;
+  setAlias: (alias: string) => void;
+  setConfirmAlias: (confirmAlias: string) => void;
 }
 
 const ChatBotStore: IMessages = observable({
   // State
+  // address state
   messages: [],
   modalVisible: false,
   jibunAddress: '',
@@ -51,7 +65,22 @@ const ChatBotStore: IMessages = observable({
       detailAddress: '',
     },
   },
+  // camera state
+  cameraModalVisible: false,
+  isCurrentImage: false,
+  currentImage: {
+    key: '0',
+    filePath: {
+      data: '',
+      uri: '',
+    },
+    fileData: '',
+    fileUri: '',
+  },
+  itemImages: [],
   userFinalData: {},
+  confirmAlias: '',
+  alias: '',
 
   // Action
   setModalVisible() {
@@ -82,7 +111,6 @@ const ChatBotStore: IMessages = observable({
       this.totalAddress.pickup.jibunAddress = this.jibunAddress;
       this.totalAddress.pickup.detailAddress = this.detailAddress;
     }
-    console.log(this.totalAddress);
   },
 
   setUserFinalData(finalData: Record<string, unknown>) {
@@ -100,10 +128,10 @@ const ChatBotStore: IMessages = observable({
           username: 'kang',
           email: 'kwh@gmail.com',
         },
-        transactionInfo: ChatBotStore.totalAddress,
-        checklist: {
-          checkItems: [],
-        },
+        address: ChatBotStore.totalAddress,
+        checklist: [],
+        itemImages: ChatBotStore.itemImages,
+        alias: ChatBotStore.confirmAlias,
       });
       // db에서 가져온 예약 db에 붙이기
       dataArray.push(ChatBotStore.userFinalData);
@@ -116,6 +144,38 @@ const ChatBotStore: IMessages = observable({
     this.jibunAddress = '';
     this.roadAddress = '';
     this.detailAddress = '';
+  },
+
+  setCurrentImage(image: Record<string, unknown>) {
+    this.currentImage = image;
+    this.isCurrentImage = true;
+  },
+
+  initCurrentImage() {
+    this.currentImage = {};
+    this.isCurrentImage = false;
+  },
+
+  setItemImages() {
+    this.itemImages.push(this.currentImage);
+    this.initCurrentImage();
+    console.log(this.itemImages);
+  },
+
+  removeItemImage(key: string) {
+    this.itemImages = this.itemImages.filter((item) => item.key !== key);
+  },
+
+  setCameraModalVisible() {
+    this.cameraModalVisible = !this.cameraModalVisible;
+  },
+
+  setAlias(alias: string) {
+    this.alias = alias;
+  },
+
+  setConfirmAlias() {
+    this.confirmAlias = this.alias;
   },
 
 });
