@@ -1,27 +1,29 @@
 import React from 'react';
 import styled from '@emotion/native';
-import {
-  TouchableOpacity, Alert,
-} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-const HeaderMenu = styled.Text`
+const HeaderMenu = styled.TouchableOpacity`
   padding: 10px;
   display: flex;
-  flex-direction: row;
 `;
 
-function CloseMenu(): JSX.Element {
+type CloseMenuPropTypes = {
+  closeButtonHandler:StackNavigationProp
+};
+
+function CloseMenu({ closeButtonHandler }:CloseMenuPropTypes): JSX.Element {
   return (
-    <HeaderMenu containerStyle={{ backgroundColor: 'white' }}>
-      <TouchableOpacity onPress={() => Alert.alert('Main으로 이동하면됨')}>
-        <FontAwesomeIcon
-          color="#aaa"
-          size={40}
-          icon={faTimes}
-        />
-      </TouchableOpacity>
+    <HeaderMenu
+      onPress={closeButtonHandler}
+      containerStyle={{ backgroundColor: 'white' }}
+    >
+      <FontAwesomeIcon
+        color="#aaa"
+        size={40}
+        icon={faTimes}
+      />
     </HeaderMenu>
   );
 }
