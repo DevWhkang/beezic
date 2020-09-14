@@ -4,6 +4,7 @@ import { Animated } from 'react-native';
 import { faBox } from '@fortawesome/free-solid-svg-icons';
 import UserStore from '../../viewModel/UserStore';
 import logo from '../../assets/Beezic_Logo.png';
+import { log } from 'react-native-reanimated';
 
 const Container = styled.View`
   display: flex;
@@ -25,10 +26,9 @@ const MainText = styled.Text`
 `;
 type IntroPropTypes = {
   loadingStateHandler: ()=>void,
-  loginStateHandler: () => void,
 };
 
-function Intro({ loadingStateHandler, loginStateHandler }:IntroPropTypes): JSX.Element {
+function Intro({ loadingStateHandler }:IntroPropTypes): JSX.Element {
   const animation = new Animated.Value(1);
   const startAnimation = () => {
     Animated.timing(animation, {
@@ -49,13 +49,11 @@ function Intro({ loadingStateHandler, loginStateHandler }:IntroPropTypes): JSX.E
         res();
       }, 1000);
     }).then(() => {
-      // TODO 나중에 여기서 로그인 상태확인 후 아래 메소드 처리
-
       UserStore.checkSignIn((isSignedIn) => {
         if (isSignedIn) {
-          // TODO Write Navigator Code: Main
+          UserStore.isLogin=true;
         } else {
-          // TODO Write Navigator Code: SignIn
+          UserStore.isLogin=false;
         }
       });
       loadingStateHandler(false);

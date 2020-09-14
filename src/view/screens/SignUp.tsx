@@ -68,9 +68,7 @@ const SignUp = (): JSX.Element => {
 
   const onSignUpButton = () => {
     ErrorStore.reset();
-    UserStore.up(() => {
-      navigation.navigate('Main');
-    });
+    UserStore.up();
   };
 
   const onLinkButton = () => {

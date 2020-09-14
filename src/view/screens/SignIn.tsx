@@ -55,9 +55,7 @@ const SignIn = (): JSX.Element => {
 
   const onClickButton = (): void => {
     ErrorStore.reset();
-    UserStore.in(() => {
-      navigation.navigate('Main');
-    });
+    UserStore.in();
   };
 
   const onLinkButton = async (): void => {
