@@ -3,7 +3,7 @@ import styled, { css } from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Text } from 'react-native';
-import DDTSlide from '../components/DDT/DDTSilde';
+import DDTSlide from '../components/DDT/DDTSlide';
 import HamburgerMenu from '../components/Main/HamburgerMenu';
 
 /*
