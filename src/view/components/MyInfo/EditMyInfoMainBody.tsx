@@ -7,6 +7,10 @@ const UserInfoWrapper = styled.View`
   margin: 10% 8%;
 `;
 
+const Margin = styled.View`
+  margin-bottom: 30px;
+`;
+
 type UserDataProps = {
   userData: { userName:string, userEmail:string },
   edit? : boolean
