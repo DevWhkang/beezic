@@ -68,7 +68,7 @@ const MyInfoMainBody = ({
       <UserInfoWrapper>
         <UserSpecSection userInfo={{ title: '👤 Username', info: userName }} />
         <UserSpecSection userInfo={{ title: '📬 Email', info: userEmail }} />
-        <EditMyInfoBtn onPress={() => navigation.navigate('EditMyinfo')}>
+        <EditMyInfoBtn onPress={() => navigation.navigate('EditMyInfo')}>
           <Text style={{ fontSize: 19, color: 'black' }}>내 정보 수정하기</Text>
         </EditMyInfoBtn>
       </UserInfoWrapper>
