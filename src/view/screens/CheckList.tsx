@@ -45,9 +45,9 @@ const UserCheckText = styled.Text`
 
 const CheckList = (): JSX.Element => {
   const navigation = useNavigation();
-  //FIXME 버튼 생성후 Main으로 네비게이팅 예정
+  //FIXME 버튼 생성후 DetailDirectTransaction으로 네비게이팅 예정
   setTimeout(() => {
-    navigation.navigate('Main')
+    navigation.navigate('MyInfoStackNavigator',{screen: 'DetailDirectTransactions'})
   }, 5000);
   return useObserver(() => (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
