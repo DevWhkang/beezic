@@ -53,14 +53,14 @@ const SignIn = (): JSX.Element => {
     UserStore.password = password;
   };
 
-  const onClickButton = (): void => {
+
+  const onSignInButton = (): void => {
     ErrorStore.reset();
     UserStore.in();
   };
 
-  const onLinkButton = async (): void => {
-    ErrorStore.reset();
-    await UserStore.checkSignIn((isSignedIn) => {
+  const onLinkButton = (): void => {
+    UserStore.checkSignIn((isSignedIn) => {
       if (isSignedIn) UserStore.out();
       navigation.navigate('SignUp');
     });
@@ -85,7 +85,7 @@ const SignIn = (): JSX.Element => {
       <Button
         title="Sign In"
         background={buttonStyle}
-        onPress={onClickButton}
+        onPress={onSignInButton}
         disabled={!(UserStore.email && UserStore.password)}
       />
       {(!ErrorStore.error && UserStore.isLogin) && (
