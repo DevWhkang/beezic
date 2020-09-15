@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from '@emotion/native';
 import { useNavigation } from '@react-navigation/native';
+import { useObserver } from 'mobx-react';
 import Hamburger from '../components/Main/HamburgerMenu';
 import Slide from '../components/Main/Slide';
 import Button from '../components/Button';
 import logo from '../../assets/Beezic_Logo.png';
+import { UserStore } from '../../viewModel';
 
 const HeaderWrapper = styled.View`
 position: relative;
@@ -30,7 +32,8 @@ const Logo = styled.Image`
 
 function Main(): JSX.Element {
   const navigation = useNavigation();
-  return (
+  const { user } = UserStore;
+  return useObserver(() => (
     <>
       <Margin>
         <HeaderWrapper>
@@ -38,13 +41,13 @@ function Main(): JSX.Element {
           <Logo source={logo} />
         </HeaderWrapper>
       </Margin>
-      <Margin><Slide Username="임진성" /></Margin>
+      <Margin><Slide Username={user.displayName} /></Margin>
       <Button
         title="비직하기"
         onPress={() => navigation.navigate('TransactionInfo')}
       />
     </>
-  );
+  ));
 }
 
 export default Main;

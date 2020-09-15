@@ -23,4 +23,4 @@ const TestMyInfoNavigator = (): JSX.Element => (
   </NavigationContainer>
 );
 
-export default TestMyInfoNavigator;
+export default MyInfoStackNavigator;
