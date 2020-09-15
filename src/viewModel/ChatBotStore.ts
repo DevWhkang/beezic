@@ -1,51 +1,9 @@
 import { observable } from 'mobx';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { setReservationListDoc, getReservationListDoc } from '../model/chatbotModel';
+import ChatbotModel from '../model/ChatbotModel';
+import { ChatbotStoreStates } from './@types/ChatBotStore';
 
-interface IUser {
-  _id: number;
-  name: string;
-  avatar: string;
-}
-
-interface IMessage {
-  _id: number;
-  text: string;
-  user: IUser<string, unknown>;
-}
-
-interface IMessages {
-  messages: IMessage[];
-  modalVisible: boolean;
-  jibunAddress: string;
-  roadAddress: string;
-  detailAddress: string;
-  totalAddress: Record<string, Record<string, string>>;
-  userFinalData: Record<string, unknown>;
-  isCurrentImage: boolean;
-  currentImage: Record<string, unknown>;
-  itemImages: [],
-  cameraModalVisible: boolean;
-  alias: string;
-  confirmAlias: string;
-  setMessages: (messages: Record<string, unknown>) => void;
-  setAddress: (address: string) => void;
-  setDetailAddress: (detailAddress: string) => void;
-  setTotalAddress: () => void;
-  setModalVisible: () => void;
-  initAddress: () => void;
-  setUserFinalData: (finalData: Record<string, unknown>) => void;
-  addReservation: () => void;
-  setCurrentImage: (image: Record<string, unknown>) => void;
-  setItemImages: () => void;
-  initCurrentImage: () => void;
-  removeItemImage: (key: string) => void;
-  setCameraModalVisible: () => void;
-  setAlias: (alias: string) => void;
-  setConfirmAlias: (confirmAlias: string) => void;
-}
-
-const ChatBotStore: IMessages = observable({
+const ChatBotStore: ChatbotStoreStates = observable({
   // State
   // address state
   messages: [],
@@ -87,20 +45,21 @@ const ChatBotStore: IMessages = observable({
     this.modalVisible = !this.modalVisible;
   },
 
-  setMessages(messages: any) {
+  setMessages(messages) {
     this.messages = GiftedChat.append(this.messages, messages);
   },
 
-  setAddress(data: Record<string, unknown>) {
-    this.jibunAddress = data.jibunAddress;
-    this.roadAddress = data.roadAddress;
+  setAddress(data) {
+    const { jibunAddress, roadAddress } = data;
+    this.jibunAddress = jibunAddress;
+    this.roadAddress = roadAddress;
   },
 
-  setDetailAddress(detailAddress: string) {
+  setDetailAddress(detailAddress) {
     this.detailAddress = detailAddress;
   },
 
-  setTotalAddress(type: string) {
+  setTotalAddress(type) {
     if (type === '직거래 장소' && type !== '픽업지') {
       this.totalAddress.location.roadAddress = this.roadAddress;
       this.totalAddress.location.jibunAddress = this.jibunAddress;
@@ -113,13 +72,13 @@ const ChatBotStore: IMessages = observable({
     }
   },
 
-  setUserFinalData(finalData: Record<string, unknown>) {
+  setUserFinalData(finalData) {
     this.userFinalData = finalData;
   },
 
   addReservation() {
     // db에서 data를 get -> [{}, ...]
-    getReservationListDoc((dataArray: []) => {
+    ChatbotModel.getReservationListDoc((dataArray) => {
       // userFinalData 만들기
       ChatBotStore.setUserFinalData({
         id: dataArray.length + 1,
@@ -136,7 +95,7 @@ const ChatBotStore: IMessages = observable({
       // db에서 가져온 예약 db에 붙이기
       dataArray.push(ChatBotStore.userFinalData);
       // 새롭게 추가된 예약 data 배열(list)를 db로 전송
-      setReservationListDoc(dataArray);
+      ChatbotModel.setReservationListDoc(dataArray);
     });
   },
 
