@@ -83,7 +83,7 @@ const MyInfoMainBody = ({
           {transactions.map(({ id, title }): [JSX.Element] => (
             <MyTransactionBtn
               key={id}
-              onPress={() => navigation.navigate('DetailDirectTransactions')}
+              onPress={() => navigation.navigate('DetailInfo')}
             >
               <MyTransactionTitle>
                 {title}

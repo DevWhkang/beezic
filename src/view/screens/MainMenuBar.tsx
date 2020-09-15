@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import CloseMenu from '../components/Main_MenuBar/CloseMenu';
 import LinkText from '../components/LinkText';
 
@@ -13,17 +14,25 @@ const Container = styled.View`
 const MarginBottom = styled.View`
   margin-bottom: 50px;
 `;
-
-function MainMenu(): JSX.Element {
+type MainMenuPropTypes={
+  navigation: StackNavigationProp
+}
+function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
   return (
     <>
-      <CloseMenu />
+      <CloseMenu closeButtonHandler={() => navigation.goBack()} />
       <Container>
         <MarginBottom>
-          <LinkText content="Home" size={20} />
+          <LinkText
+            onPress={() => navigation.navigate('MainStackNavigator', { screen: 'Main' })}
+            content="Home"
+            size={20}
+          />
         </MarginBottom>
         <MarginBottom>
-          <LinkText content="My Page" size={20} />
+          <LinkText 
+          onPress={() => navigation.navigate('MyInfoStackNavigator', {screen:'MyInfo'})}
+          content="My Page" size={20} />
         </MarginBottom>
         <MarginBottom>
           <LinkText content="Sample 1" size={20} />

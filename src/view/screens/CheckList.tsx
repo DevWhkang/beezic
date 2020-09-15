@@ -5,6 +5,7 @@ import {
 import styled from '@emotion/native';
 
 import { useObserver } from 'mobx-react';
+import { useNavigation } from '@react-navigation/native';
 import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
@@ -42,21 +43,28 @@ const UserCheckText = styled.Text`
   margin-bottom: 20;
 `;
 
-const CheckList = (): JSX.Element => useObserver(() => (
-  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <SafeAreaView>
-      <TitleText>
-        Check List
-        <Image source={carrotLogo} />
-      </TitleText>
-      <CheckAreaView>
-        <CheckedInsert />
-        <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
-        {checkListStore.checkItems.length !== 0
-          ? <CheckedList /> : <EmptyText>텅...</EmptyText>}
-      </CheckAreaView>
-    </SafeAreaView>
-  </TouchableWithoutFeedback>
-));
+const CheckList = (): JSX.Element => {
+  const navigation = useNavigation();
+  // FIXME 버튼 생성후 DetailDirectTransaction으로 네비게이팅 예정
+  setTimeout(() => {
+    navigation.navigate('MyInfoStackNavigator', { screen: 'DetailInfo' });
+  }, 5000);
+  return useObserver(() => (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView>
+        <TitleText>
+          Check List
+          <Image source={carrotLogo} />
+        </TitleText>
+        <CheckAreaView>
+          <CheckedInsert />
+          <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
+          {checkListStore.checkItems.length !== 0
+            ? <CheckedList /> : <EmptyText>텅...</EmptyText>}
+        </CheckAreaView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
+  ));
+};
 
 export default CheckList;
