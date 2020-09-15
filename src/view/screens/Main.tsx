@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/native';
-import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Hamburger from '../components/Main/HamburgerMenu';
 import Slide from '../components/Main/Slide';
 import Button from '../components/Button';
@@ -27,7 +27,9 @@ const Logo = styled.Image`
   margin-left: 80px;
   margin-top: 20px;
 `;
+
 function Main(): JSX.Element {
+  const navigation = useNavigation();
   return (
     <>
       <Margin>
@@ -39,7 +41,7 @@ function Main(): JSX.Element {
       <Margin><Slide Username="임진성" /></Margin>
       <Button
         title="비직하기"
-        onPress={() => Alert.alert('비직하기로 이동')}
+        onPress={() => navigation.navigate('TransactionInfo')}
       />
     </>
   );

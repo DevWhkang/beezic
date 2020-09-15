@@ -2,8 +2,8 @@ import React from 'react';
 import styled, { css } from '@emotion/native';
 import { Text } from 'react-native';
 import { useObserver } from 'mobx-react';
-import { UserStore, ErrorStore } from '../../viewModel';
 import { useNavigation } from '@react-navigation/native';
+import { UserStore, ErrorStore } from '../../viewModel';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
@@ -53,15 +53,13 @@ const SignIn = (): JSX.Element => {
     UserStore.password = password;
   };
 
-  const onClickButton = (): void => {
+
+  const onSignInButton = (): void => {
     ErrorStore.reset();
-    UserStore.in(() => {
-      navigation.navigate('Main');
-    });
+    UserStore.in();
   };
 
   const onLinkButton = (): void => {
-    ErrorStore.reset();
     UserStore.checkSignIn((isSignedIn) => {
       if (isSignedIn) UserStore.out();
       navigation.navigate('SignUp');
@@ -87,7 +85,7 @@ const SignIn = (): JSX.Element => {
       <Button
         title="Sign In"
         background={buttonStyle}
-        onPress={onClickButton}
+        onPress={onSignInButton}
         disabled={!(UserStore.email && UserStore.password)}
       />
       {(!ErrorStore.error && UserStore.isLogin) && (
