@@ -8,7 +8,6 @@ import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
 import OauthIcons from '../components/OAuthIcons';
-import HeaderTopBack from '../components/MyInfo/HeaderTopBack';
 
 const Container = styled.View`
   display: flex;
@@ -68,9 +67,7 @@ const SignUp = (): JSX.Element => {
 
   const onSignUpButton = () => {
     ErrorStore.reset();
-    UserStore.up(() => {
-      navigation.navigate('Main');
-    });
+    UserStore.up();
   };
 
   const onLinkButton = () => {

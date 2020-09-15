@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
 import Carrot from '../../../assets/Beezic_Logo_carrot.png';
 import Bee from '../../../assets/bee.png';
 import Logo from '../../../assets/Beezic_Logo.png';
@@ -68,22 +69,23 @@ const userTransactionList = (): JSX.Element => {
   useEffect(() => {
     DetailInfoStore.getUserTransactionList(1); // TODO: userId 파라미터로 넘기기
   }, []);
-
+  const navigation = useNavigation();
   const userTransactions = [];
 
   const navigationChatbot = () => {
     // TODO: Chatbot screen으로 가기
+    navigation.navigate('MainStackNavigator', { screen: 'TransactionInfo' });
   };
 
   return useObserver(() => (
     <View>
       <TransactionListTitle>나의 직거래 리스트</TransactionListTitle>
       <UserTransaction>
-        <TouchableOpacity style={AddTransactionStyle}>
+        <TouchableOpacity onPress={navigationChatbot} style={AddTransactionStyle}>
           <AddTranscationIcon>
             <FontAwesomeIcon icon={faPlus} style={plusIconStyle} size={25} />
           </AddTranscationIcon>
-          <AddText onPress={navigationChatbot}>비직 추가</AddText>
+          <AddText>비직 추가</AddText>
         </TouchableOpacity>
         <FlatList
           inverted

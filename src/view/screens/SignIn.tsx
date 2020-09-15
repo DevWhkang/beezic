@@ -2,8 +2,8 @@ import React from 'react';
 import styled, { css } from '@emotion/native';
 import { Text } from 'react-native';
 import { useObserver } from 'mobx-react';
-import { UserStore, ErrorStore } from '../../viewModel';
 import { useNavigation } from '@react-navigation/native';
+import { UserStore, ErrorStore } from '../../viewModel';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
@@ -55,9 +55,7 @@ const SignIn = (): JSX.Element => {
 
   const onClickButton = (): void => {
     ErrorStore.reset();
-    UserStore.in(() => {
-      navigation.navigate('Main');
-    });
+    UserStore.in();
   };
 
   const onLinkButton = async (): void => {
