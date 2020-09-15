@@ -1,7 +1,8 @@
 import auth from '@react-native-firebase/auth';
+import { AuthModelTypes, UserTypes } from './@types/AuthModel';
 
-export default {
-  async signIn(email: string, password: string): Promise<unknown> {
+const AuthModel: AuthModelTypes = {
+  async signIn(email, password) {
     try {
       return auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
@@ -9,7 +10,7 @@ export default {
     }
   },
 
-  async signUp(email: string, password: string): Promise<unknown> {
+  async signUp(email, password) {
     try {
       return auth().createUserWithEmailAndPassword(email, password);
     } catch (error) {
@@ -25,8 +26,8 @@ export default {
     }
   },
 
-  async deleteCurrentUser(): Promise<unknown> {
-    const user: Record<string, string> = auth().currentUser;
+  async deleteCurrentUser() {
+    const user: UserTypes = auth().currentUser;
     try {
       if (user) {
         await user.delete();
@@ -39,15 +40,15 @@ export default {
     }
   },
 
-  async updateEmail(email: string): Promise<unknown> {
+  async updateEmail(email) {
     // TODO
   },
 
-  async updatePassword(password: string): Promise<unknown> {
+  async updatePassword(password) {
     // TODO
   },
 
-  async updateUserProfile(profile: Record<string, string>): Promise<unknown> {
+  async updateUserProfile(profile) {
     // profile: { displayName }
     try {
       return await auth().currentUser.updateProfile(profile);
@@ -56,16 +57,18 @@ export default {
     }
   },
 
-  checkUserAuthentication(): Promise<unknown> {
+  checkUserAuthentication() {
     return new Promise((resolve) => {
-      auth().onAuthStateChanged((user: Record<string, unknown>) => {
+      auth().onAuthStateChanged((user: UserTypes) => {
         console.log('AuthModel: ', user);
         resolve(user);
       });
     });
   },
 
-  getCurrentUser(): Record<string, unknown> {
+  getCurrentUser() {
     return auth().currentUser;
   },
 };
+
+export default AuthModel;

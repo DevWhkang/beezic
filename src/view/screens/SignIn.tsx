@@ -53,7 +53,6 @@ const SignIn = (): JSX.Element => {
     UserStore.password = password;
   };
 
-
   const onSignInButton = (): void => {
     ErrorStore.reset();
     UserStore.in();

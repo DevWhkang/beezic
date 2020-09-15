@@ -1,5 +1,6 @@
+/* eslint-disable no-param-reassign */
 import { observable } from 'mobx';
-import { setCheckListDoc, getCheckListDoc } from '../model/checkListModel';
+import CheckListModel from '../model/CheckListModel';
 import ChatBotStore from './ChatBotStore';
 
 interface ICheckListStore {
@@ -32,15 +33,15 @@ const checkListStore: ICheckListStore = observable({
     // 만들어진 아이템 객체를 배열 상태의 추가하기(빠른 랜더링 될 수 있도록)
     this.checkItems.unshift(this.newCheckItem);
     // 디비의 데이터 가져오기
-    getCheckListDoc((dataArray: []) => {
-      dataArray.forEach((reservation: Record<string, Record<string, unknown>>) => {
+    CheckListModel.getCheckListDoc((dataArray) => {
+      dataArray.forEach((reservation) => {
         // 디비에서 가져온 데이터에서 로그인된 해당 유저의 예약 정보만을 가져온다.
         if (reservation.user.id === 1 && reservation.id === ChatBotStore.userFinalData.id) {
           reservation.checklist = this.checkItems;
         }
       });
       // 수정된 데이터를 디비에 업데이트하기
-      setCheckListDoc(dataArray);
+      CheckListModel.setCheckListDoc(dataArray);
     });
     // 아이템 객체 리셋
     this.newCheckItem = {};
@@ -50,7 +51,7 @@ const checkListStore: ICheckListStore = observable({
     // 상태에서 지우기
     this.checkItems = this.checkItems.filter((item) => item.id !== id);
     // 디비의 데이터 가져오기
-    getCheckListDoc((dataArray) => {
+    CheckListModel.getCheckListDoc((dataArray) => {
       dataArray.forEach((reservation) => {
         // 디비에서 가져온 데이터에서 로그인된 해당 유저의 예약 정보만을 가져온다.
         if (reservation.user.id === 1 && reservation.id === ChatBotStore.userFinalData.id) {
@@ -59,7 +60,7 @@ const checkListStore: ICheckListStore = observable({
         }
       });
       // 수정된 데이터를 디비에 업데이트하기
-      setCheckListDoc(dataArray);
+      CheckListModel.setCheckListDoc(dataArray);
     });
   },
 
