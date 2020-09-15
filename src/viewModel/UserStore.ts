@@ -116,11 +116,12 @@ const UserStore: UserStoreStates = observable({
       const beforeUser: UserTypes = AuthModel.getCurrentUser();
       await AuthModel.updateUserProfile({ displayName });
       UserStore.setPreviousInfo({ username: displayName });
-      const afterUser: UserTypes = AuthModel.getCurrentUser();
+      const user: UserTypes = AuthModel.getCurrentUser();
+      UserStore.user = user;
       console.log(
         (`Updating Username
         Before: ${beforeUser.displayName}
-        After: ${afterUser.displayName}
+        After: ${user.displayName}
         `).replace(/  +/g, ''),
       );
     } catch (error) {
