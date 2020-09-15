@@ -53,10 +53,10 @@ const SignIn = (): JSX.Element => {
     UserStore.password = password;
   };
 
+
   const onSignInButton = (): void => {
-    UserStore.in(() => {
-      navigation.navigate('Main');
-    });
+    ErrorStore.reset();
+    UserStore.in();
   };
 
   const onLinkButton = (): void => {

@@ -1,36 +1,27 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { useObserver } from 'mobx-react';
 import Intro from '../screens/Intro';
-import Main from '../screens/Main';
 import SignInStackNavigator from './SignInStackNavigator';
-
-const Stack = createStackNavigator();
-
-const MainStackNavigator = () => (
-  <Stack.Navigator initialRouteName="Main" headerMode="none">
-    <Stack.Screen name="Main" component={Main} />
-  </Stack.Navigator>
-);
+import MainDrawerNavigator from './MainDrawerNavigator';
+import { UserStore } from '../../viewModel';
 
 const Navigator = ():JSX.Element => {
-  // TODO 아래 상태들 MobX로 리팩토링 필요
   const [isLoading, setIsLoading] = useState(true);
-  const [isLogin, setIsLogin] = useState(false);
 
-  return (
+  return useObserver(() => (
     isLoading
       ? (
-        <Intro loadingStateHandler={setIsLoading} loginStateHandler={setIsLogin} />
+        <Intro loadingStateHandler={setIsLoading} />
       )
       : (
         <NavigationContainer>
-          {isLogin
-            ? <MainStackNavigator />
+          {UserStore.isLogin
+            ? <MainDrawerNavigator />
             : <SignInStackNavigator /> }
         </NavigationContainer>
       )
-  );
+  ));
 };
 
 export default Navigator;

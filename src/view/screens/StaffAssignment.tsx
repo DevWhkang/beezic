@@ -3,6 +3,7 @@ import { Animated, Easing } from 'react-native';
 import styled, { css } from '@emotion/native';
 import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
 import logo from '../../assets/Beezic_Logo_carrot.png'; // TODO svg 파일로 변경
 import LinkText from '../components/LinkText';
 
@@ -64,10 +65,14 @@ const spin = () => {
 };
 
 const StaffAssignment = (): JSX.Element => {
+  const navigation = useNavigation();
   useEffect(() => {
     spin();
     pulse();
   });
+  setTimeout(() => {
+    navigation.navigate('CheckList');
+  }, 5000);
   return (
     <Container>
       <Logo source={logo} />
