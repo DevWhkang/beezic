@@ -1,11 +1,13 @@
 import React from 'react';
 import MyInfoHeader from '../components/MyInfo/MyInfoHeader';
 import MyInfoMainBody from '../components/MyInfo/MyInfoMainBody';
+import { UserStore, DetailInfoStore } from '../../viewModel';
+import { useObserver } from 'mobx-react';
 
-const userData:{
+const userData: {
   userName: string,
   userEmail: string,
-  transactions: {id: number, title: string}[],
+  transactions: { id: number, title: string }[],
 } = {
   userName: '임진성',
   userEmail: 'realcastlee@gmail.com',
@@ -28,10 +30,10 @@ const userData:{
   ],
 };
 const isLastPage = false;
-const MyInfo = (): JSX.Element => (
+const MyInfo = (): JSX.Element => useObserver(() => (
   <>
     <MyInfoHeader userData={userData} isLastPage={isLastPage} />
     <MyInfoMainBody userData={userData} />
   </>
-);
+));
 export default MyInfo;

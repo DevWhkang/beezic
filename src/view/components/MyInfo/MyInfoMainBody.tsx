@@ -52,7 +52,7 @@ const SeeAllTransaction = styled.TouchableOpacity`
 `;
 
 type MyInfoMainBodyPropTypes = {
-  userData: { userName: string, userEmail: string, transactions:[]}
+  userData: { userName: string, userEmail: string, transactions: [] }
 };
 
 const MyInfoMainBody = ({
@@ -68,7 +68,7 @@ const MyInfoMainBody = ({
       <UserInfoWrapper>
         <UserSpecSection userInfo={{ title: '👤 Username', info: userName }} />
         <UserSpecSection userInfo={{ title: '📬 Email', info: userEmail }} />
-        <EditMyInfoBtn onPress={() => navigation.navigate('EditMyinfo')}>
+        <EditMyInfoBtn onPress={() => navigation.navigate('EditMyInfo')}>
           <Text style={{ fontSize: 19, color: 'black' }}>내 정보 수정하기</Text>
         </EditMyInfoBtn>
       </UserInfoWrapper>
@@ -80,7 +80,7 @@ const MyInfoMainBody = ({
         <MyTransactionList
           nestedScrollEnabled
         >
-          {transactions.map(({ id, title }):[JSX.Element] => (
+          {transactions.map(({ id, title }): [JSX.Element] => (
             <MyTransactionBtn
               key={id}
               onPress={() => navigation.navigate('DetailDirectTransactions')}

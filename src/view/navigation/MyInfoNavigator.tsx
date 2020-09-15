@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MyInfo from '../screens/MyInfo';
 import EditMyInfo from '../screens/EditMyInfo';
 import EditInfoDetail from '../screens/EditMyInfoDetail';
-import DetailDirectTransactions from '../screens/DetailTransactions';
+import DetailDirectTransactions from '../screens/DetailInfo';
 
 const Stack = createStackNavigator();
 
@@ -23,4 +23,4 @@ const TestMyInfoNavigator = (): JSX.Element => (
   </NavigationContainer>
 );
 
-export default MyInfoStackNavigator;
+export default TestMyInfoNavigator;
