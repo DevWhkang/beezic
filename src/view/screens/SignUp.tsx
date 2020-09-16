@@ -76,6 +76,7 @@ const SignUp = (): JSX.Element => {
         viewStyle={InputStyle}
         onChangeText={onChangeEmail}
         placeholder="이메일을 작성해주세요!"
+        regex={/[a-z0-9.@]/gi}
         label="Email"
         message={ErrorStore.message('email', '이메일 형식이 아니에요!')}
       />
@@ -83,6 +84,7 @@ const SignUp = (): JSX.Element => {
         viewStyle={InputStyle}
         onChangeText={onChangeUsername}
         placeholder="이름도 좋고 별명도 좋아요!"
+        regex={/[a-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]/gi}
         label="Username"
       />
       <TextInput
