@@ -1,6 +1,7 @@
 import { observable } from 'mobx';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { setReservationListDoc, getReservationListDoc } from '../model/chatbotModel';
+import UserStore from './UserStore';
 
 interface IUser {
   _id: number;
@@ -35,7 +36,7 @@ interface IMessages {
   setModalVisible: () => void;
   initAddress: () => void;
   setUserFinalData: (finalData: Record<string, unknown>) => void;
-  addReservation: () => void;
+  addReservation: (user: Record<string, unknown>) => void;
   setCurrentImage: (image: Record<string, unknown>) => void;
   setItemImages: () => void;
   initCurrentImage: () => void;
@@ -89,6 +90,7 @@ const ChatBotStore: IMessages = observable({
 
   setMessages(messages: any) {
     this.messages = GiftedChat.append(this.messages, messages);
+    // this.messages = messages.concat(this.messages);
   },
 
   setAddress(data: Record<string, unknown>) {
@@ -117,21 +119,18 @@ const ChatBotStore: IMessages = observable({
     this.userFinalData = finalData;
   },
 
-  addReservation() {
+  addReservation(user: Record<string, unknown>) {
     // db에서 data를 get -> [{}, ...]
     getReservationListDoc((dataArray: []) => {
       // userFinalData 만들기
       ChatBotStore.setUserFinalData({
         id: dataArray.length + 1,
-        user: {
-          id: 1,
-          username: 'kang',
-          email: 'kwh@gmail.com',
-        },
+        user,
         address: ChatBotStore.totalAddress,
         checklist: [],
         itemImages: ChatBotStore.itemImages,
         alias: ChatBotStore.confirmAlias,
+        assignmentStaff: {},
       });
       // db에서 가져온 예약 db에 붙이기
       dataArray.push(ChatBotStore.userFinalData);
@@ -159,7 +158,6 @@ const ChatBotStore: IMessages = observable({
   setItemImages() {
     this.itemImages.push(this.currentImage);
     this.initCurrentImage();
-    console.log(this.itemImages);
   },
 
   removeItemImage(key: string) {

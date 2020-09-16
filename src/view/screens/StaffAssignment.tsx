@@ -4,6 +4,8 @@ import styled, { css } from '@emotion/native';
 import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
+import { useObserver } from 'mobx-react';
+import { ChatBotStore, AssignmentStore } from '../../viewModel';
 import logo from '../../assets/Beezic_Logo_carrot.png'; // TODO svg 파일로 변경
 import LinkText from '../components/LinkText';
 
@@ -66,14 +68,21 @@ const spin = () => {
 
 const StaffAssignment = (): JSX.Element => {
   const navigation = useNavigation();
+
+  // useEffect(() => {
+  //   AssignmentStore.setAssignmentStaff();
+  // }, []);
+
   useEffect(() => {
     spin();
     pulse();
-  });
+  }, []);
+
   setTimeout(() => {
     navigation.navigate('CheckList');
-  }, 5000);
-  return (
+  }, 10000);
+
+  return useObserver(() => (
     <Container>
       <Logo source={logo} />
       <Header>담당 거래 직원을 배정 중입니다.</Header>
@@ -91,7 +100,7 @@ const StaffAssignment = (): JSX.Element => {
       </Body>
       <LinkText content="Finish" />
     </Container>
-  );
+  ));
 };
 
 export default StaffAssignment;
