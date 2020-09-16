@@ -87,7 +87,7 @@ const UserStore: UserStoreStates = observable({
     try {
       const { email, password, username: displayName } = UserStore;
       await AuthModel.signUp(email, password);
-      await AuthModel.updateUserProfile({ displayName });
+      await AuthModel.updateUserProfile(displayName);
       UserStore.user = AuthModel.getCurrentUser();
       UserStore.isLogin = true;
       UserStore.setPreviousInfo({ email, password, username: displayName });
@@ -113,7 +113,7 @@ const UserStore: UserStoreStates = observable({
   async updateUsername(displayName) {
     try {
       const beforeUser: UserTypes = AuthModel.getCurrentUser();
-      await AuthModel.updateUserProfile({ displayName });
+      await AuthModel.updateUserProfile(displayName);
       UserStore.setPreviousInfo({ username: displayName });
       const user: UserTypes = AuthModel.getCurrentUser();
       UserStore.user = user;
@@ -128,8 +128,31 @@ const UserStore: UserStoreStates = observable({
     }
   },
 
+  async updateEmail(email) {
+    try {
+      const beforeUser: UserTypes = AuthModel.getCurrentUser();
+      await AuthModel.updateEmail(email);
+      UserStore.setPreviousInfo({ email });
+      const user: UserTypes = AuthModel.getCurrentUser();
+      UserStore.user = user;
+      ErrorStore.reset();
+      console.log(
+        (`Updating Email
+        Before: ${beforeUser.email}
+        After: ${user.email}
+        `).replace(/ +/g, ''),
+      );
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
   compareUsername() {
     return UserStore.previousUsername === UserStore.username;
+  },
+
+  compareEmail() {
+    return UserStore.previousEmail === UserStore.email;
   },
 
   async sendLink(callback) {

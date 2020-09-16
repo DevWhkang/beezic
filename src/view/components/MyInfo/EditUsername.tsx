@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from '@emotion/native';
 import { useObserver } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
-import { UserStore } from '../../../viewModel';
+import { UserStore, ErrorStore } from '../../../viewModel';
 import TextInput from '../TextInput';
 import Button from '../Button';
 
@@ -49,7 +49,7 @@ const EditUsername = ({
 
   const onUpdateButton = async () => {
     await UserStore.updateUsername(UserStore.username);
-    navigation.goBack();
+    if (!ErrorStore.error) navigation.goBack();
   };
 
   const onCancelButton = (): void => {

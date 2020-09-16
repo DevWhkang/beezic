@@ -3,9 +3,9 @@ export interface AuthModelTypes {
   signUp(email: string, password: string): Promise<UserCredentialTypes>,
   signOut(): Promise<UserCredentialTypes>,
   deleteCurrentUser(): Promise<unknown>,
-  updateEmail(email: string): Promise<UserCredentialTypes>,
-  updatePassword(password: string): Promise<UserCredentialTypes>,
-  updateUserProfile(profile: Record<string, string>): Promise<UserCredentialTypes>,
+  updateEmail(email: string): Promise<void>,
+  updatePassword(password: string): Promise<void>,
+  updateUserProfile(profile: Record<string, string>): Promise<void>,
   checkUserAuthentication(): Promise<UserTypes>,
   getCurrentUser(): UserTypes,
 }

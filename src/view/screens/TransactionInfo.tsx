@@ -125,7 +125,12 @@ const TransactionInfo = (): JSX.Element => {
         );
       }
     }
-    return <BubbleRender {...props} />;
+    return (
+      <BubbleRender
+        {...props}
+        messages={ChatBotStore.messages}
+      />
+    );
   };
 
   const renderSend = (props) => (
@@ -140,7 +145,7 @@ const TransactionInfo = (): JSX.Element => {
     <View style={chatbotStyles}>
       <GiftedChat
         renderBubble={renderBubble}
-        messages={ChatBotStore.messages.slice()} // FlatList로의 props는 불변성을 지켜야한다.
+        messages={ChatBotStore.messages.slice()}
         onSend={(sendMessages) => onSend(sendMessages)}
         // showUserAvatar
         user={{ // 로그인 유저

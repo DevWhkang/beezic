@@ -11,6 +11,7 @@ interface IAssignmentStore {
   staffs: [];
   setSelectedStaff: () => void;
   setAssignmentStaff: () => void;
+  initAssignmentState: () => void;
 }
 
 const AssignmentStore: IAssignmentStore = observable({
@@ -19,6 +20,12 @@ const AssignmentStore: IAssignmentStore = observable({
   selectedStaff: {},
 
   // 임시로 랜덤하게 배정
+  initAssignmentState() {
+    this.isAssignment = false;
+    this.staffs = [];
+    this.selectedStaff = {};
+  },
+
   setSelectedStaff() {
     const shuffled = this.staffs
       .map((a) => ([Math.random(), a]))
