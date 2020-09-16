@@ -3,19 +3,9 @@ import { observable } from 'mobx';
 import CheckListModel from '../model/CheckListModel';
 import ChatBotStore from './ChatBotStore';
 import UserStore from './UserStore';
+import { CheckListStoreStates } from './@types/CheckListStore';
 
-interface ICheckListStore {
-  description: string;
-  newCheckItem: Record<string, unknown>;
-  checkItems: [];
-  setDescription: (text: string) => void;
-  setNewCheckItem: () => void;
-  addCheckItems: () => void;
-  removeCheckItem: (id: number) => void;
-  initCheckListState: () => void;
-}
-
-const checkListStore: ICheckListStore = observable({
+const checkListStore: CheckListStoreStates = observable({
   description: '',
   newCheckItem: {},
   checkItems: [],
@@ -26,7 +16,7 @@ const checkListStore: ICheckListStore = observable({
     this.checkItems = [];
   },
 
-  setDescription(text: string) {
+  setDescription(text) {
     this.description = text;
   },
 
@@ -56,7 +46,7 @@ const checkListStore: ICheckListStore = observable({
     this.newCheckItem = {};
   },
 
-  removeCheckItem(id: number) {
+  removeCheckItem(id) {
     // 상태에서 지우기
     this.checkItems = this.checkItems.filter((item) => item.id !== id);
     // 디비의 데이터 가져오기
