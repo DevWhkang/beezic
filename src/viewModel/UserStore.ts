@@ -86,10 +86,9 @@ const UserStore: UserStoreStates = observable({
   async up(callback) {
     try {
       const { email, password, username: displayName } = UserStore;
-      const userCredential: UserCredentialTypes = await AuthModel.signUp(email, password);
+      await AuthModel.signUp(email, password);
       await AuthModel.updateUserProfile({ displayName });
-      const { user } = userCredential;
-      UserStore.user = user;
+      UserStore.user = AuthModel.getCurrentUser();
       UserStore.isLogin = true;
       UserStore.setPreviousInfo({ email, password, username: displayName });
       console.log('Sign Up: ', user);
