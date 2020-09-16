@@ -1,24 +1,16 @@
 // App.js
-import React, { useEffect, useCallback } from 'react';
-import {
-  View,
-  // TouchableWithoutFeedback,
-  // Keyboard,
-  // TouchableOpacity,
-  // Button, Text, Modal,
-  // TouchableHighlight,
-  TouchableWithoutFeedback, Keyboard,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import { useObserver } from 'mobx-react';
 import { css } from '@emotion/native';
 import { Dialogflow_V2 } from 'react-native-dialogflow';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
-import ChatBotStore from '../../viewModel/ChatBotStore';
+import { ChatBotStore, UserStore } from '../../viewModel';
 import dialogflowConfig from '../../../dialogflowENV';
 import {
-  initMessages, dialogflowMessage, ConfirmMessage, ConfirmAliasMessage,
+  initMessages, dialogflowMessage,
 } from '../components/Chatbot/BotMessages';
 import BubbleRender from '../components/Chatbot/BubbleRender';
 import AddressSearchModal from '../components/Chatbot/AddressSearchModal';
@@ -47,7 +39,7 @@ const TransactionInfo = (): JSX.Element => {
       dialogflowConfig.project_id,
     );
     if (ChatBotStore.messages.length === 0) {
-      ChatBotStore.setMessages(initMessages);
+      ChatBotStore.setMessages(initMessages(UserStore.user.displayName));
     }
   }, []);
 
@@ -152,11 +144,15 @@ const TransactionInfo = (): JSX.Element => {
         onSend={(sendMessages) => onSend(sendMessages)}
         // showUserAvatar
         user={{ // 로그인 유저
-          _id: 1,
+          _id: UserStore.user.uid,
+          name: UserStore.user.displayName,
         }}
         alwaysShowSend
         placeholder="  Beezic Bot에게 말해주세요."
         renderSend={renderSend}
+        textInputProps={{
+          autoCorrect: false,
+        }}
       />
     </View>
   ));

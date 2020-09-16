@@ -15,7 +15,7 @@ const BOT_ADMIN: IBotAdmin = {
 
 // Massagee
 // 초기 세팅 Messages
-const initMessages = [{
+const initMessages = (displayName: string) => [{
   _id: 3,
   text: 'ex) 판매자 or 구매자 라고 입력하세요.',
   createdAt: new Date(),
@@ -29,7 +29,8 @@ const initMessages = [{
 },
 {
   _id: 1,
-  text: '안녕하세요 Beezic Bot입니다!',
+  text: `안녕하세요, ${displayName}님,\
+  \nBeezic Bot입니다!`,
   createdAt: new Date(),
   user: BOT_ADMIN,
 }];

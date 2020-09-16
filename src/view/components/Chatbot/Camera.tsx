@@ -174,19 +174,20 @@ const Camera = (): JSX.Element => {
     };
 
     ImagePicker.launchCamera(options, (response) => {
-      console.log('Response = ', response);
+      // console.log('Response = ', response);
 
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        // console.log('User cancelled image picker');
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        // console.log('ImagePicker Error: ', response.error);
       } else {
         // const source = { uri: response.uri };
-        console.log('response', JSON.stringify(response));
+        // console.log('response', JSON.stringify(response));
         ChatBotStore.setCurrentImage({
           key: `${ChatBotStore.itemImages.length + 1}`,
-          filePath: response,
-          fileData: response.data,
+          // 너무 무거워서 주석
+          // filePath: response,
+          // fileData: response.data,
           fileUri: response.uri,
         });
       }
@@ -201,19 +202,20 @@ const Camera = (): JSX.Element => {
       },
     };
     ImagePicker.launchImageLibrary(options, (response) => {
-      console.log('Response = ', response);
+      // console.log('Response = ', response);
 
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        // console.log('User cancelled image picker');
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        // console.log('ImagePicker Error: ', response.error);
       } else {
         // const source = { uri: response.uri };
-        console.log('response', JSON.stringify(response));
+        // console.log('response', JSON.stringify(response));
         ChatBotStore.setCurrentImage({
           key: `${ChatBotStore.itemImages.length + 1}`,
-          filePath: response,
-          fileData: response.data,
+          // 너무 무거워서 주석
+          // filePath: response,
+          // fileData: response.data,
           fileUri: response.uri,
         });
       }

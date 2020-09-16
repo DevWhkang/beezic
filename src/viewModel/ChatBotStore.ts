@@ -47,6 +47,7 @@ const ChatBotStore: ChatbotStoreStates = observable({
 
   setMessages(messages) {
     this.messages = GiftedChat.append(this.messages, messages);
+    // this.messages = messages.concat(this.messages);
   },
 
   setAddress(data) {
@@ -76,21 +77,18 @@ const ChatBotStore: ChatbotStoreStates = observable({
     this.userFinalData = finalData;
   },
 
-  addReservation() {
+  addReservation(user: Record<string, unknown>) {
     // db에서 data를 get -> [{}, ...]
     ChatbotModel.getReservationListDoc((dataArray) => {
       // userFinalData 만들기
       ChatBotStore.setUserFinalData({
         id: dataArray.length + 1,
-        user: {
-          id: 1,
-          username: 'kang',
-          email: 'kwh@gmail.com',
-        },
+        user,
         address: ChatBotStore.totalAddress,
         checklist: [],
         itemImages: ChatBotStore.itemImages,
         alias: ChatBotStore.confirmAlias,
+        assignmentStaff: {},
       });
       // db에서 가져온 예약 db에 붙이기
       dataArray.push(ChatBotStore.userFinalData);
@@ -118,7 +116,6 @@ const ChatBotStore: ChatbotStoreStates = observable({
   setItemImages() {
     this.itemImages.push(this.currentImage);
     this.initCurrentImage();
-    console.log(this.itemImages);
   },
 
   removeItemImage(key: string) {

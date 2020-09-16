@@ -19,7 +19,7 @@ export interface UserStoreStates {
   out(): void,
   up(callback?: () => void): void,
   delete(callback?: () => void): void,
-  updateUsername(displayName: string): void,
+  updateUsername(displayName: string): Promise<unknown>,
   compareUsername(): boolean,
   sendLink(callback?: () => void): void,
   checkVerification(): void,

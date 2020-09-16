@@ -73,7 +73,7 @@ const EditUsername = ({
             ? '기존 이름과 달라야 해요!'
             : ' '
         }
-        regex={/[a-zA-Z0-9]/gi}
+        regex={/[a-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]/gi}
       />
 
       <FlatButton>
