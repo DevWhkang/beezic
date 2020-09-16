@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
-import { Animated, Easing } from 'react-native';
+import {
+  Alert, Animated, BackHandler, Easing,
+} from 'react-native';
 import styled, { css } from '@emotion/native';
 import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useObserver } from 'mobx-react';
 import { ChatBotStore, AssignmentStore } from '../../viewModel';
 import logo from '../../assets/Beezic_Logo_carrot.png'; // TODO svg 파일로 변경
@@ -78,9 +80,34 @@ const StaffAssignment = (): JSX.Element => {
     pulse();
   }, []);
 
-  setTimeout(() => {
+  const screenNavigator = setTimeout(() => {
     navigation.navigate('CheckList');
-  }, 10000);
+  }, 5000);
+  useFocusEffect(() => {
+    const onBackPress = async () => {
+      const result = new Promise(() => (
+        Alert.alert('경고', '리셋됩니다', [
+          {
+            text: '다시하기',
+            onPress: () => {
+              clearInterval(screenNavigator);
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Main' }],
+              });
+              return true;
+            },
+          }, {
+            text: '계속하기',
+            onPress: () => true,
+          },
+        ])))
+        .then((e) => e);
+      return result;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+  });
 
   return useObserver(() => (
     <Container>
