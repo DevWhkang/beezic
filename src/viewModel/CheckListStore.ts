@@ -2,6 +2,7 @@
 import { observable } from 'mobx';
 import CheckListModel from '../model/CheckListModel';
 import ChatBotStore from './ChatBotStore';
+import UserStore from './UserStore';
 
 interface ICheckListStore {
   description: string;
@@ -11,12 +12,19 @@ interface ICheckListStore {
   setNewCheckItem: () => void;
   addCheckItems: () => void;
   removeCheckItem: (id: number) => void;
+  initCheckListState: () => void;
 }
 
 const checkListStore: ICheckListStore = observable({
   description: '',
   newCheckItem: {},
   checkItems: [],
+
+  initCheckListState() {
+    this.description = '';
+    this.newCheckItem = {};
+    this.checkItems = [];
+  },
 
   setDescription(text: string) {
     this.description = text;
@@ -36,7 +44,8 @@ const checkListStore: ICheckListStore = observable({
     CheckListModel.getCheckListDoc((dataArray) => {
       dataArray.forEach((reservation) => {
         // 디비에서 가져온 데이터에서 로그인된 해당 유저의 예약 정보만을 가져온다.
-        if (reservation.user.id === 1 && reservation.id === ChatBotStore.userFinalData.id) {
+        if (reservation.user.uid === UserStore.user.uid
+          && reservation.id === ChatBotStore.userFinalData.id) {
           reservation.checklist = this.checkItems;
         }
       });
@@ -54,7 +63,8 @@ const checkListStore: ICheckListStore = observable({
     CheckListModel.getCheckListDoc((dataArray) => {
       dataArray.forEach((reservation) => {
         // 디비에서 가져온 데이터에서 로그인된 해당 유저의 예약 정보만을 가져온다.
-        if (reservation.user.id === 1 && reservation.id === ChatBotStore.userFinalData.id) {
+        if (reservation.user.uid === UserStore.user.uid
+          && reservation.id === ChatBotStore.userFinalData.id) {
           // 지워진 리스트를 업데이트
           reservation.checklist = this.checkItems;
         }

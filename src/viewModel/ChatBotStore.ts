@@ -6,6 +6,7 @@ import { ChatbotStoreStates } from './@types/ChatBotStore';
 const ChatBotStore: ChatbotStoreStates = observable({
   // State
   // address state
+  input: '',
   messages: [],
   modalVisible: false,
   jibunAddress: '',
@@ -43,6 +44,10 @@ const ChatBotStore: ChatbotStoreStates = observable({
   // Action
   setModalVisible() {
     this.modalVisible = !this.modalVisible;
+  },
+
+  setInput(input: string) {
+    this.input = input;
   },
 
   setMessages(messages) {
@@ -132,6 +137,43 @@ const ChatBotStore: ChatbotStoreStates = observable({
 
   setConfirmAlias() {
     this.confirmAlias = this.alias;
+  },
+
+  initChatbotState() {
+    this.input = '';
+    this.messages = [];
+    this.modalVisible = false;
+    this.jibunAddress = '';
+    this.roadAddress = '';
+    this.detailAddress = '';
+    this.totalAddress = {
+      location: {
+        jibunAddress: '',
+        roadAddress: '',
+        detailAddress: '',
+      },
+      pickup: {
+        jibunAddress: '',
+        roadAddress: '',
+        detailAddress: '',
+      },
+    };
+    // camera state
+    this.cameraModalVisible = false;
+    this.isCurrentImage = false;
+    this.currentImage = {
+      key: '0',
+      filePath: {
+        data: '',
+        uri: '',
+      },
+      fileData: '',
+      fileUri: '',
+    };
+    this.itemImages = [];
+    this.userFinalData = {};
+    this.confirmAlias = '';
+    this.alias = '';
   },
 
 });

@@ -2,11 +2,13 @@ import React from 'react';
 import styled from '@emotion/native';
 import { useNavigation } from '@react-navigation/native';
 import { useObserver } from 'mobx-react';
+import {
+  ChatBotStore, CheckListStore, AssignmentStore, UserStore,
+} from '../../viewModel';
 import Hamburger from '../components/Main/HamburgerMenu';
 import Slide from '../components/Main/Slide';
 import Button from '../components/Button';
 import logo from '../../assets/Beezic_Logo.png';
-import { UserStore } from '../../viewModel';
 
 const HeaderWrapper = styled.View`
 position: relative;
@@ -33,6 +35,14 @@ const Logo = styled.Image`
 function Main(): JSX.Element {
   const navigation = useNavigation();
   const { user } = UserStore;
+  const startBeezic = () => {
+    ChatBotStore.initChatbotState();
+    AssignmentStore.initAssignmentState();
+    CheckListStore.initCheckListState();
+
+    navigation.navigate('TransactionInfo');
+  };
+
   return useObserver(() => (
     <>
       <Margin>
@@ -44,7 +54,7 @@ function Main(): JSX.Element {
       <Margin><Slide Username={user.displayName} /></Margin>
       <Button
         title="비직하기"
-        onPress={() => navigation.navigate('TransactionInfo')}
+        onPress={startBeezic}
       />
     </>
   ));

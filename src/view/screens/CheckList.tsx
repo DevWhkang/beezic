@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-  SafeAreaView, Image, TouchableWithoutFeedback, Keyboard,
+  View, Text, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard, Alert,
 } from 'react-native';
-import styled from '@emotion/native';
+import styled, { css } from '@emotion/native';
 
 import { useObserver } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
-import checkListStore from '../../viewModel/CheckListStore';
+import CheckListStore from '../../viewModel/CheckListStore';
 
 const TitleText = styled.Text`
   font-size: 50;
@@ -43,12 +43,27 @@ const UserCheckText = styled.Text`
   margin-bottom: 20;
 `;
 
+const completeAreaStyle = css`
+  flex-direction: row;
+`;
+
+const completeButtonStyle = css`
+  align-self: center;
+  margin-left: 100px;
+`;
+
 const CheckList = (): JSX.Element => {
   const navigation = useNavigation();
-  // FIXME 버튼 생성후 DetailDirectTransaction으로 네비게이팅 예정
-  setTimeout(() => {
-    navigation.navigate('MyInfoStackNavigator', { screen: 'DetailInfo' });
-  }, 5000);
+
+  const handleCompleteButton = () => {
+    if (CheckListStore.checkItems.length === 0) {
+      Alert.alert('응');
+      // TODO 나중에 할래요, 나중에 할 수 있는 곳 설명 등 나중에 할래요 버튼 누르면 디테일 페이지로
+    } else {
+      navigation.navigate('MyInfoStackNavigator', { screen: 'DetailInfo' });
+    }
+  };
+
   return useObserver(() => (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView>
@@ -58,8 +73,13 @@ const CheckList = (): JSX.Element => {
         </TitleText>
         <CheckAreaView>
           <CheckedInsert />
-          <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
-          {checkListStore.checkItems.length !== 0
+          <View style={completeAreaStyle}>
+            <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
+            <View style={completeButtonStyle}>
+              <Text onPress={handleCompleteButton}>다했어요</Text>
+            </View>
+          </View>
+          {CheckListStore.checkItems.length !== 0
             ? <CheckedList /> : <EmptyText>텅...</EmptyText>}
         </CheckAreaView>
       </SafeAreaView>

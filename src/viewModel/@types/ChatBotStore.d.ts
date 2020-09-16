@@ -16,6 +16,7 @@ export interface Address {
 }
 
 export interface ChatbotStoreStates {
+  input: string;
   messages: IMessage[];
   modalVisible: boolean;
   jibunAddress: string;
@@ -44,4 +45,5 @@ export interface ChatbotStoreStates {
   setCameraModalVisible: () => void;
   setAlias: (alias: string) => void;
   setConfirmAlias: (confirmAlias: string) => void;
+  initChatbotState: () => void;
 }

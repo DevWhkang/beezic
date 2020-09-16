@@ -3,58 +3,38 @@ import { AuthModelTypes, UserTypes } from './@types/AuthModel';
 
 const AuthModel: AuthModelTypes = {
   async signIn(email, password) {
-    try {
-      return auth().signInWithEmailAndPassword(email, password);
-    } catch (error) {
-      throw new Error(error);
-    }
+    return auth().signInWithEmailAndPassword(email, password);
   },
 
   async signUp(email, password) {
-    try {
-      return auth().createUserWithEmailAndPassword(email, password);
-    } catch (error) {
-      throw new Error(error);
-    }
+    return auth().createUserWithEmailAndPassword(email, password);
   },
 
   async signOut(): Promise<unknown> {
-    try {
-      return await auth().signOut();
-    } catch (error) {
-      throw new Error(error);
-    }
+    return auth().signOut();
   },
 
   async deleteCurrentUser() {
     const user: UserTypes = auth().currentUser;
-    try {
-      if (user) {
-        await user.delete();
-        console.log(`${user.email} deleted`);
-      } else {
-        console.warn('No user is signed in.');
-      }
-    } catch (error) {
-      throw new Error(error);
+    if (user) {
+      await user.delete();
+      console.log(`${user.email} deleted`);
+    } else {
+      console.warn('No user is signed in.');
     }
   },
 
   async updateEmail(email) {
-    // TODO
+    return auth().currentUser.updateEmail(email);
   },
 
   async updatePassword(password) {
     // TODO
   },
 
-  async updateUserProfile(profile) {
+  async updateUserProfile(displayName) {
     // profile: { displayName }
-    try {
-      return await auth().currentUser.updateProfile(profile);
-    } catch (error) {
-      throw new Error(error);
-    }
+    return auth().currentUser.updateProfile({ displayName });
   },
 
   checkUserAuthentication() {
