@@ -1,12 +1,13 @@
 // App.js
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { Alert, BackHandler, View } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import { useObserver } from 'mobx-react';
 import { css } from '@emotion/native';
 import { Dialogflow_V2 } from 'react-native-dialogflow';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ChatBotStore, UserStore } from '../../viewModel';
 import dialogflowConfig from '../../../dialogflowENV';
 import {
@@ -140,7 +141,31 @@ const TransactionInfo = (): JSX.Element => {
       </View>
     </Send>
   );
-
+  const navigation = useNavigation();
+  useFocusEffect(() => {
+    const onBackPress = async () => {
+      const result = new Promise(() => (
+        Alert.alert('경고', '리셋됩니다', [
+          {
+            text: '다시하기',
+            onPress: () => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Main' }],
+              });
+              return true;
+            },
+          }, {
+            text: '계속하기',
+            onPress: () => true,
+          },
+        ])))
+        .then((e) => e);
+      return result;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+  });
   return useObserver(() => (
     <View style={chatbotStyles}>
       <GiftedChat

@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  View, Text, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard, Alert,
+  View, Text, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard, Alert, BackHandler,
 } from 'react-native';
 import styled, { css } from '@emotion/native';
 
 import { useObserver } from 'mobx-react';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
@@ -49,7 +49,15 @@ const completeAreaStyle = css`
 
 const completeButtonStyle = css`
   align-self: center;
-  margin-left: 100px;
+  margin-left: 80px;
+  background-color: #D2691E;
+  border-radius: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+`;
+const completeTextStyle = css`
+  font-family: 'Jua-Regular';
+  font-size: 20px;
 `;
 
 const CheckList = (): JSX.Element => {
@@ -60,9 +68,33 @@ const CheckList = (): JSX.Element => {
       Alert.alert('응');
       // TODO 나중에 할래요, 나중에 할 수 있는 곳 설명 등 나중에 할래요 버튼 누르면 디테일 페이지로
     } else {
-      navigation.navigate('MyInfoStackNavigator', { screen: 'DetailInfo' });
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'Main' }],
+        }),
+        navigation.navigate('MyInfoStackNavigator', { screen: 'DetailInfo' }),
+      );
     }
   };
+  useFocusEffect(() => {
+    const onBackPress = async () => {
+      const result = new Promise(() => (
+        Alert.alert('경고', '직거래가 예약되었습니다.\n취소는 마이페이지나 상세보기 페이지에서 가능합니다.', [
+          {
+            text: '상세페이지로 가기',
+            onPress: () => {
+              navigation.navigate('MyInfoStackNavigator', { screen: 'DetailInfo' });
+              return true;
+            },
+          },
+        ])))
+        .then((e) => e);
+      return result;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+  });
 
   return useObserver(() => (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -76,7 +108,7 @@ const CheckList = (): JSX.Element => {
           <View style={completeAreaStyle}>
             <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
             <View style={completeButtonStyle}>
-              <Text onPress={handleCompleteButton}>다했어요</Text>
+              <Text style={completeTextStyle} onPress={handleCompleteButton}>다했어요</Text>
             </View>
           </View>
           {CheckListStore.checkItems.length !== 0
