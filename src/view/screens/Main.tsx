@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/native';
 import { useNavigation } from '@react-navigation/native';
+import { ChatBotStore, CheckListStore, AssignmentStore } from '../../viewModel';
 import Hamburger from '../components/Main/HamburgerMenu';
 import Slide from '../components/Main/Slide';
 import Button from '../components/Button';
@@ -30,6 +31,15 @@ const Logo = styled.Image`
 
 function Main(): JSX.Element {
   const navigation = useNavigation();
+
+  const startBeezic = () => {
+    ChatBotStore.initChatbotState();
+    AssignmentStore.initAssignmentState();
+    CheckListStore.initCheckListState();
+
+    navigation.navigate('TransactionInfo');
+  };
+
   return (
     <>
       <Margin>
@@ -41,7 +51,7 @@ function Main(): JSX.Element {
       <Margin><Slide Username="임진성" /></Margin>
       <Button
         title="비직하기"
-        onPress={() => navigation.navigate('TransactionInfo')}
+        onPress={startBeezic}
       />
     </>
   );
