@@ -31,7 +31,8 @@ const Finish = (): JSX.Element => {
   const navigation = useNavigation();
   const onFinish = () => {
     const user = {
-      _id: 1,
+      uid: UserStore.user.uid,
+      displayName: UserStore.user.displayName,
     };
     // viewModel의 Action 사용
     ChatBotStore.addReservation(user);
