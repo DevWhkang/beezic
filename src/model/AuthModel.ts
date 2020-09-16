@@ -29,7 +29,7 @@ const AuthModel: AuthModelTypes = {
   },
 
   async updatePassword(password) {
-    // TODO
+    return auth().currentUser.updatePassword(password);
   },
 
   async updateUserProfile(displayName) {
