@@ -1,7 +1,7 @@
 // App.js
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { GiftedChat, Send } from 'react-native-gifted-chat';
+import { GiftedChat, Send, InputToolbar } from 'react-native-gifted-chat';
 import { useObserver } from 'mobx-react';
 import { css } from '@emotion/native';
 import { Dialogflow_V2 } from 'react-native-dialogflow';
@@ -141,6 +141,8 @@ const TransactionInfo = (): JSX.Element => {
     </Send>
   );
 
+  const isHideInput = (props) => <InputToolbar {...props} />;
+
   return useObserver(() => (
     <View style={chatbotStyles}>
       <GiftedChat
@@ -158,6 +160,7 @@ const TransactionInfo = (): JSX.Element => {
         textInputProps={{
           autoCorrect: false,
         }}
+        renderInputToolbar={(props) => isHideInput(props)}
       />
     </View>
   ));
