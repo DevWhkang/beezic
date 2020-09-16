@@ -1,20 +1,15 @@
 import { observable } from 'mobx';
-import { setCheckListDoc, getCheckListDoc } from '../model/checkListModel';
+import CheckListModel from '../model/CheckListModel';
+import { DetailInfoStoreStates } from './@types';
 
-interface IDetailInfoStore {
-  transactionDetailInfo: [];
-  transactionCheckList: [];
-  userTransactionList: [];
-}
-
-const DetailInfoStore: IDetailInfoStore = observable({
+const DetailInfoStore: DetailInfoStoreStates = observable({
   transactionDetailInfo: [],
   transactionCheckList: [],
   userTransactionList: [],
 
   getUserTransactionList(userId) {
     // db에서 data를 get -> [{}, ...]
-    getCheckListDoc((dataArray: []) => {
+    CheckListModel.getCheckListDoc((dataArray) => {
       dataArray.forEach((reservation) => {
         if (reservation.user.id === userId) {
           this.userTransactionList.push(reservation);

@@ -19,6 +19,18 @@
     "@typescript-eslint/no-unused-vars": "error",
     "import/no-extraneous-dependencies": "off",
     "import/no-unresolved": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never",
+        "js": "never",
+        "jsx": "never",
+        "mjs": "never",
+        "": "never"
+      }
+    ],
     "react/jsx-filename-extension": [
       1,
       {
