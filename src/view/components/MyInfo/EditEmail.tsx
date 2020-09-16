@@ -1,9 +1,10 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
-import { Keyboard } from 'react-native';
+import { useObserver } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import TextInput from '../TextInput';
 import Button from '../Button';
+import { UserStore, ErrorStore } from '../../../viewModel';
 
 type EditEmailPropTypes = {
   textInputSettings:{
@@ -13,7 +14,6 @@ type EditEmailPropTypes = {
     background:Record<string, unknown>,
     label: string,
     placeholder:string,
-    onPress: () => void
   }
 };
 const buttonStyle = css`
@@ -37,35 +37,49 @@ const EditEmail = ({
     label,
     placeholder,
     background,
-    onPress,
   },
 }: EditEmailPropTypes):JSX.Element => {
   const navigation = useNavigation();
-  return (
+  const onChangeText = (email: string) => {
+    UserStore.email = email;
+  };
+
+  const onChangeButton = async () => {
+    await UserStore.updateEmail(UserStore.email);
+    if (!ErrorStore.error) navigation.goBack();
+  };
+
+  const onCancelButton = () => {
+    UserStore.email = '';
+    navigation.goBack();
+  };
+
+  return useObserver(() => (
     <>
       <TextInput
         labelStyle={labelStyle}
         textInputStyle={textInputStyle}
         viewStyle={viewStyle}
         label={label}
-        title="보내기"
         placeholder={placeholder}
         background={background}
-        onPress={Keyboard.dismiss}
+        onChangeText={onChangeText}
+        message={ErrorStore.message('email', '이메일 형식이 아니에요!')}
       />
       <FlatButton>
         <Button
           title="바꾸기"
           background={buttonStyle}
-          onPress={Keyboard.dismiss}
+          onPress={onChangeButton}
+          disabled={!UserStore.email.match(/^\w+\.?\w+@\w+\.\w+\.?\w+$/g)}
         />
         <Button
           title="취소하기"
           background={buttonStyle}
-          onPress={() => navigation.goBack()}
+          onPress={onCancelButton}
         />
       </FlatButton>
     </>
-  );
+  ));
 };
 export default EditEmail;
