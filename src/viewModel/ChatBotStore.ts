@@ -52,7 +52,6 @@ const ChatBotStore: ChatbotStoreStates = observable({
 
   setMessages(messages) {
     this.messages = GiftedChat.append(this.messages, messages);
-    // this.messages = messages.concat(this.messages);
   },
 
   setAddress(data) {

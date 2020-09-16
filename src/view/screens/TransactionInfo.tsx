@@ -1,12 +1,17 @@
 // App.js
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
-import { GiftedChat, Send, InputToolbar } from 'react-native-gifted-chat';
+import {
+  GiftedChat, Send, InputToolbar, Time,
+} from 'react-native-gifted-chat';
+import {
+  Alert, BackHandler, View, Text,
+} from 'react-native';
 import { useObserver } from 'mobx-react';
 import { css } from '@emotion/native';
 import { Dialogflow_V2 } from 'react-native-dialogflow';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ChatBotStore, UserStore } from '../../viewModel';
 import dialogflowConfig from '../../../dialogflowENV';
 import {
@@ -27,6 +32,18 @@ const sendStyle = css`
   color: #EF904C;
   margin-right: 5px;
   margin-bottom: 4px;
+`;
+
+const inputDownStyle = css`
+  align-self: center;
+`;
+
+const inputDownText = css`
+  font-family: 'Jua-Regular';
+  font-size: 15;
+  color: #000;
+  opacity: 0.4;
+  margin-top: 10;
 `;
 
 const TransactionInfo = (): JSX.Element => {
@@ -141,8 +158,101 @@ const TransactionInfo = (): JSX.Element => {
     </Send>
   );
 
-  const isHideInput = (props) => <InputToolbar {...props} />;
+  const renderInputToolbar = (props) => {
+    const { messages } = props;
+    const { text, user } = messages[0];
 
+    if (user._id === 1) {
+      if (text.includes('직거래 장소를 알려주세요')) {
+        return (
+          <View style={inputDownStyle}>
+            <Text style={inputDownText}>입력 창은 직거래 장소를 알려주시면 돌려 드릴게요.</Text>
+          </View>
+        );
+      }
+      if (text.includes('직거래 장소를 다시 선택')) {
+        return (
+          <View style={inputDownStyle}>
+            <Text style={inputDownText}>입력 창은 직거래 장소를 다시 알려주시면 돌려 드릴게요.</Text>
+          </View>
+        );
+      }
+      if (text.includes('픽업지는 어디인가요?')) {
+        return (
+          <View style={inputDownStyle}>
+            <Text style={inputDownText}>입력 창은 픽업 장소를 알려주시면 돌려 드릴게요.</Text>
+          </View>
+        );
+      }
+      if (text.includes('픽업지 장소를 다시 선택')) {
+        return (
+          <View style={inputDownStyle}>
+            <Text style={inputDownText}>입력 창은 픽업 장소를 다시 알려주시면 돌려 드릴게요.</Text>
+          </View>
+        );
+      }
+      if (text.includes('사진을 업로드')) {
+        return (
+          <View style={inputDownStyle}>
+            <Text style={inputDownText}>입력 창은 사진을 업로드 해주시면 돌려 드릴게요.</Text>
+          </View>
+        );
+      }
+      if (text.includes('중고 직거래의 별명')) {
+        return (
+          <View style={inputDownStyle}>
+            <Text style={inputDownText}>해당 직거래를 한눈에 알아볼 수 있도록 별명을 지어주세요.</Text>
+          </View>
+        );
+      }
+      if (text.includes('비직 직원이 배정됩니다')) {
+        return (
+          <View style={inputDownStyle}>
+            <Text style={inputDownText}>Finish 버튼을 누르면 담당 직원을 배정해 드릴게요.</Text>
+          </View>
+        );
+      }
+    }
+    return (
+      <InputToolbar
+        {...props}
+        containerStyle={{
+          backgroundColor: '#fff',
+          borderRadius: 60,
+          paddingLeft: 5,
+        }}
+      />
+    );
+  };
+  const renderTime = () => {
+    // 이렇게 해야... 메시지에서 시간 없어짐...;;
+  };
+
+  const navigation = useNavigation();
+  useFocusEffect(() => {
+    const onBackPress = async () => {
+      const result = new Promise(() => (
+        Alert.alert('경고', '리셋됩니다', [
+          {
+            text: '다시하기',
+            onPress: () => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Main' }],
+              });
+              return true;
+            },
+          }, {
+            text: '계속하기',
+            onPress: () => true,
+          },
+        ])))
+        .then((e) => e);
+      return result;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+  });
   return useObserver(() => (
     <View style={chatbotStyles}>
       <GiftedChat
@@ -160,7 +270,8 @@ const TransactionInfo = (): JSX.Element => {
         textInputProps={{
           autoCorrect: false,
         }}
-        renderInputToolbar={(props) => isHideInput(props)}
+        renderInputToolbar={(props) => renderInputToolbar(props)}
+        renderTime={renderTime}
       />
     </View>
   ));
