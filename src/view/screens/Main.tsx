@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from '@emotion/native';
 import { useNavigation } from '@react-navigation/native';
-import { ChatBotStore, CheckListStore, AssignmentStore } from '../../viewModel';
+import { useObserver } from 'mobx-react';
+import {
+  ChatBotStore, CheckListStore, AssignmentStore, UserStore,
+} from '../../viewModel';
 import Hamburger from '../components/Main/HamburgerMenu';
 import Slide from '../components/Main/Slide';
 import Button from '../components/Button';
@@ -31,7 +34,7 @@ const Logo = styled.Image`
 
 function Main(): JSX.Element {
   const navigation = useNavigation();
-
+  const { user } = UserStore;
   const startBeezic = () => {
     ChatBotStore.initChatbotState();
     AssignmentStore.initAssignmentState();
@@ -40,7 +43,7 @@ function Main(): JSX.Element {
     navigation.navigate('TransactionInfo');
   };
 
-  return (
+  return useObserver(() => (
     <>
       <Margin>
         <HeaderWrapper>
@@ -48,13 +51,13 @@ function Main(): JSX.Element {
           <Logo source={logo} />
         </HeaderWrapper>
       </Margin>
-      <Margin><Slide Username="임진성" /></Margin>
+      <Margin><Slide Username={user.displayName} /></Margin>
       <Button
         title="비직하기"
         onPress={startBeezic}
       />
     </>
-  );
+  ));
 }
 
 export default Main;

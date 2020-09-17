@@ -70,6 +70,11 @@ const iconStyle = css`
   align-self: center;
 `;
 
+const completeButtonStyle = css`
+  color: #329632;
+  align-self: center;
+`;
+
 const btnText = css`
   text-align: center;
   color: gray;
@@ -82,7 +87,7 @@ const titleStyle = css`
   font-size: 25;
   margin-top: 30;
   margin-bottom: 10;
-  color: #E56D29;
+  color: #DB631F;
   font-family: 'Jua-Regular';
 `;
 
@@ -321,7 +326,7 @@ const Camera = (): JSX.Element => {
               </TouchableOpacity>
               <TouchableOpacity onPress={closeCameraModal} style={iconWrapper}>
                 <View style={launchCameraIconArea}>
-                  <FontAwesomeIcon icon={faCheckSquare} style={iconStyle} size={40} />
+                  <FontAwesomeIcon icon={faCheckSquare} style={completeButtonStyle} size={40} />
                 </View>
                 <Text style={btnText}>다했어요</Text>
               </TouchableOpacity>

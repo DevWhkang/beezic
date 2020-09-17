@@ -6,7 +6,7 @@ import { ChatbotStoreStates } from './@types/ChatBotStore';
 const ChatBotStore: ChatbotStoreStates = observable({
   // State
   // address state
-  input: '',
+  input: false,
   messages: [],
   modalVisible: false,
   jibunAddress: '',
@@ -46,13 +46,12 @@ const ChatBotStore: ChatbotStoreStates = observable({
     this.modalVisible = !this.modalVisible;
   },
 
-  setInput(input: string) {
-    this.input = input;
+  setInput() {
+    this.input = !this.input;
   },
 
   setMessages(messages) {
     this.messages = GiftedChat.append(this.messages, messages);
-    // this.messages = messages.concat(this.messages);
   },
 
   setAddress(data) {

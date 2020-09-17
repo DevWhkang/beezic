@@ -27,15 +27,17 @@ const EditBtnStyle = css`
 `;
 
 type UserSpecProps = {
-  userInfo: {title: string, info: string, userName: string},
+  userInfo: { title: string, info: string, userName: string },
   edit?: boolean,
-  onPress?: ()=>void;
+  onPress?: () => void;
+  style?: Record<string, string>
 };
 
 const UserSpecSection = ({
   userInfo: { title, info, userName },
   edit,
   onPress,
+  style
 }: UserSpecProps): JSX.Element => {
   const screenFor = title.split(' ')[1].toLowerCase();
   const textInputSettings = {
@@ -51,7 +53,7 @@ const UserSpecSection = ({
   const navigation = useNavigation();
   return (
     <>
-      <UserSpecSectionWrapper>
+      <UserSpecSectionWrapper style={style}>
         <UserInfoTitle>
           {title}
         </UserInfoTitle>
@@ -78,5 +80,6 @@ const UserSpecSection = ({
 UserSpecSection.defaultProps = {
   onPress: null,
   edit: false,
+  style: {},
 };
 export default UserSpecSection;
