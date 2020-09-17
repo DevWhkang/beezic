@@ -63,23 +63,14 @@ const SeeAllTransaction = styled.TouchableOpacity`
   margin:0 0 10px 0;
 `;
 
-type MyInfoMainBodyPropTypes = {
-  userData: { userName: string, userEmail: string, transactions: [] }
-};
-
-const MyInfoMainBody = ({
-  userData: {
-    userName,
-    userEmail,
-  },
-}: MyInfoMainBodyPropTypes): JSX.Element => {
+const MyInfoMainBody = (): JSX.Element => {
   const navigation = useNavigation();
   const { user } = UserStore;
   return useObserver(() => (
     <>
       <UserInfoWrapper>
-        <UserSpecSection userInfo={{ title: '👤 Username', info: userName }} />
-        <UserSpecSection userInfo={{ title: '📬 Email', info: userEmail }} />
+        <UserSpecSection userInfo={{ title: '👤 Username', info: UserStore.user.displayName }} />
+        <UserSpecSection userInfo={{ title: '📬 Email', info: UserStore.user.email }} />
         <EditMyInfoBtn onPress={() => navigation.navigate('EditMyInfo')}>
           <Text style={{ fontSize: 19, color: 'black' }}>내 정보 수정하기</Text>
         </EditMyInfoBtn>

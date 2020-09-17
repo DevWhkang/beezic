@@ -13,14 +13,14 @@ const HeaderMenu = styled.TouchableOpacity`
 
 type HamburgerMenuPropTypes = {
   navigation: StackNavigationProp,
-}
+};
 
 function HamburgerMenu(): JSX.Element {
   const navigation = useNavigation();
   return (
     <HeaderMenu onPress={() => navigation.openDrawer()}>
       <FontAwesomeIcon
-        color="#aaa"
+        color="#E56D29"
         size={40}
         icon={faBars}
       />

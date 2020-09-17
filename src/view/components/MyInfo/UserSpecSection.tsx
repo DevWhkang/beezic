@@ -37,7 +37,7 @@ const UserSpecSection = ({
   userInfo: { title, info, userName },
   edit,
   onPress,
-  style
+  style,
 }: UserSpecProps): JSX.Element => {
   const screenFor = title.split(' ')[1].toLowerCase();
   const textInputSettings = {

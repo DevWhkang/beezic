@@ -2,6 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import styled, { css } from '@emotion/native';
 import Swiper from 'react-native-swiper';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
 const Wrapper = css`
   {};
@@ -10,11 +12,39 @@ const Wrapper = css`
 const Box = styled.View`
   width: auto;
   height: 360px;
+  border-width: 1px;
+  border-radius: 20px;
+  border-color: #d2d2d2;
+`;
+
+const dotStyle = css`
+  background-color: #c8c8c8;
+  width: 7;
+  height: 7;
+  border-radius: 7px;
+  margin-left: 7;
+  margin-right: 7;
+  opacity: 0.6;
+`;
+
+const dotActiveStyle = css`
+  background-color: #F5AF64;
+  width: 7;
+  height: 7;
+  border-radius: 7px;
+  margin-left: 7;
+  margin-right: 7;
+`;
+
+const allowButtonStyle = css`
+  color: #8c8c8c;
+  opacity: 0.6;
 `;
 
 const SwiperBox = css`
   flex:1;
-  background-color: #9dd6eb;
+  background-color: #FFEFD5;
+  border-radius: 20px;
 `;
 
 const ProfileTitle = styled.Text`
@@ -50,7 +80,14 @@ const MarginTop = styled.View`
 function Slide({ Username }: props): JSX.Element {
   return (
     <Box>
-      <Swiper showsButtons style={Wrapper}>
+      <Swiper
+        showsButtons
+        loop
+        dot={(<View style={dotStyle} />)}
+        activeDot={(<View style={dotActiveStyle} />)}
+        prevButton={(<FontAwesomeIcon size={20} icon={faAngleDoubleLeft} style={allowButtonStyle} />)}
+        nextButton={(<FontAwesomeIcon size={20} icon={faAngleDoubleRight} style={allowButtonStyle} />)}
+      >
         <View style={SwiperBox}>
           <ProfileTitle>
             {Username}
