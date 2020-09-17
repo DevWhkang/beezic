@@ -3,6 +3,7 @@ import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import CloseMenu from '../components/Main_MenuBar/CloseMenu';
 import LinkText from '../components/LinkText';
+import { UserStore, DetailInfoStore } from '../../viewModel';
 
 const Container = styled.View`
   display: flex;
@@ -16,8 +17,12 @@ const MarginBottom = styled.View`
 `;
 type MainMenuPropTypes={
   navigation: StackNavigationProp
-}
+};
 function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
+  const navigationMyInfo = () => {
+    navigation.navigate('MyInfoStackNavigator', { screen: 'MyInfo' });
+    DetailInfoStore.getUserTransactionList(UserStore.user.uid);
+  };
   return (
     <>
       <CloseMenu closeButtonHandler={() => navigation.goBack()} />
@@ -30,9 +35,11 @@ function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
           />
         </MarginBottom>
         <MarginBottom>
-          <LinkText 
-          onPress={() => navigation.navigate('MyInfoStackNavigator', {screen:'MyInfo'})}
-          content="My Page" size={20} />
+          <LinkText
+            onPress={navigationMyInfo}
+            content="My Page"
+            size={20}
+          />
         </MarginBottom>
         <MarginBottom>
           <LinkText content="Sample 1" size={20} />

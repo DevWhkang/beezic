@@ -1,14 +1,23 @@
-import React from 'react';
-import styled from '@emotion/native';
+import React, { useEffect } from 'react';
+import styled, { css } from '@emotion/native';
 import { Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useObserver } from 'mobx-react';
 import UserSpecSection from './UserSpecSection';
+import { UserStore, DetailInfoStore } from '../../../viewModel';
 
 const UserInfoWrapper = styled.View`
   padding: 10px 5px;
 `;
+
+const SectionTitle = css`
+  margin-left: 10px;
+  font-size: 30px;
+  font-weight: bold;
+`;
+
 const EditMyInfoBtn = styled.TouchableOpacity`
   align-self: center;
   border-bottom-color: #ff8a3d;
@@ -25,12 +34,12 @@ const MyTransactionSectionWrapper = styled.View`
 `;
 const MyTransactionList = styled.ScrollView`
 `;
-const MyTransactionSectionTitle = styled.Text`
+const MyTransaction = styled.View`
   margin: 0 10px;
-  font-size: 30px;
-  font-weight: bold;
   border-bottom-color: #ff8a3d;
   border-bottom-width:2px;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 const MyTransactionBtn = styled.TouchableOpacity`
   background-color: #ff8a3d;
@@ -45,6 +54,9 @@ const MyTransactionTitle = styled.Text`
   text-align: center;
 `;
 
+const UserIconWrapper = styled.TouchableOpacity`
+`;
+
 const SeeAllTransaction = styled.TouchableOpacity`
   align-self: flex-end;
   padding-right: 10px;
@@ -52,18 +64,18 @@ const SeeAllTransaction = styled.TouchableOpacity`
 `;
 
 type MyInfoMainBodyPropTypes = {
-  userData: { userName: string, userEmail: string, transactions:[]}
+  userData: { userName: string, userEmail: string, transactions: [] }
 };
 
 const MyInfoMainBody = ({
   userData: {
     userName,
     userEmail,
-    transactions,
   },
 }: MyInfoMainBodyPropTypes): JSX.Element => {
   const navigation = useNavigation();
-  return (
+  const { user } = UserStore;
+  return useObserver(() => (
     <>
       <UserInfoWrapper>
         <UserSpecSection userInfo={{ title: '👤 Username', info: userName }} />
@@ -73,20 +85,32 @@ const MyInfoMainBody = ({
         </EditMyInfoBtn>
       </UserInfoWrapper>
 
-      <MyTransactionSectionTitle>
-        나의 직거래
-      </MyTransactionSectionTitle>
+      <MyTransaction>
+        <Text style={SectionTitle}>나의 직거래</Text>
+        <UserIconWrapper
+          activeOpacity={0.6}
+          onPress={() => DetailInfoStore.getUserTransactionList(user.uid)}
+        >
+          <FontAwesomeIcon
+            color="#fc8a3d"
+            size={25}
+            icon={faRedoAlt}
+          />
+        </UserIconWrapper>
+      </MyTransaction>
       <MyTransactionSectionWrapper>
         <MyTransactionList
           nestedScrollEnabled
         >
-          {transactions.map(({ id, title }):[JSX.Element] => (
+          {DetailInfoStore.userTransactionList.map(({ alias, id }) => (
             <MyTransactionBtn
               key={id}
-              onPress={() => navigation.navigate('DetailInfo')}
+              onPress={() => navigation.navigate('DetailInfo', {
+                alias, id,
+              })}
             >
               <MyTransactionTitle>
-                {title}
+                {alias}
                 {' '}
                 <FontAwesomeIcon
                   color="white"
@@ -103,7 +127,7 @@ const MyInfoMainBody = ({
         </SeeAllTransaction>
       </MyTransactionSectionWrapper>
     </>
-  );
+  ));
 };
 
 export default MyInfoMainBody;
