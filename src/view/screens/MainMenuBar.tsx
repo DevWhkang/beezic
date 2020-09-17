@@ -16,7 +16,7 @@ const MarginBottom = styled.View`
 `;
 type MainMenuPropTypes={
   navigation: StackNavigationProp
-}
+};
 function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
   return (
     <>
@@ -30,9 +30,11 @@ function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
           />
         </MarginBottom>
         <MarginBottom>
-          <LinkText 
-          onPress={() => navigation.navigate('MyInfoStackNavigator', {screen:'MyInfo'})}
-          content="My Page" size={20} />
+          <LinkText
+            onPress={() => navigation.navigate('MyInfoStackNavigator', { screen: 'MyInfo' })}
+            content="My Page"
+            size={20}
+          />
         </MarginBottom>
         <MarginBottom>
           <LinkText content="Sample 1" size={20} />

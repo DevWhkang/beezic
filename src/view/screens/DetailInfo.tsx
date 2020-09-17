@@ -7,9 +7,8 @@ import {
 } from 'react-native';
 import { useObserver } from 'mobx-react';
 import styled, { css } from '@emotion/native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
-import TransactionDetailInfo from '../components/DetailInfo/TransactionDetailInfo';
 import UserTransactionList from '../components/DetailInfo/UserTransactionList';
 import TransactionCheckList from '../components/DetailInfo/TransactionCheckList';
 import DetailInfoSwiper from '../components/DetailInfo/DetailInfoSwiper';
@@ -62,9 +61,12 @@ const ProfileImageNotification = css`
 const DetailInfo = (): JSX.Element => {
   const { width, height } = Dimensions.get('window');
   const navigation = useNavigation();
+
   useFocusEffect(() => {
     const onBackPress = () => {
-      navigation.navigate('MyInfo');
+      navigation.dispatch(
+        StackActions.popToTop(),
+      );
       return true;
     };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
