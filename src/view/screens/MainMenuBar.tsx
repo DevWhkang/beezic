@@ -19,10 +19,10 @@ type MainMenuPropTypes={
   navigation: StackNavigationProp
 };
 function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
-  // const navigationMyInfo = () => {
-  //   navigation.navigate('MyInfoStackNavigator', { screen: 'MyInfo' });
-  //   DetailInfoStore.getUserTransactionList(UserStore.user.uid);
-  // };
+  const navigationMyInfo = () => {
+    navigation.navigate('MyInfoStackNavigator', { screen: 'MyInfo' });
+    DetailInfoStore.getUserTransactionList(UserStore.user.uid);
+  };
   return (
     <>
       <CloseMenu closeButtonHandler={() => navigation.goBack()} />
@@ -36,7 +36,7 @@ function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
         </MarginBottom>
         <MarginBottom>
           <LinkText
-            onPress={() => navigation.navigate('MyInfoStackNavigator', { screen: 'MyInfo' })}
+            onPress={navigationMyInfo}
             content="My Page"
             size={20}
           />
