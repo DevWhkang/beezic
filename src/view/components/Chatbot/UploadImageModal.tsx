@@ -21,12 +21,12 @@ const ButtonView = styled.View`
 const ToggleText = styled.Text`
   margin-top: 5px;
   width: 170;
-  padding-top: 6;
-  height: 30;
+  padding-top: 12px;
+  padding-bottom: 8px;
   text-align: center;
   color: white;
   font-size: 18;
-  background-color: #E56D29;
+  background-color: #329632;
   font-family: 'Jua-Regular';
   border-radius: 10px;
 `;

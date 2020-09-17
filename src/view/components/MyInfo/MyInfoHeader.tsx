@@ -54,7 +54,7 @@ const MyInfoHeader = ({
     <HeaderBottomWrapper>
       <ProfileTitle>Profile</ProfileTitle>
       <UserName>
-        {`| ${userName}님`}
+        {` | ${userName} 님`}
       </UserName>
       <UserIconWrapper>
         <FontAwesomeIcon
