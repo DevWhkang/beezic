@@ -1,6 +1,8 @@
 export interface OAuthModelTypes {
+  webClientId: string,
   initGoogleConfigure: () => void,
   onGoogleSignIn: () => Promise<UserCredentialTypes>,
+  onFaceBookSignIn: () => Promise<UserCredentialTypes>,
 }
 
 export interface UserTypes {

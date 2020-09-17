@@ -32,8 +32,8 @@ const OAuthIcons = ({ style, size }: OAuthIconsProps): JSX.Element => {
     await OAuthStore.google();
   };
 
-  const onFacebookHandler = () => {
-
+  const onFacebookHandler = async () => {
+    await OAuthStore.facebook();
   };
 
   const onTwitterHandler = () => {

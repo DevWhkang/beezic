@@ -17,10 +17,19 @@ const OAuthStore: OAuthStoreStates = observable({
     try {
       const userCredential: UserCredentialTypes = await OAuthModel.onGoogleSignIn();
       const { user } = userCredential;
+      UserStore.set(user);
       console.log('Google Sign In: ', user);
-      UserStore.user = user;
-      UserStore.isLogin = true;
-      ErrorStore.reset();
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
+  async facebook() {
+    try {
+      const userCredential: UserCredentialTypes = await OAuthModel.onFaceBookSignIn();
+      const { user } = userCredential;
+      UserStore.set(user);
+      console.log('Facebook Sign In: ', user);
     } catch (error) {
       ErrorStore.handle(error);
     }

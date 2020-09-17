@@ -15,6 +15,8 @@ export interface UserStoreStates {
   checkSignIn(callback?: (isSignIn: boolean) => void): void,
   setPreviousInfo(info: Record<string, string>): void,
   clearPreviousInfo(): void,
+  set(user: UserTypes): void,
+  unset(): void,
   in(callback?: () => void): void,
   out(): void,
   up(callback?: () => void): void,
