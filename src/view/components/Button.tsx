@@ -18,7 +18,7 @@ const TouchableButton = styled.TouchableOpacity`
   border-radius: 100px;
   /* width: 100px; */
   align-self: center;
-  opacity: ${(props: ButtonProps) => (props.disabled ? '0.5' : '1')}
+  opacity: ${(props: ButtonProps) => (props.disabled ? '0.5' : '1')};
 `;
 
 const Text = styled.Text`

@@ -8,9 +8,10 @@ import {
 } from '../../viewModel';
 import Hamburger from '../components/Main/HamburgerMenu';
 import Slide from '../components/Main/Slide';
-import Button from '../components/Button';
 import logo from '../../assets/Beezic_Logo.png';
-import News from '../components/Main/News';
+import CardListUp from '../components/Main/CardListUp';
+import Fixbutton from '../components/Main/FixButton';
+import BottomBox from '../components/Main/MainBotBox';
 
 const HeaderWrapper = styled.View`
 position: relative;
@@ -20,7 +21,7 @@ width: 100%;
 height: 60px;
 display: flex;
 flex-direction: row;
-margin-bottom: 60px;
+margin-bottom: 45px;
 `;
 const MainScrollView = styled.ScrollView`
 `;
@@ -31,10 +32,11 @@ const ScrollSectionWrapper = styled.View`
   padding: 5px;
   height: 260px;
 `;
+
 const ButtonStyle = css`
   background-color: #D2691E;
   margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 
 const Logo = styled.Image`
@@ -57,21 +59,21 @@ function Main(): JSX.Element {
   const { height } = Dimensions.get('window');
   return useObserver(() => (
     <>
+      <HeaderWrapper>
+        <Hamburger />
+        <Logo source={logo} />
+      </HeaderWrapper>
       <MainScrollView
         nestedScrollEnabled
       >
-        <HeaderWrapper>
-          <Hamburger />
-          <Logo source={logo} />
-        </HeaderWrapper>
         <Slide Username={UserStore.user.displayName} />
-        <Button
-          title="비직하기"
-          onPress={startBeezic}
-          background={ButtonStyle}
-        />
-        {/* <News propHeight={height} /> */}
+        <CardListUp propHeight={height} />
+        <BottomBox />
       </MainScrollView>
+      <Fixbutton
+        onPress={startBeezic}
+        background={ButtonStyle}
+      />
     </>
   ));
 }

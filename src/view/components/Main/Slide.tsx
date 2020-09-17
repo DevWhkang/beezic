@@ -4,9 +4,14 @@ import styled, { css } from '@emotion/native';
 import Swiper from 'react-native-swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Wrapper = css`
   {};
+`;
+
+const Font = css`
+  font-family: 'Jua-Regular';
 `;
 
 const Box = styled.View`
@@ -50,26 +55,32 @@ const SwiperBox = css`
 const ProfileTitle = styled.Text`
   margin: 30px;
   font-size: 30px;
-  font-weight: bold;
+  font-family: 'Jua-Regular';
   border-bottom-width:2px;
   border-bottom-color: #ff8a3d;
 `;
 
 const SaysHello = styled.Text`
-font-size: 25px;
+  font-size: 25px;
+`;
+
+const ButtonStyle = css`
+  background-color: #D2691E;
+  margin-top: 50px;
+  margin-bottom: 50px;
 `;
 
 const MiddleText = styled.Text`
   margin-bottom: 30px;
   margin-left: 30px;
+  font-family: 'Jua-Regular';
   font-size: 20px;
-  font-weight: bold;
 `;
 
 const LowText = styled.Text`
   margin-left: 40px;
   font-size: 20px;
-  font-weight: bold;
+  font-family: 'Jua-Regular';
 `;
 
 const MarginTop = styled.View`
@@ -82,6 +93,7 @@ function Slide({ Username }: props): JSX.Element {
     <Box>
       <Swiper
         showsButtons
+        // showsPagination={false}
         loop
         dot={(<View style={dotStyle} />)}
         activeDot={(<View style={dotActiveStyle} />)}
@@ -98,13 +110,13 @@ function Slide({ Username }: props): JSX.Element {
           </ProfileTitle>
           <MiddleText>중고 직거래가 잡히셨나요 ?</MiddleText>
           <LowText>비직하기를 클릭해서</LowText>
-          <LowText>직거래 대행을 시작해 보세요!</LowText>
+          <LowText>지금 바로 직거래 대행을 시작해 보세요!</LowText>
         </View>
         <View style={SwiperBox}>
-          <MarginTop>
-            <MiddleText>Fun 하고 Cool 한 직거래대행</MiddleText>
-            <MiddleText>Sexy하게 Beezic 지금 바로 시작하세요</MiddleText>
-          </MarginTop>
+          <ProfileTitle>직거래에 고충을 겪는 분들 Beezic 을 추천 합니다.</ProfileTitle>
+          <MiddleText>첫번째✅ 직거래 하고싶은데 시간이 없는 분  </MiddleText>
+          <MiddleText>두번째✅ 모르는 사람을 직접 만나기 힘드신 분 </MiddleText>
+          <MiddleText>세번째✅ 중고품을 검사 받고 싶은 분</MiddleText>
         </View>
       </Swiper>
     </Box>
