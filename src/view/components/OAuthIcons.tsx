@@ -36,14 +36,6 @@ const OAuthIcons = ({ style, size }: OAuthIconsProps): JSX.Element => {
     await OAuthStore.facebook();
   };
 
-  const onTwitterHandler = () => {
-
-  };
-
-  const onAppleHandler = () => {
-
-  };
-
   return (
     <Container style={style}>
       <OAuthIcon onPress={onGoogleHandler}>
@@ -58,13 +50,13 @@ const OAuthIcons = ({ style, size }: OAuthIconsProps): JSX.Element => {
           size={size}
         />
       </OAuthIcon>
-      <OAuthIcon onPress={onTwitterHandler}>
+      <OAuthIcon onPress={() => {}}>
         <FontAwesomeIcon
           icon={faTwitter}
           size={size}
         />
       </OAuthIcon>
-      <OAuthIcon onPress={onAppleHandler}>
+      <OAuthIcon onPress={() => {}}>
         <FontAwesomeIcon
           icon={faApple}
           size={size}
