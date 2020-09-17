@@ -6,9 +6,6 @@ import { UserStore, DetailInfoStore } from '../../viewModel';
 
 const MyInfo = (): JSX.Element => {
   const { user } = UserStore;
-  useEffect(() => {
-    DetailInfoStore.getUserTransactionList(user.uid);
-  }, []);
   const userData: {
     userName: Record<string, string>,
     userEmail: Record<string, string>,
