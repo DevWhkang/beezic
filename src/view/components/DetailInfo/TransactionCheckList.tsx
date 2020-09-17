@@ -117,7 +117,7 @@ const userTransactionList = ({ propHeight }): JSX.Element => {
     },
   ];
 
-  const draggedValue = new Animated.Value(100);
+  const draggedValue = new Animated.Value(90);
 
   const ModalRef = useRef(null);
 

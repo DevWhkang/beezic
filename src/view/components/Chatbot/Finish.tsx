@@ -23,8 +23,9 @@ const FinishText = styled.Text`
   color: #E56D29;
   font-size: 25;
   font-family: 'Jua-Regular';
-  text-align: center;
+  /* text-align: center; */
   text-decoration-line: underline;
+  margin-left: 120;
 `;
 
 const Finish = (): JSX.Element => {
