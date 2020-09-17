@@ -2,11 +2,12 @@ import React from 'react';
 
 import {
   View,
-  Dimensions,
+  Dimensions, BackHandler,
   // TouchableOpacityBase,
 } from 'react-native';
 import { useObserver } from 'mobx-react';
 import styled, { css } from '@emotion/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
 import TransactionDetailInfo from '../components/DetailInfo/TransactionDetailInfo';
 import UserTransactionList from '../components/DetailInfo/UserTransactionList';
@@ -60,7 +61,15 @@ const ProfileImageNotification = css`
 // TODO: username 가져와서 임진성 부분에 넣기
 const DetailInfo = (): JSX.Element => {
   const { width, height } = Dimensions.get('window');
-
+  const navigation = useNavigation();
+  useFocusEffect(() => {
+    const onBackPress = () => {
+      navigation.navigate('MyInfo');
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+  });
   return useObserver(() => (
     <Container>
       <ContentsForm>

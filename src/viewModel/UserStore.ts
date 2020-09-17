@@ -91,7 +91,7 @@ const UserStore: UserStoreStates = observable({
       UserStore.user = AuthModel.getCurrentUser();
       UserStore.isLogin = true;
       UserStore.setPreviousInfo({ email, password, username: displayName });
-      console.log('Sign Up: ', user);
+      console.log('Sign Up: ', UserStore.user);
       if (callback) callback();
     } catch (error) {
       ErrorStore.handle(error);
@@ -147,6 +147,18 @@ const UserStore: UserStoreStates = observable({
     }
   },
 
+  async updatePassword(password) {
+    try {
+      await AuthModel.updatePassword(password);
+      const user: UserTypes = AuthModel.getCurrentUser();
+      UserStore.user = user;
+      ErrorStore.reset();
+      console.log('Updating Password');
+    } catch (error) {
+      ErrorStore.handle(error);
+    }
+  },
+
   compareUsername() {
     return UserStore.previousUsername === UserStore.username;
   },
@@ -185,6 +197,10 @@ const UserStore: UserStoreStates = observable({
     return isTouched
       && !!UserStore.user
       && UserStore.user.emailVerified;
+  },
+
+  isEmptyPassword() {
+    return (!UserStore.password || !UserStore.passwordCheck);
   },
 
   checkPassword() {

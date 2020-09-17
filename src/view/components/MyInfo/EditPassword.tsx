@@ -1,9 +1,10 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
-import { Keyboard } from 'react-native';
+import { useObserver } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import TextInput from '../TextInput';
 import Button from '../Button';
+import { UserStore, ErrorStore } from '../../../viewModel';
 
 type EditPasswordPropTypes = {
   textInputSettings:{
@@ -13,7 +14,6 @@ type EditPasswordPropTypes = {
     background:Record<string, unknown>,
     label: string,
     placeholder:string,
-    onPress: () => void
   }
 };
 const buttonStyle = css`
@@ -39,11 +39,28 @@ const EditPassword = ({
     label,
     placeholder,
     background,
-    onPress,
   },
 }: EditPasswordPropTypes):JSX.Element => {
   const navigation = useNavigation();
-  return (
+
+  const onChangeText = (password: string) => {
+    UserStore.password = password;
+  };
+
+  const onCheckChangeText = (passwordCheck: string) => {
+    UserStore.passwordCheck = passwordCheck;
+  };
+
+  const onChangeButton = async () => {
+    await UserStore.updatePassword(UserStore.password);
+    if (!ErrorStore.error) navigation.goBack();
+  };
+
+  const onCancelButton = () => {
+    navigation.goBack();
+  };
+
+  return useObserver(() => (
     <>
       <MarginBottom>
         <TextInput
@@ -54,7 +71,7 @@ const EditPassword = ({
           label={label}
           placeholder={placeholder}
           background={background}
-          onPress={Keyboard.dismiss}
+          onChangeText={onChangeText}
         />
       </MarginBottom>
       <MarginBottom>
@@ -66,22 +83,33 @@ const EditPassword = ({
           label={`${label} 확인`}
           placeholder={placeholder}
           background={background}
-          onPress={Keyboard.dismiss}
+          onChangeText={onCheckChangeText}
+          message={(
+            !UserStore.isEmptyPassword()
+            && (UserStore.checkPassword()
+              ? '제대로 작성하셨네요!'
+              : '음... 다시 한 번 작성해보실래요?'
+            )
+          )}
         />
       </MarginBottom>
       <FlatButton>
         <Button
           title="바꾸기"
           background={buttonStyle}
-          onPress={Keyboard.dismiss}
+          onPress={onChangeButton}
+          disabled={
+            UserStore.isEmptyPassword()
+            || !UserStore.checkPassword()
+          }
         />
         <Button
           title="취소하기"
           background={buttonStyle}
-          onPress={() => navigation.goBack()}
+          onPress={onCancelButton}
         />
       </FlatButton>
     </>
-  );
+  ));
 };
 export default EditPassword;
