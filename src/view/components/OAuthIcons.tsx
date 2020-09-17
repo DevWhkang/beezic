@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
-  faGoogle, faFacebookF, faTwitter, faInstagram,
+  faGoogle, faFacebookF, faTwitter, faApple,
 } from '@fortawesome/free-brands-svg-icons';
+import { OAuthStore } from '../../viewModel';
 
 type OAuthIconsProps = {
   style?: Record<string, string>,
@@ -18,14 +19,60 @@ const Container = styled.View<OAuthIconsProps>`
   width: 200px;
 `;
 
-const OAuthIcons = ({ style, size }: OAuthIconsProps): JSX.Element => (
-  <Container style={style}>
-    <FontAwesomeIcon icon={faGoogle} size={size} />
-    <FontAwesomeIcon icon={faFacebookF} size={size} />
-    <FontAwesomeIcon icon={faTwitter} size={size} />
-    <FontAwesomeIcon icon={faInstagram} size={size} />
-  </Container>
-);
+const OAuthIcon = styled.TouchableOpacity`
+
+`;
+
+const OAuthIcons = ({ style, size }: OAuthIconsProps): JSX.Element => {
+  useEffect(() => {
+    OAuthStore.init();
+  }, []);
+
+  const onGoogleHandler = async () => {
+    await OAuthStore.google();
+  };
+
+  const onFacebookHandler = () => {
+
+  };
+
+  const onTwitterHandler = () => {
+
+  };
+
+  const onAppleHandler = () => {
+
+  };
+
+  return (
+    <Container style={style}>
+      <OAuthIcon onPress={onGoogleHandler}>
+        <FontAwesomeIcon
+          icon={faGoogle}
+          size={size}
+        />
+      </OAuthIcon>
+      <OAuthIcon onPress={onFacebookHandler}>
+        <FontAwesomeIcon
+          icon={faFacebookF}
+          size={size}
+        />
+      </OAuthIcon>
+      <OAuthIcon onPress={onTwitterHandler}>
+        <FontAwesomeIcon
+          icon={faTwitter}
+          size={size}
+        />
+      </OAuthIcon>
+      <OAuthIcon onPress={onAppleHandler}>
+        <FontAwesomeIcon
+          icon={faApple}
+          size={size}
+        />
+      </OAuthIcon>
+    </Container>
+  );
+};
 
 OAuthIcons.defaultProps = {
   style: {},
