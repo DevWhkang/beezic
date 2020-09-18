@@ -13,7 +13,7 @@ const HeaderMenu = styled.TouchableOpacity`
 
 type HamburgerMenuPropTypes = {
   navigation: StackNavigationProp,
-}
+};
 
 function HamburgerMenu(): JSX.Element {
   const navigation = useNavigation();
