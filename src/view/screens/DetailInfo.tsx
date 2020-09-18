@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   View,
@@ -7,11 +7,12 @@ import {
 } from 'react-native';
 import { useObserver } from 'mobx-react';
 import styled, { css } from '@emotion/native';
-import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
 import UserTransactionList from '../components/DetailInfo/UserTransactionList';
 import TransactionCheckList from '../components/DetailInfo/TransactionCheckList';
 import DetailInfoSwiper from '../components/DetailInfo/DetailInfoSwiper';
+import { UserStore, DetailInfoStore, CheckListStore } from '../../viewModel';
 
 const Container = styled.View`
   flex: 1;
@@ -57,16 +58,22 @@ const ProfileImageNotification = css`
   border-color: #000;
   opacity: 1;
 `;
-// TODO: username 가져와서 임진성 부분에 넣기
+
 const DetailInfo = (): JSX.Element => {
   const { width, height } = Dimensions.get('window');
+  const route = useRoute();
+  const { alias, id } = route.params;
+
+  useEffect = (() => {
+    console.log(alias, id);
+  }, []);
+
   const navigation = useNavigation();
 
   useFocusEffect(() => {
     const onBackPress = () => {
-      navigation.dispatch(
-        StackActions.popToTop(),
-      );
+      // DetailInfoStore.getUserTransactionList(UserStore.user.uid);
+      navigation.navigate('MyInfo');
       return true;
     };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
@@ -76,7 +83,12 @@ const DetailInfo = (): JSX.Element => {
     <Container>
       <ContentsForm>
         <View>
-          <Greetings>안녕하세요 임진성님,</Greetings>
+          <Greetings>
+            안녕하세요
+            {' '}
+            {UserStore.user.displayName}
+            님,
+          </Greetings>
           <Greetings>비직하기 상세 정보 입니다.</Greetings>
         </View>
         <UserImageForm>

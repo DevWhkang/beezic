@@ -10,6 +10,7 @@ import { useObserver } from 'mobx-react';
 import { ChatBotStore, AssignmentStore } from '../../viewModel';
 import logo from '../../assets/Beezic_Logo_carrot.png'; // TODO svg 파일로 변경
 import LinkText from '../components/LinkText';
+import CompleteAssignment from '../components/Chatbot/CompleteAssignment';
 
 const Container = styled.View`
   font-family: 'BMYEONSUNG';
@@ -70,27 +71,25 @@ const spin = () => {
 
 const StaffAssignment = (): JSX.Element => {
   const navigation = useNavigation();
-
-  // useEffect(() => {
-  //   AssignmentStore.setAssignmentStaff();
-  // }, []);
+  const { isSetReservation } = ChatBotStore;
+  useEffect(() => {
+    if (isSetReservation) {
+      AssignmentStore.setAssignmentStaff();
+    }
+  }, [isSetReservation]);
 
   useEffect(() => {
     spin();
     pulse();
   }, []);
 
-  const screenNavigator = setTimeout(() => {
-    navigation.navigate('CheckList');
-  }, 5000);
   useFocusEffect(() => {
     const onBackPress = async () => {
       const result = new Promise(() => (
-        Alert.alert('경고', '리셋됩니다', [
+        Alert.alert('경고', ' 배정 취소 하시면 담당 직원 배정 없이 중고 직거래가 예약 됩니다. 배정이 안된 직거래는 비직에서 검토 후 연락드립니다.', [
           {
-            text: '다시하기',
+            text: '배정 취소',
             onPress: () => {
-              clearInterval(screenNavigator);
               navigation.reset({
                 index: 0,
                 routes: [{ name: 'Main' }],
@@ -107,26 +106,40 @@ const StaffAssignment = (): JSX.Element => {
     };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-  });
+  }, []);
+
+  const startAssignment = () => {
+    if (ChatBotStore.isSetReservation) {
+      AssignmentStore.setAssignmentStaff();
+    }
+  };
 
   return useObserver(() => (
-    <Container>
-      <Logo source={logo} />
-      <Header>담당 거래 직원을 배정 중입니다.</Header>
-      <Animated.View style={{ transform: [{ rotate }, { scale }] }}>
-        <FontAwesomeIcon
-          icon={faCarrot}
-          style={iconStyle}
-          color="#fc8a3d"
-        />
-      </Animated.View>
+    <>
+      {AssignmentStore.isAssignment
+        ? <CompleteAssignment />
+        : (
+          <Container>
+            {ChatBotStore.isSetReservation
+          && startAssignment()}
+            <Logo source={logo} />
+            <Header>담당 거래 직원을 배정 중입니다.</Header>
+            <Animated.View style={{ transform: [{ rotate }, { scale }] }}>
+              <FontAwesomeIcon
+                icon={faCarrot}
+                style={iconStyle}
+                color="#fc8a3d"
+              />
+            </Animated.View>
 
-      <Body>
-        <BodyText>배정이 완료되면</BodyText>
-        <BodyText>체크리스트를 작성해주세요.</BodyText>
-      </Body>
-      <LinkText content="Finish" />
-    </Container>
+            <Body>
+              <BodyText>배정이 완료되면</BodyText>
+              <BodyText>체크리스트를 작성해주세요.</BodyText>
+            </Body>
+            <LinkText content="Finish" />
+          </Container>
+        )}
+    </>
   ));
 };
 

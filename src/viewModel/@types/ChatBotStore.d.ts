@@ -24,6 +24,7 @@ export interface ChatbotStoreStates {
   detailAddress: string;
   totalAddress: Record<string, Record<string, string>>;
   userFinalData: Record<string, unknown>;
+  isSetReservation: boolean;
   isCurrentImage: boolean;
   currentImage: Record<string, unknown>;
   itemImages: [],
@@ -47,4 +48,6 @@ export interface ChatbotStoreStates {
   setConfirmAlias: (confirmAlias: string) => void;
   initChatbotState: () => void;
   setInput: () => void;
+  toogleisSetReservation: () => void;
+  falseIsReservation: () => void;
 }

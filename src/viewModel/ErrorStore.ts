@@ -12,8 +12,8 @@ const ErrorStore: ErrorStoreStates = observable({
 
   // 인자로 받은 error를 auth error와 common error로 분기하고 이를 state에 저장합니다.
   handle(error) {
+    console.error(error);
     const { message, userInfo, namespace } = error;
-    console.error('Error: ', message);
     ErrorStore.error = message;
     ErrorStore.short = namespace === 'auth'
       ? userInfo.message
