@@ -20,11 +20,5 @@ export interface UserTypes {
 }
 
 export interface UserCredentialTypes {
-  user: {
-    uid: string,
-    displayName: string,
-    email: string,
-    emailVerified: boolean,
-    sendEmailVerification: () => void,
-  }
+  user: UserTypes
 }
