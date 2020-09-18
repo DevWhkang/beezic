@@ -58,8 +58,8 @@ const UserStore: UserStoreStates = observable({
   },
 
   unset() {
-    UserStore.user = null;
     UserStore.isLogin = false;
+    UserStore.user = null;
     ErrorStore.reset();
   },
 
