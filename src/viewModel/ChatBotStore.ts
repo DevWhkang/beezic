@@ -38,6 +38,7 @@ const ChatBotStore: ChatbotStoreStates = observable({
   },
   itemImages: [],
   userFinalData: {},
+  isSetReservation: false,
   confirmAlias: '',
   alias: '',
 
@@ -85,6 +86,9 @@ const ChatBotStore: ChatbotStoreStates = observable({
     // db에서 data를 get -> [{}, ...]
     ChatbotModel.getReservationListDoc((dataArray) => {
       // userFinalData 만들기
+      if (dataArray.length !== 0) {
+        console.log('현재 예약 리스트 가져오기 성공');
+      }
       ChatBotStore.setUserFinalData({
         id: dataArray.length + 1,
         user,
@@ -99,6 +103,14 @@ const ChatBotStore: ChatbotStoreStates = observable({
       // 새롭게 추가된 예약 data 배열(list)를 db로 전송
       ChatbotModel.setReservationListDoc(dataArray);
     });
+  },
+
+  toogleisSetReservation() {
+    this.isSetReservation = true;
+  },
+
+  falseIsReservation() {
+    this.isSetReservation = false;
   },
 
   initAddress() {
@@ -171,6 +183,7 @@ const ChatBotStore: ChatbotStoreStates = observable({
     };
     this.itemImages = [];
     this.userFinalData = {};
+    this.isSetReservation = false;
     this.confirmAlias = '';
     this.alias = '';
   },
