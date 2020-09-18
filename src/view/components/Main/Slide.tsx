@@ -20,10 +20,11 @@ const Box = styled.View`
   border-width: 1px;
   border-radius: 20px;
   border-color: #d2d2d2;
+  margin: 10px;
 `;
 
 const dotStyle = css`
-  background-color: #c8c8c8;
+  background-color: #2B3F6B;
   width: 7;
   height: 7;
   border-radius: 7px;
@@ -42,13 +43,13 @@ const dotActiveStyle = css`
 `;
 
 const allowButtonStyle = css`
-  color: #8c8c8c;
-  opacity: 0.6;
+  color: #2B3F6B;
+  opacity: 0.7;
 `;
 
 const SwiperBox = css`
   flex:1;
-  background-color: #FFEFD5;
+  background-color: #ff8a3d;
   border-radius: 20px;
 `;
 
@@ -57,11 +58,13 @@ const ProfileTitle = styled.Text`
   font-size: 30px;
   font-family: 'Jua-Regular';
   border-bottom-width:2px;
-  border-bottom-color: #ff8a3d;
+  border-bottom-color: #2B3F6B;
+  color: white;
 `;
 
 const SaysHello = styled.Text`
   font-size: 25px;
+  color: white;
 `;
 
 const ButtonStyle = css`
@@ -75,17 +78,14 @@ const MiddleText = styled.Text`
   margin-left: 30px;
   font-family: 'Jua-Regular';
   font-size: 20px;
+  color: white;
 `;
 
 const LowText = styled.Text`
   margin-left: 40px;
   font-size: 20px;
   font-family: 'Jua-Regular';
-`;
-
-const MarginTop = styled.View`
-  margin-top: 50px;
-  margin-bottom: 30px;
+  color: white;
 `;
 
 function Slide({ Username }: props): JSX.Element {

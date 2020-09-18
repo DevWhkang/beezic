@@ -8,7 +8,7 @@ import {
 } from '../../viewModel';
 import Hamburger from '../components/Main/HamburgerMenu';
 import Slide from '../components/Main/Slide';
-import logo from '../../assets/Beezic_Logo.png';
+// import logo from '../../assets/Beezic_Logo.png';
 import CardListUp from '../components/Main/CardListUp';
 import Fixbutton from '../components/Main/FixButton';
 import BottomBox from '../components/Main/MainBotBox';
@@ -18,11 +18,12 @@ position: relative;
 padding: 10px;
 bottom: -10;
 width: 100%;
-height: 60px;
+height: 50px;
 display: flex;
 flex-direction: row;
-margin-bottom: 45px;
+margin-bottom: 5px;
 `;
+
 const MainScrollView = styled.ScrollView`
 `;
 
@@ -34,9 +35,10 @@ const ScrollSectionWrapper = styled.View`
 `;
 
 const ButtonStyle = css`
-  background-color: #D2691E;
+  background-color: green;
   margin-top: 50px;
   margin-bottom: 30px;
+  background-color: rgba( 10, 128, 1, 0.7 );
 `;
 
 const Logo = styled.Image`
@@ -61,14 +63,13 @@ function Main(): JSX.Element {
     <>
       <HeaderWrapper>
         <Hamburger />
-        <Logo source={logo} />
+        {/* <Logo source={logo} /> */}
       </HeaderWrapper>
       <MainScrollView
         nestedScrollEnabled
       >
         <Slide Username={UserStore.user.displayName} />
         <CardListUp propHeight={height} />
-        <BottomBox />
       </MainScrollView>
       <Fixbutton
         onPress={startBeezic}

@@ -1,8 +1,7 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
-import { Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlus, faCartPlus, faCarrot } from '@fortawesome/free-solid-svg-icons';
+import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 
 type ButtonProps = {
   title: string,

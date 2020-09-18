@@ -20,21 +20,21 @@ const CarrotImage = styled.Image`
 `;
 
 const Title = styled.Text`
-  font-size: 30;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  font-size: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   margin-left: 30px;
-  color: white;
+  color: white; 
   font-family: 'Jua-Regular';
 `;
-
+// title 두께 줄이기
 const CardListUp = (): JSX.Element => (
   <CheckListWrapper>
     <TitleForm>
       <Title>Beezic Issues</Title>
       <CarrotImage source={carrotLogo} />
     </TitleForm>
-    <View style={{ height: 400, paddingBottom: 10 }}>
+    <View style={{ height: 480, paddingBottom: 10 }}>
       <CardView />
     </View>
   </CheckListWrapper>
