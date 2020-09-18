@@ -48,6 +48,6 @@ export interface ChatbotStoreStates {
   setConfirmAlias: (confirmAlias: string) => void;
   initChatbotState: () => void;
   setInput: () => void;
-  toogleisSetReservation: () => void;
+  toggleIsSetReservation: () => void;
   falseIsReservation: () => void;
 }

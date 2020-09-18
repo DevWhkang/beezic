@@ -1,30 +1,25 @@
 /* eslint-disable no-console */
 import firestore from '@react-native-firebase/firestore';
+import '@react-native-firebase/app';
 import { ChatbotModelTypes } from './@types/ChatBotModel';
-import { ChatBotStore } from '../viewModel';
 
 const ChatbotModel: ChatbotModelTypes = {
-  async getReservationListDoc(callback) {
-    const ReservationListDoc = await firestore()
+  async getReservationListDoc() {
+    return firestore()
       .collection('user-reservation')
       .doc('IBrKfuVZdkesTwqcZHna')
       .get()
       .then((item) => item.data())
-      .catch(console.error);
-    callback(ReservationListDoc['reservation-list']);
+      .then((data) => data['reservation-list']);
   },
+
   async setReservationListDoc(updateData) {
-    const result = await firestore()
+    return firestore()
       .collection('user-reservation')
       .doc('IBrKfuVZdkesTwqcZHna')
-      .update({ 'reservation-list': updateData })
-      .then(() => true)
-      .catch(console.error);
-    console.log('1', true);
-    if (result === true) {
-      ChatBotStore.toogleisSetReservation();
-    }
+      .update({ 'reservation-list': updateData });
   },
+
 };
 
 export default ChatbotModel;
