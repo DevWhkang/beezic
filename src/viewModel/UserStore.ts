@@ -51,6 +51,18 @@ const UserStore: UserStoreStates = observable({
     UserStore.previousPassword = '';
   },
 
+  set(user) {
+    UserStore.user = user;
+    UserStore.isLogin = true;
+    ErrorStore.reset();
+  },
+
+  unset() {
+    UserStore.user = null;
+    UserStore.isLogin = false;
+    ErrorStore.reset();
+  },
+
   async in(callback) {
     try {
       const { email, password } = UserStore;
@@ -59,11 +71,9 @@ const UserStore: UserStoreStates = observable({
       // TODO 이메일 인증 기능 추가
       // if (emailVerified) {
       if (!emailVerified) {
-        UserStore.user = user;
-        UserStore.isLogin = true;
+        UserStore.set(user);
         const { displayName } = user;
         UserStore.setPreviousInfo({ email, password, username: displayName });
-        ErrorStore.reset();
         if (callback) callback();
       }
     } catch (error) {
@@ -75,8 +85,7 @@ const UserStore: UserStoreStates = observable({
     try {
       const user = await AuthModel.signOut();
       console.log('Sign Out: ', user);
-      UserStore.user = null;
-      UserStore.isLogin = false;
+      UserStore.unset();
       UserStore.clearPreviousInfo();
     } catch (error) {
       ErrorStore.handle(error);
@@ -88,8 +97,8 @@ const UserStore: UserStoreStates = observable({
       const { email, password, username: displayName } = UserStore;
       await AuthModel.signUp(email, password);
       await AuthModel.updateUserProfile(displayName);
-      UserStore.user = AuthModel.getCurrentUser();
-      UserStore.isLogin = true;
+      const { user } = AuthModel.getCurrentUser();
+      UserStore.set(user);
       UserStore.setPreviousInfo({ email, password, username: displayName });
       console.log('Sign Up: ', UserStore.user);
       if (callback) callback();
@@ -101,8 +110,7 @@ const UserStore: UserStoreStates = observable({
   async delete(callback) {
     try {
       await AuthModel.deleteCurrentUser();
-      UserStore.isLogin = false;
-      UserStore.user = null;
+      UserStore.unset();
       UserStore.clearPreviousInfo();
       if (callback) callback();
     } catch (error) {
@@ -116,7 +124,7 @@ const UserStore: UserStoreStates = observable({
       await AuthModel.updateUserProfile(displayName);
       UserStore.setPreviousInfo({ username: displayName });
       const user: UserTypes = AuthModel.getCurrentUser();
-      UserStore.user = user;
+      UserStore.set(user);
       console.log(
         (`Updating Username
         Before: ${beforeUser.displayName}
@@ -134,8 +142,7 @@ const UserStore: UserStoreStates = observable({
       await AuthModel.updateEmail(email);
       UserStore.setPreviousInfo({ email });
       const user: UserTypes = AuthModel.getCurrentUser();
-      UserStore.user = user;
-      ErrorStore.reset();
+      UserStore.set(user);
       console.log(
         (`Updating Email
         Before: ${beforeUser.email}
@@ -151,8 +158,7 @@ const UserStore: UserStoreStates = observable({
     try {
       await AuthModel.updatePassword(password);
       const user: UserTypes = AuthModel.getCurrentUser();
-      UserStore.user = user;
-      ErrorStore.reset();
+      UserStore.set(user);
       console.log('Updating Password');
     } catch (error) {
       ErrorStore.handle(error);

@@ -120,9 +120,6 @@ const SignUp = (): JSX.Element => {
         onPress={onLinkButton}
         style={linkStyle}
       />
-      <OAuthIcons
-        style={oauthStyle}
-      />
     </ScrollView>
   ));
 };
