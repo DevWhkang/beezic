@@ -1,5 +1,7 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 
 type ButtonProps = {
   title: string,
@@ -9,16 +11,21 @@ type ButtonProps = {
   disabled?: boolean,
 };
 
+const ButtonView = styled.View`
+  flex: 1;
+  flex-direction: column;
+  margin-right: 20px;
+`;
+
 const TouchableButton = styled.TouchableOpacity`
   display: flex;
-  justify-content: center;
   flex-direction: row;
-  align-items: center;
   background-color: gray;
   border-radius: 100px;
-  /* width: 100px; */
-  align-self: center;
+  align-self: flex-end;
   opacity: ${(props: ButtonProps) => (props.disabled ? '0.5' : '1')};
+  position: absolute;
+  bottom: 0px;
 `;
 
 const Text = styled.Text`
@@ -26,33 +33,39 @@ const Text = styled.Text`
   font-family: 'Jua-Regular';
   font-size: 26.6px;
   font-weight: 600;
-  margin: 10px 20px;
+  margin: 16px 16px;
   align-self: center;
 `;
 
-const Button = ({
+const FixButtonStyle = css`
+  color: white;
+`;
+
+const FixButton = ({
   title, background, foreground, onPress, disabled,
 }: ButtonProps): JSX.Element => (
-  <TouchableButton
-    disabled={disabled}
-    style={background}
-    onPress={onPress}
-    activeOpacity={0.5}
-  >
-    <Text
-      style={foreground}
-      numberOfLines={1}
+  <ButtonView>
+    <TouchableButton
+      disabled={disabled}
+      style={background}
+      onPress={onPress}
+      activeOpacity={0.5}
     >
-      {title}
-    </Text>
-  </TouchableButton>
+      <Text
+        style={foreground}
+        numberOfLines={1}
+      >
+        <FontAwesomeIcon size={35} icon={faCarrot} style={FixButtonStyle} />
+      </Text>
+    </TouchableButton>
+  </ButtonView>
 );
 
-Button.defaultProps = {
+FixButton.defaultProps = {
   background: css``,
   foreground: css``,
   onPress: () => { },
   disabled: false,
 };
 
-export default Button;
+export default FixButton;

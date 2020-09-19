@@ -2,8 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import styled from '@emotion/native';
+import { useObserver } from 'mobx-react';
 import HeaderTopBack from './HeaderTopBack';
 import HeaderTopMenu from './HeaderTopMenu';
+import { UserStore } from '../../../viewModel';
 
 const HeaderWrapper = styled.View`
   height: 150px;
@@ -40,13 +42,11 @@ const UserIconWrapper = styled.TouchableOpacity`
 
 type MyInfoPropTypes = {
   isLastPage: boolean,
-  userData: {userName: string},
 };
 
 const MyInfoHeader = ({
   isLastPage,
-  userData: { userName },
-}: MyInfoPropTypes): JSX.Element => (
+}: MyInfoPropTypes): JSX.Element => useObserver(() => (
   <HeaderWrapper>
     {isLastPage
       ? <HeaderTopBack />
@@ -54,7 +54,7 @@ const MyInfoHeader = ({
     <HeaderBottomWrapper>
       <ProfileTitle>Profile</ProfileTitle>
       <UserName>
-        {` | ${userName} 님`}
+        {` | ${UserStore.user.displayName} 님`}
       </UserName>
       <UserIconWrapper>
         <FontAwesomeIcon
@@ -65,5 +65,6 @@ const MyInfoHeader = ({
       </UserIconWrapper>
     </HeaderBottomWrapper>
   </HeaderWrapper>
-);
+));
+
 export default MyInfoHeader;
