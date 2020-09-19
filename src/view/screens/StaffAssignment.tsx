@@ -73,6 +73,10 @@ const spin = () => {
 const StaffAssignment = (): JSX.Element => {
   const navigation = useNavigation();
 
+  setTimeout(() => {
+    AssignmentStore.toggleIsTimer();
+  }, 20000);
+
   useEffect(() => {
     if (ChatBotStore.isSetReservation) {
       AssignmentStore.assignmentStaff();
@@ -111,7 +115,7 @@ const StaffAssignment = (): JSX.Element => {
 
   return useObserver(() => (
     <>
-      {AssignmentStore.isUpdateBoth
+      {AssignmentStore.isUpdateBoth && AssignmentStore.isTimer
         ? <CompleteAssignment />
         : (
           <Container>

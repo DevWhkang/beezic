@@ -7,6 +7,7 @@ import { AssignmentStoreStates } from './@types/AssignmentStore';
 
 const AssignmentStore: AssignmentStoreStates = observable({
   isUpdateBoth: false,
+  isTimer: false,
   staffs: [],
   ReservationList: [],
   currentReservation: {},
@@ -15,11 +16,15 @@ const AssignmentStore: AssignmentStoreStates = observable({
   // 임시로 랜덤하게 배정
   initAssignmentState() {
     AssignmentStore.isUpdateBoth = false;
-    AssignmentStore.isSelecte = false;
+    AssignmentStore.isTimer = false;
     AssignmentStore.staffs = [];
     AssignmentStore.ReservationList = [];
     AssignmentStore.currentReservation = {};
     AssignmentStore.selectedStaff = {};
+  },
+
+  toggleIsTimer() {
+    AssignmentStore.isTimer = true;
   },
 
   async assignmentStaff() {
