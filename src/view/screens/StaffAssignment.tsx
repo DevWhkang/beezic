@@ -7,6 +7,7 @@ import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useObserver } from 'mobx-react';
+import { ChatbotModel, AssignmentModel } from 'src/model';
 import { ChatBotStore, AssignmentStore } from '../../viewModel';
 import logo from '../../assets/Beezic_Logo_carrot.png'; // TODO svg 파일로 변경
 import LinkText from '../components/LinkText';
@@ -71,12 +72,16 @@ const spin = () => {
 
 const StaffAssignment = (): JSX.Element => {
   const navigation = useNavigation();
-  const { isSetReservation } = ChatBotStore;
+
+  setTimeout(() => {
+    AssignmentStore.toggleIsTimer();
+  }, 20000);
+
   useEffect(() => {
-    if (isSetReservation) {
-      AssignmentStore.setAssignmentStaff();
+    if (ChatBotStore.isSetReservation) {
+      AssignmentStore.assignmentStaff();
     }
-  }, [isSetReservation]);
+  }, [ChatBotStore.isSetReservation]);
 
   useEffect(() => {
     spin();
@@ -108,20 +113,13 @@ const StaffAssignment = (): JSX.Element => {
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   }, []);
 
-  const startAssignment = () => {
-    if (ChatBotStore.isSetReservation) {
-      AssignmentStore.setAssignmentStaff();
-    }
-  };
-
   return useObserver(() => (
     <>
-      {AssignmentStore.isAssignment
+      {AssignmentStore.isUpdateBoth && AssignmentStore.isTimer
         ? <CompleteAssignment />
         : (
           <Container>
-            {ChatBotStore.isSetReservation
-          && startAssignment()}
+            {ChatBotStore.isSetReservation}
             <Logo source={logo} />
             <Header>담당 거래 직원을 배정 중입니다.</Header>
             <Animated.View style={{ transform: [{ rotate }, { scale }] }}>

@@ -44,51 +44,50 @@ const ChatBotStore: ChatbotStoreStates = observable({
 
   // Action
   setModalVisible() {
-    this.modalVisible = !this.modalVisible;
+    ChatBotStore.modalVisible = !ChatBotStore.modalVisible;
   },
 
   setInput() {
-    this.input = !this.input;
+    ChatBotStore.input = !ChatBotStore.input;
   },
 
   setMessages(messages) {
-    this.messages = GiftedChat.append(this.messages, messages);
+    ChatBotStore.messages = GiftedChat.append(ChatBotStore.messages, messages);
   },
 
   setAddress(data) {
     const { jibunAddress, roadAddress } = data;
-    this.jibunAddress = jibunAddress;
-    this.roadAddress = roadAddress;
+    ChatBotStore.jibunAddress = jibunAddress;
+    ChatBotStore.roadAddress = roadAddress;
   },
 
   setDetailAddress(detailAddress) {
-    this.detailAddress = detailAddress;
+    ChatBotStore.detailAddress = detailAddress;
   },
 
   setTotalAddress(type) {
     if (type === '직거래 장소' && type !== '픽업지') {
-      this.totalAddress.location.roadAddress = this.roadAddress;
-      this.totalAddress.location.jibunAddress = this.jibunAddress;
-      this.totalAddress.location.detailAddress = this.detailAddress;
+      ChatBotStore.totalAddress.location.roadAddress = ChatBotStore.roadAddress;
+      ChatBotStore.totalAddress.location.jibunAddress = ChatBotStore.jibunAddress;
+      ChatBotStore.totalAddress.location.detailAddress = ChatBotStore.detailAddress;
     }
     if (type !== '직거래 장소' && type === '픽업지') {
-      this.totalAddress.pickup.roadAddress = this.roadAddress;
-      this.totalAddress.pickup.jibunAddress = this.jibunAddress;
-      this.totalAddress.pickup.detailAddress = this.detailAddress;
+      ChatBotStore.totalAddress.pickup.roadAddress = ChatBotStore.roadAddress;
+      ChatBotStore.totalAddress.pickup.jibunAddress = ChatBotStore.jibunAddress;
+      ChatBotStore.totalAddress.pickup.detailAddress = ChatBotStore.detailAddress;
     }
   },
 
   setUserFinalData(finalData) {
-    this.userFinalData = finalData;
+    ChatBotStore.userFinalData = finalData;
   },
 
-  addReservation(user: Record<string, unknown>) {
+  async addReservation(user: Record<string, unknown>) {
     // db에서 data를 get -> [{}, ...]
-    ChatbotModel.getReservationListDoc((dataArray) => {
+    try {
+      const dataArray = await ChatbotModel.getReservationListDoc();
       // userFinalData 만들기
-      if (dataArray.length !== 0) {
-        console.log('현재 예약 리스트 가져오기 성공');
-      }
+      console.log(dataArray);
       ChatBotStore.setUserFinalData({
         id: dataArray.length + 1,
         user,
@@ -101,63 +100,66 @@ const ChatBotStore: ChatbotStoreStates = observable({
       // db에서 가져온 예약 db에 붙이기
       dataArray.push(ChatBotStore.userFinalData);
       // 새롭게 추가된 예약 data 배열(list)를 db로 전송
-      ChatbotModel.setReservationListDoc(dataArray);
-    });
+      await ChatbotModel.setReservationListDoc(dataArray);
+      ChatBotStore.toggleIsSetReservation();
+    } catch (error) {
+      console.log(error);
+    }
   },
 
-  toogleisSetReservation() {
-    this.isSetReservation = true;
+  toggleIsSetReservation() {
+    ChatBotStore.isSetReservation = true;
   },
 
   falseIsReservation() {
-    this.isSetReservation = false;
+    ChatBotStore.isSetReservation = false;
   },
 
   initAddress() {
-    this.jibunAddress = '';
-    this.roadAddress = '';
-    this.detailAddress = '';
+    ChatBotStore.jibunAddress = '';
+    ChatBotStore.roadAddress = '';
+    ChatBotStore.detailAddress = '';
   },
 
   setCurrentImage(image: Record<string, unknown>) {
-    this.currentImage = image;
-    this.isCurrentImage = true;
+    ChatBotStore.currentImage = image;
+    ChatBotStore.isCurrentImage = true;
   },
 
   initCurrentImage() {
-    this.currentImage = {};
-    this.isCurrentImage = false;
+    ChatBotStore.currentImage = {};
+    ChatBotStore.isCurrentImage = false;
   },
 
   setItemImages() {
-    this.itemImages.push(this.currentImage);
-    this.initCurrentImage();
+    ChatBotStore.itemImages.push(ChatBotStore.currentImage);
+    ChatBotStore.initCurrentImage();
   },
 
   removeItemImage(key: string) {
-    this.itemImages = this.itemImages.filter((item) => item.key !== key);
+    ChatBotStore.itemImages = ChatBotStore.itemImages.filter((item) => item.key !== key);
   },
 
   setCameraModalVisible() {
-    this.cameraModalVisible = !this.cameraModalVisible;
+    ChatBotStore.cameraModalVisible = !ChatBotStore.cameraModalVisible;
   },
 
   setAlias(alias: string) {
-    this.alias = alias;
+    ChatBotStore.alias = alias;
   },
 
   setConfirmAlias() {
-    this.confirmAlias = this.alias;
+    ChatBotStore.confirmAlias = ChatBotStore.alias;
   },
 
   initChatbotState() {
-    this.input = '';
-    this.messages = [];
-    this.modalVisible = false;
-    this.jibunAddress = '';
-    this.roadAddress = '';
-    this.detailAddress = '';
-    this.totalAddress = {
+    ChatBotStore.input = '';
+    ChatBotStore.messages = [];
+    ChatBotStore.modalVisible = false;
+    ChatBotStore.jibunAddress = '';
+    ChatBotStore.roadAddress = '';
+    ChatBotStore.detailAddress = '';
+    ChatBotStore.totalAddress = {
       location: {
         jibunAddress: '',
         roadAddress: '',
@@ -170,9 +172,9 @@ const ChatBotStore: ChatbotStoreStates = observable({
       },
     };
     // camera state
-    this.cameraModalVisible = false;
-    this.isCurrentImage = false;
-    this.currentImage = {
+    ChatBotStore.cameraModalVisible = false;
+    ChatBotStore.isCurrentImage = false;
+    ChatBotStore.currentImage = {
       key: '0',
       filePath: {
         data: '',
@@ -181,11 +183,11 @@ const ChatBotStore: ChatbotStoreStates = observable({
       fileData: '',
       fileUri: '',
     };
-    this.itemImages = [];
-    this.userFinalData = {};
-    this.isSetReservation = false;
-    this.confirmAlias = '';
-    this.alias = '';
+    ChatBotStore.itemImages = [];
+    ChatBotStore.userFinalData = {};
+    ChatBotStore.isSetReservation = false;
+    ChatBotStore.confirmAlias = '';
+    ChatBotStore.alias = '';
   },
 
 });

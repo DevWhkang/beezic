@@ -9,7 +9,8 @@
     "link-voice": "react-native link react-native-voice",
     "ios": "react-native run-ios",
     "start": "react-native start --reset-cache",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "firestore": "firebase emulators:start --only firestore"
   },
   "dependencies": {
     "@emotion/core": "^10.0.35",
