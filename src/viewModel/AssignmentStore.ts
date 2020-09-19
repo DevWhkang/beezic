@@ -6,11 +6,15 @@ import ChatBotStore from './ChatBotStore';
 import { AssignmentStoreStates } from './@types/AssignmentStore';
 
 const AssignmentStore: AssignmentStoreStates = observable({
+  isModalShown: false,
   isAssignment: false,
   isUpdateStaffsList: false,
   staffs: [],
   selectedStaff: {},
 
+  toggleModal() {
+    this.isModalShown = !this.isModalShown;
+  },
   // 임시로 랜덤하게 배정
   initAssignmentState() {
     this.isAssignment = false;

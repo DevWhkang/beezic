@@ -6,6 +6,8 @@ import { ChatbotStoreStates } from './@types/ChatBotStore';
 const ChatBotStore: ChatbotStoreStates = observable({
   // State
   // address state
+  isModalShown: false,
+
   input: false,
   messages: [],
   modalVisible: false,
@@ -43,6 +45,9 @@ const ChatBotStore: ChatbotStoreStates = observable({
   alias: '',
 
   // Action
+  toggleModal() {
+    this.isModalShown = !this.isModalShown;
+  },
   setModalVisible() {
     this.modalVisible = !this.modalVisible;
   },
