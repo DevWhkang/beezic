@@ -31,7 +31,7 @@ function Intro({ loadingStateHandler }:IntroPropTypes): JSX.Element {
   const startAnimation = () => {
     Animated.timing(animation, {
       toValue: 0,
-      duration: 1000,
+      duration: 500,
       useNativeDriver: false,
     }).start();
   };
@@ -40,22 +40,18 @@ function Intro({ loadingStateHandler }:IntroPropTypes): JSX.Element {
     opacity: animation,
   };
 
+  const delay = (wait) => new Promise((resolve) => {
+    setTimeout(resolve, wait);
+  });
+
   useEffect(() => {
-    (new Promise((res) => {
+    (async (): void => {
+      await delay(1000);
       startAnimation();
-      setTimeout(() => {
-        res();
-      }, 1000);
-    }).then(() => {
-      UserStore.checkSignIn((isSignedIn) => {
-        if (isSignedIn) {
-          UserStore.isLogin = true;
-        } else {
-          UserStore.isLogin = false;
-        }
-      });
+      await delay(800);
+      await UserStore.checkSignIn();
       loadingStateHandler(false);
-    }));
+    })();
   });
   return (
     <>
