@@ -7,9 +7,8 @@ import {
 } from 'react-native';
 import { useObserver } from 'mobx-react';
 import styled, { css } from '@emotion/native';
-import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
-import TransactionDetailInfo from '../components/DetailInfo/TransactionDetailInfo';
 import UserTransactionList from '../components/DetailInfo/UserTransactionList';
 import TransactionCheckList from '../components/DetailInfo/TransactionCheckList';
 import DetailInfoSwiper from '../components/DetailInfo/DetailInfoSwiper';
@@ -62,18 +61,16 @@ const ProfileImageNotification = css`
 
 const DetailInfo = (): JSX.Element => {
   const { width, height } = Dimensions.get('window');
-  const route = useRoute();
-  const { alias, id } = route.params;
-
-  useEffect = (() => {
-    console.log(alias, id);
-  }, []);
-
   const navigation = useNavigation();
+
   useFocusEffect(() => {
     const onBackPress = () => {
-      // DetailInfoStore.getUserTransactionList(UserStore.user.uid);
-      navigation.navigate('MyInfo');
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: 'MyInfo' }],
+        }),
+      );
       return true;
     };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);

@@ -5,7 +5,9 @@ import {
 import styled, { css } from '@emotion/native';
 
 import { useObserver } from 'mobx-react';
-import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
+import {
+  CommonActions, StackActions, useFocusEffect, useNavigation,
+} from '@react-navigation/native';
 import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
@@ -49,15 +51,18 @@ const completeAreaStyle = css`
 
 const completeButtonStyle = css`
   align-self: center;
-  margin-left: 80px;
+  margin-left: 60px;
   background-color: #D2691E;
-  border-radius: 10px;
-  padding: 5px;
-  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 9px  ;
+  width: 100px;
 `;
 const completeTextStyle = css`
   font-family: 'Jua-Regular';
   font-size: 20px;
+  color: white;
+  text-align: center;
+  margin-top: 2px;
 `;
 
 const CheckList = (): JSX.Element => {
@@ -65,8 +70,16 @@ const CheckList = (): JSX.Element => {
 
   const handleCompleteButton = () => {
     if (CheckListStore.checkItems.length === 0) {
-      Alert.alert('응');
-      // TODO 나중에 할래요, 나중에 할 수 있는 곳 설명 등 나중에 할래요 버튼 누르면 디테일 페이지로
+      Alert.alert('', '나중에 작성하실껀가요? \n상세페이지에서 수정과 취소를 할 수 있어요', [
+        {
+          text: '나중에 하기',
+          onPress: () => (
+            navigation.dispatch(
+              StackActions.popToTop(),
+            )),
+        },
+        { text: '지금 하기', style: 'cancel' },
+      ]);
     } else {
       navigation.dispatch(
         CommonActions.reset({
@@ -79,15 +92,18 @@ const CheckList = (): JSX.Element => {
   };
   useFocusEffect(() => {
     const onBackPress = async () => {
-      const result = new Promise(() => (
-        Alert.alert('경고', '직거래가 예약되었습니다.\n취소는 마이페이지나 상세보기 페이지에서 가능합니다.', [
+      const result = await new Promise(() => (
+        Alert.alert('', '나중에 작성하실껀가요? \n상세페이지에서 수정과 취소를 할 수 있어요', [
           {
-            text: '상세페이지로 가기',
+            text: '나중에 하기',
             onPress: () => {
-              navigation.navigate('MyInfoStackNavigator', { screen: 'DetailInfo' });
+              navigation.dispatch(
+                StackActions.popToTop(),
+              );
               return true;
             },
           },
+          { text: '지금 하기', style: 'cancel' },
         ])))
         .then((e) => e);
       return result;
