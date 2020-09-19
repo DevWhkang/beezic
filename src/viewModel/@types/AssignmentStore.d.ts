@@ -11,7 +11,7 @@ export interface AssignmentStoreStates {
   assignmentStaff: () => void;
   getStaffList: () => void;
   setAssignment: () => void;
-  setSelectedStaff: () => void;
+  getSelectedStaff: () => void;
   toggleIsUpdateBoth: () => void;
 }
 
