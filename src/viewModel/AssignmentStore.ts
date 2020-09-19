@@ -8,6 +8,7 @@ import { AssignmentStoreStates } from './@types/AssignmentStore';
 const AssignmentStore: AssignmentStoreStates = observable({
   isUpdateBoth: false,
   isTimer: false,
+  isGetStaffList: false,
   staffs: [],
   ReservationList: [],
   currentReservation: {},
@@ -17,6 +18,7 @@ const AssignmentStore: AssignmentStoreStates = observable({
   initAssignmentState() {
     AssignmentStore.isUpdateBoth = false;
     AssignmentStore.isTimer = false;
+    AssignmentStore.isGetStaffList = true;
     AssignmentStore.staffs = [];
     AssignmentStore.ReservationList = [];
     AssignmentStore.currentReservation = {};
@@ -27,23 +29,14 @@ const AssignmentStore: AssignmentStoreStates = observable({
     AssignmentStore.isTimer = true;
   },
 
-  async assignmentStaff() {
-    try {
-      await AssignmentStore.getStaffList();
-      await AssignmentStore.setAssignment();
-      await AssignmentModel.setReservationDoc(AssignmentStore.ReservationList);
-      await AssignmentModel.setStaffDoc(AssignmentStore.staffs);
-      AssignmentStore.toggleIsUpdateBoth();
-    } catch (error) {
-      console.log(error);
-    }
+  toggleIsGetStaffList() {
+    AssignmentStore.isGetStaffList = true;
   },
 
-  async getStaffList() {
+  async assignmentStaff() {
     try {
-      const staffList = await AssignmentModel.getStaffDoc();
-      AssignmentStore.staffs = staffList;
-      AssignmentStore.setSelectedStaff();
+      await AssignmentStore.setAssignment();
+      AssignmentStore.toggleIsUpdateBoth();
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +59,21 @@ const AssignmentStore: AssignmentStoreStates = observable({
           staff.assignmentTransaction.push(AssignmentStore.currentReservation);
         }
       });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async updateDoc() {
+    await AssignmentModel.setReservationDoc(AssignmentStore.ReservationList);
+    await AssignmentModel.setStaffDoc(AssignmentStore.staffs);
+  },
+
+  async getStaffList() {
+    try {
+      const staffList = await AssignmentModel.getStaffDoc();
+      AssignmentStore.staffs = staffList;
+      AssignmentStore.setSelectedStaff();
     } catch (error) {
       console.log(error);
     }

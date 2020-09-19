@@ -1,4 +1,8 @@
 rootProject.name = 'beezic'
+include ':react-native-dialogflow'
+project(':react-native-dialogflow').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-dialogflow/android')
+include ':react-native-dialogflow'
+project(':react-native-dialogflow').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-dialogflow/android')
 include ':@react-native-community_google-signin'
 project(':@react-native-community_google-signin').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/google-signin/android')
 include ':react-native-image-picker'

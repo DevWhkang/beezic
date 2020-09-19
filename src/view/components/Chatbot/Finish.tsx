@@ -39,6 +39,7 @@ const Finish = (): JSX.Element => {
     };
     // viewModel의 Action 사용
     ChatBotStore.addReservation(user);
+    AssignmentStore.getStaffList();
     navigation.navigate('StaffAssignment');
   };
 

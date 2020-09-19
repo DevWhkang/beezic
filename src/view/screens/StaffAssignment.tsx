@@ -75,13 +75,13 @@ const StaffAssignment = (): JSX.Element => {
 
   setTimeout(() => {
     AssignmentStore.toggleIsTimer();
-  }, 20000);
+  }, 5000);
 
   useEffect(() => {
-    if (ChatBotStore.isSetReservation) {
+    if (ChatBotStore.isSetReservation && AssignmentStore.isGetStaffList) {
       AssignmentStore.assignmentStaff();
     }
-  }, [ChatBotStore.isSetReservation]);
+  }, [ChatBotStore.isSetReservation, AssignmentStore.isGetStaffList]);
 
   useEffect(() => {
     spin();
@@ -120,6 +120,7 @@ const StaffAssignment = (): JSX.Element => {
         : (
           <Container>
             {ChatBotStore.isSetReservation}
+            {AssignmentStore.isGetStaffList}
             <Logo source={logo} />
             <Header>담당 거래 직원을 배정 중입니다.</Header>
             <Animated.View style={{ transform: [{ rotate }, { scale }] }}>
