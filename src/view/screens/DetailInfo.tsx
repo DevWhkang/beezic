@@ -61,13 +61,6 @@ const ProfileImageNotification = css`
 
 const DetailInfo = (): JSX.Element => {
   const { width, height } = Dimensions.get('window');
-  const route = useRoute();
-  const { alias, id } = route.params;
-
-  useEffect = (() => {
-    console.log(alias, id);
-  }, []);
-
   const navigation = useNavigation();
 
   useFocusEffect(() => {
