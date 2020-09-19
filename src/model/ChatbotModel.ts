@@ -1,24 +1,25 @@
 /* eslint-disable no-console */
 import firestore from '@react-native-firebase/firestore';
+import '@react-native-firebase/app';
 import { ChatbotModelTypes } from './@types/ChatBotModel';
 
 const ChatbotModel: ChatbotModelTypes = {
-  async getReservationListDoc(callback) {
-    const ReservationListDoc = await firestore()
+  async getReservationListDoc() {
+    return firestore()
       .collection('user-reservation')
       .doc('IBrKfuVZdkesTwqcZHna')
       .get()
       .then((item) => item.data())
-      .catch(console.error);
-    callback(ReservationListDoc['reservation-list']);
+      .then((data) => data['reservation-list']);
   },
-  setReservationListDoc(updateData: Array<Record<string, unknown>>) {
-    firestore()
+
+  async setReservationListDoc(updateData) {
+    return firestore()
       .collection('user-reservation')
       .doc('IBrKfuVZdkesTwqcZHna')
-      .update({ 'reservation-list': updateData })
-      .catch(console.error);
+      .update({ 'reservation-list': updateData });
   },
+
 };
 
 export default ChatbotModel;

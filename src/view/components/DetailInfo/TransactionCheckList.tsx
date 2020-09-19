@@ -7,10 +7,14 @@ import {
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { CheckListStore } from '../../../viewModel';
 import Carrot from '../../../assets/Beezic_Logo_carrot.png';
 import Bee from '../../../assets/bee.png';
 import Logo from '../../../assets/Beezic_Logo.png';
 import carrotLogo from '../../../assets/Beezic_Logo_carrot.png';
+import CheckInsert from '../CheckList/CheckedInsert';
+import CheckedListItem from '../CheckList/CheckedListItem';
+import CheckedList from '../CheckList/CheckedList';
 
 const TitleForm = styled.View`
   flex-direction: row;
@@ -78,6 +82,36 @@ const checkIconStyle = css`
   color: #D2691E;
 `;
 
+const propsTextStyle = css`
+  border-bottom-color: #bbb;
+  border-bottom-width: 2;
+  margin-left: 10;
+  margin-right: 10;
+  margin-top:10;
+  flex: 1;
+  & > ::placeholder{
+    font-family: 'Jua-Regular';
+    font-size: 18px;
+  }
+`;
+
+const propsButtonStyle = css`
+  margin-right: 10;
+  margin-top: 10;
+`;
+
+const propsButtonTextStyle = css`
+  margin-top: 5px;
+`;
+
+const propsTextViewStyle = css`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20;
+
+`;
+
 const userTransactionList = ({ propHeight }): JSX.Element => {
   const userTransactions = [
     {
@@ -139,17 +173,21 @@ const userTransactionList = ({ propHeight }): JSX.Element => {
             <CheckListTitle>Check List</CheckListTitle>
             <CarrotImage source={carrotLogo} />
           </TitleForm>
+          <CheckInsert
+            propsTextStyle={propsTextStyle}
+            propsTextViewStyle={propsTextViewStyle}
+            propsButtonStyle={propsButtonStyle}
+            propsButtonTextStyle={propsButtonTextStyle}
+          />
           <View style={{ height: 500, paddingBottom: 10 }}>
-            <FlatList
-              data={userTransactions}
-              keyExtractor={(item) => item.key}
+            <CheckedList />
+            {/* <FlatList
+              data={CheckListStore.checkItems}
+              keyExtractor={(item) => String(item.id)}
               renderItem={({ item }) => (
-                <View style={PanelItem}>
-                  <FontAwesomeIcon icon={faCheck} style={checkIconStyle} size={20} />
-                  <Description>{item.userName}</Description>
-                </View>
+                <CheckedListItem id={item.id} description={item.description} />
               )}
-            />
+            /> */}
           </View>
 
         </TransactionCheckListView>

@@ -38,11 +38,12 @@ const AuthModel: AuthModelTypes = {
   },
 
   checkUserAuthentication() {
-    return new Promise((resolve) => {
-      auth().onAuthStateChanged((user: UserTypes) => {
-        console.log('AuthModel: ', user);
-        resolve(user);
-      });
+    return new Promise((resolve, reject) => {
+      try {
+        auth().onAuthStateChanged(resolve);
+      } catch (error) {
+        reject(error);
+      }
     });
   },
 

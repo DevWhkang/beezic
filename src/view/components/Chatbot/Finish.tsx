@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/native';
 import { useNavigation } from '@react-navigation/native';
+import { useObserver } from 'mobx-react';
 import bee from '../../../assets/bee.png';
 import { ChatBotStore, UserStore, AssignmentStore } from '../../../viewModel';
 
@@ -30,6 +31,7 @@ const FinishText = styled.Text`
 
 const Finish = (): JSX.Element => {
   const navigation = useNavigation();
+
   const onFinish = () => {
     const user = {
       uid: UserStore.user.uid,
@@ -37,11 +39,10 @@ const Finish = (): JSX.Element => {
     };
     // viewModel의 Action 사용
     ChatBotStore.addReservation(user);
-    AssignmentStore.setAssignmentStaff();
     navigation.navigate('StaffAssignment');
   };
 
-  return (
+  return useObserver(() => (
     <Container>
       <FinishImage source={bee} />
       <FinishView>
@@ -50,7 +51,7 @@ const Finish = (): JSX.Element => {
         </FinishText>
       </FinishView>
     </Container>
-  );
+  ));
 };
 
 export default Finish;

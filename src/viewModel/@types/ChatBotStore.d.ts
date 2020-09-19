@@ -23,28 +23,31 @@ export interface ChatbotStoreStates {
   roadAddress: string;
   detailAddress: string;
   totalAddress: Record<string, Record<string, string>>;
-  userFinalData: Record<string, unknown>;
+  cameraModalVisible: boolean;
   isCurrentImage: boolean;
   currentImage: Record<string, unknown>;
   itemImages: [],
-  cameraModalVisible: boolean;
-  alias: string;
+  userFinalData: Record<string, unknown>;
+  isSetReservation: boolean;
   confirmAlias: string;
+  alias: string;
+  setModalVisible: () => void;
+  setInput: () => void;
   setMessages: (messages: Record<string, unknown>) => void;
   setAddress: (data: Address) => void;
   setDetailAddress: (detailAddress: string) => void;
   setTotalAddress: (type: string) => void;
-  setModalVisible: () => void;
-  initAddress: () => void;
   setUserFinalData: (finalData: Record<string, unknown>) => void;
   addReservation: () => void;
+  toggleIsSetReservation: () => void;
+  falseIsReservation: () => void;
+  initAddress: () => void;
   setCurrentImage: (image: Record<string, unknown>) => void;
-  setItemImages: () => void;
   initCurrentImage: () => void;
+  setItemImages: () => void;
   removeItemImage: (key: string) => void;
   setCameraModalVisible: () => void;
   setAlias: (alias: string) => void;
   setConfirmAlias: (confirmAlias: string) => void;
   initChatbotState: () => void;
-  setInput: () => void;
 }

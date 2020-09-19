@@ -6,7 +6,7 @@ import CheckedListItem from './CheckedListItem';
 import checkListStore from '../../../viewModel/CheckListStore';
 
 const ScrollForm = styled.View`
-  height: 400px;
+  height: 500px;
 `;
 
 const CheckedList = (): JSX.Element => useObserver(() => (

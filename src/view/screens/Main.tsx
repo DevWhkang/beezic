@@ -12,6 +12,9 @@ import Slide from '../components/Main/Slide';
 import CardListUp from '../components/Main/CardListUp';
 import Fixbutton from '../components/Main/FixButton';
 import BottomBox from '../components/Main/MainBotBox';
+import Button from '../components/Button';
+import logo from '../../assets/Beezic_Logo.png';
+import { ChatbotModel, AssignmentModel } from '../../model';
 
 const HeaderWrapper = styled.View`
 position: relative;
@@ -52,11 +55,10 @@ const Logo = styled.Image`
 function Main(): JSX.Element {
   const navigation = useNavigation();
   const startBeezic = () => {
+    navigation.navigate('TransactionInfo');
     ChatBotStore.initChatbotState();
     AssignmentStore.initAssignmentState();
     CheckListStore.initCheckListState();
-
-    navigation.navigate('TransactionInfo');
   };
   const { height } = Dimensions.get('window');
   return useObserver(() => (

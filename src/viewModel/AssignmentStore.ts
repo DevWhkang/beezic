@@ -1,54 +1,87 @@
 /* eslint-disable no-param-reassign */
 import { observable } from 'mobx';
-import AssignmentModel from '../model/AssignmentModel';
+import { AssignmentModel } from '../model';
 import UserStore from './UserStore';
 import ChatBotStore from './ChatBotStore';
 import { AssignmentStoreStates } from './@types/AssignmentStore';
 
 const AssignmentStore: AssignmentStoreStates = observable({
-  isAssignment: false,
+  isUpdateBoth: false,
+  isTimer: false,
   staffs: [],
+  ReservationList: [],
+  currentReservation: {},
   selectedStaff: {},
 
   // 임시로 랜덤하게 배정
   initAssignmentState() {
-    this.isAssignment = false;
-    this.staffs = [];
-    this.selectedStaff = {};
+    AssignmentStore.isUpdateBoth = false;
+    AssignmentStore.isTimer = false;
+    AssignmentStore.staffs = [];
+    AssignmentStore.ReservationList = [];
+    AssignmentStore.currentReservation = {};
+    AssignmentStore.selectedStaff = {};
+  },
+
+  toggleIsTimer() {
+    AssignmentStore.isTimer = true;
+  },
+
+  async assignmentStaff() {
+    try {
+      await AssignmentStore.getStaffList();
+      await AssignmentStore.setAssignment();
+      await AssignmentModel.setReservationDoc(AssignmentStore.ReservationList);
+      await AssignmentModel.setStaffDoc(AssignmentStore.staffs);
+      AssignmentStore.toggleIsUpdateBoth();
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async getStaffList() {
+    try {
+      const staffList = await AssignmentModel.getStaffDoc();
+      AssignmentStore.staffs = staffList;
+      AssignmentStore.setSelectedStaff();
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async setAssignment() {
+    try {
+      const ReservationList = await AssignmentModel.getReservationDoc();
+      AssignmentStore.ReservationList = ReservationList;
+
+      AssignmentStore.ReservationList.forEach((reservation) => {
+        if (reservation.user.uid === UserStore.user.uid
+          && reservation.id === ChatBotStore.userFinalData.id) {
+          reservation.assignmentStaff = AssignmentStore.selectedStaff.staffProfile; // 배정시키기
+          AssignmentStore.currentReservation = reservation; // 배정시킨 Reservation 상태에 저장
+        }
+      });
+      AssignmentStore.staffs.forEach((staff) => {
+        if (staff.staffProfile.id === AssignmentStore.currentReservation.assignmentStaff.id) {
+          staff.assignmentTransaction.push(AssignmentStore.currentReservation);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   setSelectedStaff() {
-    [this.selectedStaff] = this.staffs
+    [AssignmentStore.selectedStaff] = AssignmentStore.staffs
       .map((a) => ([Math.random(), a]))
       .sort((a, b) => a[0] - b[0])
       .map((a) => a[1]);
   },
 
-  setAssignmentStaff() {
-    AssignmentModel.getStaffDoc((staffList) => {
-      this.staffs = staffList;
-      this.setSelectedStaff();
-
-      AssignmentModel.getReservationDoc((dataArray) => {
-        dataArray.forEach((reservation) => {
-          // 디비에서 가져온 데이터에서 로그인된 해당 유저의 예약 정보만을 가져온다.
-          // reservation.user.uid === UserStore.user.uid && <- 이 조건 잠시빼봄
-          if (reservation.user.uid === UserStore.user.uid
-            && reservation.id === ChatBotStore.userFinalData.id) {
-            reservation.assignmentStaff = AssignmentStore.selectedStaff.staffProfile;
-            staffList.forEach((staff) => {
-              if (staff.staffProfile.id === reservation.assignmentStaff.id) {
-                staff.assignmentTransaction.push(reservation);
-              }
-            });
-          }
-        });
-        AssignmentModel.setReservationDoc(dataArray);
-        AssignmentModel.setStaffDoc(staffList);
-        this.isAssignment = !this.isAssignment;
-      });
-    });
+  toggleIsUpdateBoth() {
+    AssignmentStore.isUpdateBoth = true;
   },
+
 });
 
 export default AssignmentStore;
