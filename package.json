@@ -10,7 +10,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start --reset-cache",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "firestore": "firebase emulators:start --only firestore"
   },
   "dependencies": {
     "@emotion/core": "^10.0.35",
