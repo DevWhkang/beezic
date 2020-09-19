@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
-import { Text } from 'react-native';
+import { Image, Text } from 'react-native';
 import { useObserver } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import { UserStore, ErrorStore } from '../../viewModel';
@@ -8,6 +8,45 @@ import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
 import OAuthIcons from '../components/OAuthIcons';
+import BeezicLogo from '../../assets/Beezic_Logo_carrot.png';
+import Line from '../../assets/line.png';
+
+const BackGround = css`
+  background-color: #ECECEC;
+  height: 100%;
+  width: 100%;
+`;
+
+const Box = styled.View`
+  margin: 20px 0px 20px 0px;
+  background-color: white;
+  border-color: #c8c8c8;
+  border-width: 2px;
+  border-radius: 10px;
+  width:350px;
+`;
+
+const HeaderWrapper = styled.View`
+  flex-direction: row;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  align-self: center;
+`;
+
+const TextLine1 = styled.View`
+  flex-direction: row;
+  align-self: center;
+  margin-bottom: 15px;
+`;
+
+const TextLine = css`
+  width: 50px;
+  height: auto;
+`;
+
+const GrayText = css`
+  color: #888;
+`;
 
 const View = styled.View`
   display: flex;
@@ -16,31 +55,40 @@ const View = styled.View`
 `;
 
 const Header = styled.Text`
-  font-size: 64px;
-  margin-top: 60px;
-  margin-bottom: 30px;
+  font-size: 45px;
+  color: #D2691E;
   font-family: 'BMDOHYEON';
 `;
 
 const emailInputStyle = css`
-  margin-bottom: 30px;
+  width:300px;
 `;
 
 const passwordInputStyle = css`
-  margin-bottom: 50px;
+  width:300px;
+`;
+
+const linkTextStyle = css`
+  margin-bottom: 20px;
 `;
 
 const buttonStyle = css`
   margin-bottom: 30px;
   background-color: #fc8a3d;
+  width: 275px;
 `;
 
 const oauthStyle = css`
-  margin-top: 45px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 `;
 
 const errorTextStyle = css`
   color: red;
+`;
+
+const CarrotImage = styled.Image`
+  margin-top: 10px;
 `;
 
 const SignIn = (): JSX.Element => {
@@ -66,38 +114,48 @@ const SignIn = (): JSX.Element => {
   };
 
   return useObserver(() => (
-    <View>
-      <Header>Welcome!</Header>
-      <TextInput
-        label="Email"
-        onChangeText={onChangeEmail}
-        placeholder="Enter your email address"
-        textInputStyle={emailInputStyle}
-      />
-      <TextInput
-        label="Password"
-        onChangeText={onChangePassword}
-        placeholder="Enter your password"
-        textInputStyle={passwordInputStyle}
-        password
-      />
-      <Button
-        title="Sign In"
-        background={buttonStyle}
-        onPress={onSignInButton}
-        disabled={!(UserStore.email && UserStore.password)}
-      />
-      {(!ErrorStore.error && UserStore.isLogin) && (
+    <View style={BackGround}>
+      <Box>
+        <HeaderWrapper>
+          <Header>안녕하세요</Header>
+          <CarrotImage source={BeezicLogo} />
+        </HeaderWrapper>
+        <TextInput
+          onChangeText={onChangeEmail}
+          placeholder="Enter your email address"
+          textInputStyle={emailInputStyle}
+          email
+        />
+        <TextInput
+          onChangeText={onChangePassword}
+          placeholder="Enter your password"
+          textInputStyle={passwordInputStyle}
+          password
+        />
+        <Button
+          title="Sign In"
+          background={buttonStyle}
+          onPress={onSignInButton}
+          disabled={!(UserStore.email && UserStore.password)}
+        />
+        {(!ErrorStore.error && UserStore.isLogin) && (
         // FIXME 모달
         <Text>로그인 성공</Text>
-      )}
-      {!!ErrorStore.error && (
+        )}
+        {!!ErrorStore.error && (
         <Text style={errorTextStyle}>{ErrorStore.short}</Text>
-      )}
-      <LinkText
-        content="Create an account"
-        onPress={onLinkButton}
-      />
+        )}
+        <TextLine1>
+          <Image source={Line} style={TextLine} />
+          <Text style={GrayText}>  또는  </Text>
+          <Image source={Line} style={TextLine} />
+        </TextLine1>
+        <LinkText
+          content="Create an account"
+          onPress={onLinkButton}
+          style={linkTextStyle}
+        />
+      </Box>
       <OAuthIcons style={oauthStyle} />
     </View>
   ));
