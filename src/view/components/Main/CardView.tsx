@@ -6,7 +6,6 @@ import styled, { css } from '@emotion/native';
 import Carrot from '../../../assets/Beezic_Logo_carrot.png';
 
 const TouchCard = styled.TouchableOpacity`
-
 `;
 
 const CardContainer = styled.View`
@@ -20,7 +19,7 @@ const CardContainer = styled.View`
 
 const CardTitle = css`
   width: 100%;
-  font-size: 22px;
+  font-size: 18px;
   padding: 5px; 
   border-bottom-width:2px;
   border-bottom-color: #2B3F6B;
@@ -30,7 +29,7 @@ const CardTitle = css`
 const CardContent = css`
   margin-top: 5px;
   width: 100%;
-  font-size: 13px;
+  font-size: 12px;
   padding:3px;
 `;
 /* TODO: 배열 Map 으로 Refactoring 예정 지금은 일단 하드코딩 */
@@ -56,7 +55,7 @@ const pulse = (value) => () => {
 
 const CardView = ():JSX.Element => (
   <>
-    <TouchCard onPress={pulse(scaleValue)}>
+    <TouchCard onPress={pulse(scaleValue)} activeOpacity={1}>
       <Animated.View style={{ transform: [{ scale }] }}>
         <CardContainer>
           <Text style={CardTitle}>'주식회사 강원형' 설립</Text>
@@ -64,7 +63,7 @@ const CardView = ():JSX.Element => (
         </CardContainer>
       </Animated.View>
     </TouchCard>
-    <TouchCard onPress={pulse(scaleValue1)}>
+    <TouchCard onPress={pulse(scaleValue1)} activeOpacity={1}>
       <Animated.View style={{ transform: [{ scale: scale1 }] }}>
         <CardContainer>
           <Text style={CardTitle}>'Beezic' app 드디어 배포 </Text>
@@ -72,7 +71,7 @@ const CardView = ():JSX.Element => (
         </CardContainer>
       </Animated.View>
     </TouchCard>
-    <TouchCard onPress={pulse(scaleValue2)}>
+    <TouchCard onPress={pulse(scaleValue2)} activeOpacity={1}>
       <Animated.View style={{ transform: [{ scale: scale2 }] }}>
         <CardContainer>
           <Text style={CardTitle}>코로나19 '후유증' 의외로 오래 간다 </Text>
@@ -80,7 +79,7 @@ const CardView = ():JSX.Element => (
         </CardContainer>
       </Animated.View>
     </TouchCard>
-    <TouchCard onPress={pulse(scaleValue3)}>
+    <TouchCard onPress={pulse(scaleValue3)} activeOpacity={1}>
       <Animated.View style={{ transform: [{ scale: scale3 }] }}>
         <CardContainer>
           <Text style={CardTitle}>'Beezic' 유명 마켓 어플과 '협약' </Text>
