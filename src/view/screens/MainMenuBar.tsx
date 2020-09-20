@@ -1,9 +1,9 @@
 import React from 'react';
-import styled, { css } from '@emotion/native';
+import styled from '@emotion/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Linking, Text, View } from 'react-native';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Linking, View } from 'react-native';
 import {
   UserStore, DetailInfoStore, ChatBotStore, AssignmentStore, CheckListStore,
 } from '../../viewModel';
@@ -42,6 +42,10 @@ const HeaderProfileWrapper = styled.View`
   flex-direction: row;
   padding: 15px 15px 10px 15px;
   align-items: center;  
+  overflow: hidden;
+  flex-shrink:1;
+  width: 100%;
+  height:50%;
 `;
 const HeaderUserNameText = styled.Text`
   font-size: 30px;
@@ -63,7 +67,6 @@ const DrawerRoundBtn = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   margin: 0 5px 0 5px;
-  
 `;
 const RoundBtnTitle = styled.Text`
   font-family: 'BMHANNAPro';
@@ -71,8 +74,9 @@ const RoundBtnTitle = styled.Text`
 `;
 
 const RoundImg = styled.Image`
-  height: 100%;
-  width: 100%;
+  height: 55px;
+  width: 55px;
+  resizeMode: contain,
   border-radius: 100px;
 `;
 
@@ -132,9 +136,7 @@ function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
               <RoundImg source={bee} />
             </DrawerRoundBtn>
             <HeaderUserNameText>
-              {user.displayName.length >= 3
-                ? user.displayName.slice(1)
-                : user.displayName.slice(user.displayName.length - 3)}
+              {user.displayName}
             </HeaderUserNameText>
           </HeaderProfileWrapper>
           <HeaderBtnMenuWrapper>

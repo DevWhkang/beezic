@@ -38,7 +38,7 @@ const UserSpecSection = ({
   onPress,
   style,
 }: UserSpecProps): JSX.Element => {
-  const screenFor = title.split(' ')[1].toLowerCase();
+  const screenFor = title.split(' ')[1];
   const textInputSettings = {
     labelStyle: css``,
     textInputStyle: css``,

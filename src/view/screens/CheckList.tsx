@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-  View, Text, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard, Alert, BackHandler,
+  View, Text, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard, BackHandler,
 } from 'react-native';
 import styled, { css } from '@emotion/native';
 
 import { useObserver } from 'mobx-react';
-import {
-  CommonActions, StackActions, useFocusEffect, useNavigation,
-} from '@react-navigation/native';
+import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
+import Modal, { ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
@@ -64,22 +63,27 @@ const completeTextStyle = css`
   text-align: center;
   margin-top: 2px;
 `;
-
+const modalContentStyle = css`
+font-family: 'BMHANNAPro';
+color: black;
+font-size: 20px;
+`;
+const modalCancleBtnStyle = css`
+color: black;
+font-family: 'BMHANNAPro';
+font-size: 20px;
+`;
+const modalOkBtnStyle = css`
+color: #EF904C;
+font-family: 'BMHANNAPro';
+font-size: 20px;
+`;
 const CheckList = (): JSX.Element => {
   const navigation = useNavigation();
 
   const handleCompleteButton = () => {
     if (CheckListStore.checkItems.length === 0) {
-      Alert.alert('', '나중에 작성하실껀가요? \n상세페이지에서 수정과 취소를 할 수 있어요', [
-        {
-          text: '나중에 하기',
-          onPress: () => (
-            navigation.dispatch(
-              StackActions.popToTop(),
-            )),
-        },
-        { text: '지금 하기', style: 'cancel' },
-      ]);
+      CheckListStore.toggleModal();
     } else {
       navigation.dispatch(
         CommonActions.reset({
@@ -91,47 +95,71 @@ const CheckList = (): JSX.Element => {
     }
   };
   useFocusEffect(() => {
-    const onBackPress = async () => {
-      const result = await new Promise(() => (
-        Alert.alert('', '나중에 작성하실껀가요? \n상세페이지에서 수정과 취소를 할 수 있어요', [
-          {
-            text: '나중에 하기',
-            onPress: () => {
-              navigation.dispatch(
-                StackActions.popToTop(),
-              );
-              return true;
-            },
-          },
-          { text: '지금 하기', style: 'cancel' },
-        ])))
-        .then((e) => e);
-      return result;
+    const onBackPress = () => {
+      CheckListStore.toggleModal();
+      return true;
     };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   });
 
   return useObserver(() => (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView>
-        <TitleText>
-          Check List
-          <Image source={carrotLogo} />
-        </TitleText>
-        <CheckAreaView>
-          <CheckedInsert />
-          <View style={completeAreaStyle}>
-            <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
-            <View style={completeButtonStyle}>
-              <Text style={completeTextStyle} onPress={handleCompleteButton}>다했어요</Text>
+    <>
+      <Modal
+        useNativeDriver
+        width={300}
+        visible={CheckListStore.isModalShown}
+        footer={(
+          <ModalFooter>
+            <ModalButton
+              textStyle={modalCancleBtnStyle}
+              text="나중에하기"
+              onPress={() => {
+                CheckListStore.toggleModal();
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Main' }],
+                });
+              }}
+            />
+            <ModalButton
+              textStyle={modalOkBtnStyle}
+              text="계속하기"
+              onPress={() => {
+                CheckListStore.toggleModal();
+              }}
+            />
+          </ModalFooter>
+        )}
+      >
+        <ModalContent>
+          <Text style={modalContentStyle}>
+            나중에 작성하실껀가요?
+            {'\n'}
+            상세페이지에서 수정할 수 있어요
+          </Text>
+        </ModalContent>
+      </Modal>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView>
+          <TitleText>
+            Check List
+            <Image source={carrotLogo} />
+          </TitleText>
+          <CheckAreaView>
+            <CheckedInsert />
+            <View style={completeAreaStyle}>
+              <UserCheckText>나의 직거래 체크 목록 :</UserCheckText>
+              <View style={completeButtonStyle}>
+                <Text style={completeTextStyle} onPress={handleCompleteButton}>다했어요</Text>
+              </View>
             </View>
-          </View>
-          {CheckListStore.checkItems.length !== 0
-            ? <CheckedList /> : <EmptyText>텅...</EmptyText>}
-        </CheckAreaView>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+            {CheckListStore.checkItems.length !== 0
+              ? <CheckedList /> : <EmptyText>텅...</EmptyText>}
+          </CheckAreaView>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </>
   ));
 };
 
