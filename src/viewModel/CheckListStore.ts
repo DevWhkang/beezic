@@ -6,10 +6,14 @@ import UserStore from './UserStore';
 import { CheckListStoreStates } from './@types/CheckListStore';
 
 const checkListStore: CheckListStoreStates = observable({
+  isModalShown: false,
   description: '',
   newCheckItem: {},
   checkItems: [],
 
+  toggleModal() {
+    this.isModalShown = !this.isModalShown;
+  },
   initCheckListState() {
     this.description = '';
     this.newCheckItem = {};

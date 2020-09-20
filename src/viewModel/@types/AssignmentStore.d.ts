@@ -1,4 +1,5 @@
 export interface AssignmentStoreStates {
+  isModalShown: boolean;
   isUpdateBoth: boolean;
   isTimer: boolean;
   staffs: Array<StaffTypes>;
@@ -6,6 +7,7 @@ export interface AssignmentStoreStates {
   currentReservation: Record<string, unknown>;
   selectedStaff: Record<string, Record<string, unknown>>;
 
+  toggleModal: () => void;
   initAssignmentState: () => void;
   toggleIsTimer: () => void;
   assignmentStaff: () => void;

@@ -16,6 +16,7 @@ export interface Address {
 }
 
 export interface ChatbotStoreStates {
+  isModalShown: boolean,
   input: boolean;
   messages: IMessage[];
   modalVisible: boolean;
@@ -31,6 +32,7 @@ export interface ChatbotStoreStates {
   isSetReservation: boolean;
   confirmAlias: string;
   alias: string;
+  toggleModal : () => void;
   setModalVisible: () => void;
   setInput: () => void;
   setMessages: (messages: Record<string, unknown>) => void;
