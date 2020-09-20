@@ -4,6 +4,7 @@ import styled, { css } from '@emotion/native';
 import Swiper from 'react-native-swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import Maps from './Maps';
 /*
  * TODO: Props로 username, location, 거래시간 등 받아서 표기할게 많음 Component DDTSlide.tsx 파일도 포함
  */
@@ -45,6 +46,27 @@ const allowButtonStyle = css`
   opacity: 0.6;
 `;
 
+const mapViewWrapperStyle = css`
+  width: 100%;
+  height: 100%;
+`;
+
+const mapViewStyle = css`
+  width: 320px;
+  height: 220px;
+  margin-left: 25px;
+  margin-top: 13px;
+  border: solid 1px #c8c8c8;
+`;
+
+const mapViewTitleStyle = css`
+  font-family: 'BMHANNA_11yrs';
+  font-size: 20;
+  margin-top: 20;
+  color: #8c8c8c;
+  align-self: center;
+`;
+
 function DetailInfoSwiper({ username, beezicler }: IProps): JSX.Element {
   return (
     <SwiperWrapper>
@@ -53,10 +75,25 @@ function DetailInfoSwiper({ username, beezicler }: IProps): JSX.Element {
         loop
         dot={(<View style={dotStyle} />)}
         activeDot={(<View style={dotActiveStyle} />)}
-        prevButton={(<FontAwesomeIcon size={25} icon={faAngleDoubleLeft} style={allowButtonStyle} />)}
-        nextButton={(<FontAwesomeIcon size={25} icon={faAngleDoubleRight} style={allowButtonStyle} />)}
+        prevButton={(
+          <FontAwesomeIcon size={25} icon={faAngleDoubleLeft} style={allowButtonStyle} />
+        )}
+        nextButton={(
+          <FontAwesomeIcon size={25} icon={faAngleDoubleRight} style={allowButtonStyle} />
+        )}
       >
-        <View><Text>zzzz</Text></View>
+        <View style={mapViewWrapperStyle}>
+          <Text style={mapViewTitleStyle}>여기서 직거래 할게요.</Text>
+          <View style={mapViewStyle}>
+            <Maps />
+          </View>
+        </View>
+        <View style={mapViewWrapperStyle}>
+          <Text style={mapViewTitleStyle}>여기로 픽업하러 갈게요.</Text>
+          <View style={mapViewStyle}>
+            <Maps />
+          </View>
+        </View>
         <View><Text>zzzz</Text></View>
         <View><Text>zzzz</Text></View>
       </Swiper>

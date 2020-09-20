@@ -5,21 +5,33 @@ import { DetailInfoStoreStates } from './@types';
 const DetailInfoStore: DetailInfoStoreStates = observable({
   transactionDetailInfo: [],
   transactionCheckList: [],
-  userTransactionList: [],
   renderUserTransactionList: [],
+  targetTransaction: {},
 
-  getUserTransactionList(userId) {
-    // db에서 data를 get -> [{}, ...]
-    this.renderUserTransactionList = [];
-    CheckListModel.getCheckListDoc((dataArray) => {
-      dataArray.forEach((reservation) => {
-        if (reservation.user.uid === userId) {
-          this.renderUserTransactionList.push(reservation);
-        }
-      });
-      this.userTransactionList = this.renderUserTransactionList;
+  async getUserTransactionList(id) {
+    DetailInfoStore.initRenderUserTransactionList();
+
+    const dataArray = await CheckListModel.getCheckListDoc();
+
+    dataArray.forEach((reservation) => {
+      if (reservation.user.uid === id) {
+        DetailInfoStore.renderUserTransactionList.push(reservation);
+      }
     });
   },
+
+  initRenderUserTransactionList() {
+    DetailInfoStore.renderUserTransactionList = [];
+  },
+
+  filterTargetTransaction(id) {
+    DetailInfoStore.renderUserTransactionList.forEach((transaction) => {
+      if (id === transaction.id) {
+        DetailInfoStore.targetTransaction = transaction;
+      }
+    });
+  },
+
 });
 
 export default DetailInfoStore;

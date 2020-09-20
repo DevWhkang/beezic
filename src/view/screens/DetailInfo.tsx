@@ -7,7 +7,9 @@ import {
 } from 'react-native';
 import { useObserver } from 'mobx-react';
 import styled, { css } from '@emotion/native';
-import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
+import {
+  CommonActions, useFocusEffect, useNavigation, useRoute,
+} from '@react-navigation/native';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
 import UserTransactionList from '../components/DetailInfo/UserTransactionList';
 import TransactionCheckList from '../components/DetailInfo/TransactionCheckList';
@@ -62,8 +64,12 @@ const ProfileImageNotification = css`
 const DetailInfo = (): JSX.Element => {
   const { width, height } = Dimensions.get('window');
   const navigation = useNavigation();
+  const route = useRoute();
+  const { alias, id } = route.params;
 
   useFocusEffect(() => {
+    DetailInfoStore.filterTargetTransaction(id);
+
     const onBackPress = () => {
       navigation.dispatch(
         CommonActions.reset({
@@ -75,7 +81,8 @@ const DetailInfo = (): JSX.Element => {
     };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-  });
+  }, []);
+
   return useObserver(() => (
     <Container>
       <ContentsForm>
@@ -86,11 +93,10 @@ const DetailInfo = (): JSX.Element => {
             {UserStore.user.displayName}
             님,
           </Greetings>
-          <Greetings>비직하기 상세 정보 입니다.</Greetings>
+          <Greetings>{`"${alias}" 상세 정보 입니다.`}</Greetings>
         </View>
         <UserImageForm>
           <UserImage source={carrotLogo} />
-          {/* <View style={ProfileImageNotification} /> */}
         </UserImageForm>
       </ContentsForm>
       {/* <TransactionDetailInfo propWidth={width} /> */}

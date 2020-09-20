@@ -1,9 +1,26 @@
 import * as React from 'react';
 import WebView from 'react-native-webview';
+import Geocoder from 'react-native-geocoding';
+import { DetailInfoStore } from '../../../viewModel';
 import htmlFunction from './MapsHtml';
 
 const Maps = (props): JSX.Element => {
-  const html = htmlFunction(props.Latitude, props.longitude);
+  const Latitude = 0;
+  const longitude = 0;
+
+  Geocoder.init('AIzaSyBjoxJeM36SDKuiG5cR_cBAhWeBLNUwles');
+
+  Geocoder.from(DetailInfoStore.targetTransaction.address.location.roadAddress)
+    .then((json) => {
+      const { location } = json.results[0].geometry;
+      console.log(location);
+      // Latitude = location.lat;
+      // longitude = location.lon;
+    })
+    .catch((error) => console.warn(error));
+
+  // const html = htmlFunction(props.address, Latitude, longitude);
+  const html = htmlFunction('제주시 월산남길 7', 37.537187, 127.005476);
 
   const {
     jsOptions, onSelected, onError, ...otherProps

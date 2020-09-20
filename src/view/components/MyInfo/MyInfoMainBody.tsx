@@ -93,7 +93,7 @@ const MyInfoMainBody = (): JSX.Element => {
         <MyTransactionList
           nestedScrollEnabled
         >
-          {DetailInfoStore.userTransactionList.map(({ alias, id }) => (
+          {DetailInfoStore.renderUserTransactionList.map(({ alias, id }) => (
             <MyTransactionBtn
               key={id}
               onPress={() => navigation.navigate('DetailInfo', {

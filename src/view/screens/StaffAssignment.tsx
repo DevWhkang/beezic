@@ -83,12 +83,9 @@ const StaffAssignment = (): JSX.Element => {
     }
   }, [ChatBotStore.isSetReservation, AssignmentStore.isGetStaffList]);
 
-  useEffect(() => {
+  useFocusEffect(() => {
     spin();
     pulse();
-  }, []);
-
-  useFocusEffect(() => {
     const onBackPress = async () => {
       const result = new Promise(() => (
         Alert.alert('경고', ' 배정 취소 하시면 담당 직원 배정 없이 중고 직거래가 예약 됩니다. 배정이 안된 직거래는 비직에서 검토 후 연락드립니다.', [
