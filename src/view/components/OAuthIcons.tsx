@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from '@emotion/native';
+import styled, { css } from '@emotion/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   faGoogle, faFacebookF, faTwitter, faApple,
@@ -23,6 +23,22 @@ const OAuthIcon = styled.TouchableOpacity`
 
 `;
 
+const googleIconStyle = css`
+  color: #CA4E37;
+`;
+
+const facebookIconStyle = css`
+  color: #5263B2;
+`;
+
+const twitterIconStyle = css`
+  color: #888;
+`;
+
+const appleIconStyle = css`
+  color: #888;
+`;
+
 const OAuthIcons = ({ style, size }: OAuthIconsProps): JSX.Element => {
   useEffect(() => {
     OAuthStore.init();
@@ -42,24 +58,28 @@ const OAuthIcons = ({ style, size }: OAuthIconsProps): JSX.Element => {
         <FontAwesomeIcon
           icon={faGoogle}
           size={size}
+          style={googleIconStyle}
         />
       </OAuthIcon>
       <OAuthIcon onPress={onFacebookHandler}>
         <FontAwesomeIcon
           icon={faFacebookF}
           size={size}
+          style={facebookIconStyle}
         />
       </OAuthIcon>
       <OAuthIcon onPress={() => {}}>
         <FontAwesomeIcon
           icon={faTwitter}
           size={size}
+          style={twitterIconStyle}
         />
       </OAuthIcon>
       <OAuthIcon onPress={() => {}}>
         <FontAwesomeIcon
           icon={faApple}
           size={size}
+          style={appleIconStyle}
         />
       </OAuthIcon>
     </Container>
