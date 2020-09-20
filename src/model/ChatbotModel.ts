@@ -2,6 +2,7 @@
 import firestore from '@react-native-firebase/firestore';
 import '@react-native-firebase/app';
 import { ChatbotModelTypes } from './@types/ChatBotModel';
+import { ReservationListDocTypes } from './@types/DataListModel';
 
 const ChatbotModel: ChatbotModelTypes = {
   async getReservationListDoc() {
@@ -10,7 +11,7 @@ const ChatbotModel: ChatbotModelTypes = {
       .doc('IBrKfuVZdkesTwqcZHna')
       .get()
       .then((item) => item.data())
-      .then((data) => data['reservation-list']);
+      .then((data: ReservationListDocTypes) => data['reservation-list']);
   },
 
   async setReservationListDoc(updateData) {

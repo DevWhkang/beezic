@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
-import { Image, Text } from 'react-native';
+import {
+  Image, Text, ScrollView,
+} from 'react-native';
 import { useObserver } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import { UserStore, ErrorStore } from '../../viewModel';
@@ -73,6 +75,7 @@ const linkTextStyle = css`
 `;
 
 const buttonStyle = css`
+  margin-top: 30px;
   margin-bottom: 30px;
   background-color: #fc8a3d;
   width: 275px;
@@ -112,51 +115,54 @@ const SignIn = (): JSX.Element => {
       navigation.navigate('SignUp');
     });
   };
-
   return useObserver(() => (
     <View style={BackGround}>
-      <Box>
-        <HeaderWrapper>
-          <Header>안녕하세요</Header>
-          <CarrotImage source={BeezicLogo} />
-        </HeaderWrapper>
-        <TextInput
-          onChangeText={onChangeEmail}
-          placeholder="이메일을 입력해 주세요"
-          textInputStyle={emailInputStyle}
-          email
-        />
-        <TextInput
-          onChangeText={onChangePassword}
-          placeholder="비밀번호를 입력해 주세요"
-          textInputStyle={passwordInputStyle}
-          password
-        />
-        <Button
-          title="Sign In"
-          background={buttonStyle}
-          onPress={onSignInButton}
-          disabled={!(UserStore.email && UserStore.password)}
-        />
-        {(!ErrorStore.error && UserStore.isLogin) && (
-        // FIXME 모달
-        <Text>로그인 성공</Text>
-        )}
-        {!!ErrorStore.error && (
-        <Text style={errorTextStyle}>{ErrorStore.short}</Text>
-        )}
-        <TextLine1>
-          <Image source={Line} style={TextLine} />
-          <Text style={GrayText}>  또는  </Text>
-          <Image source={Line} style={TextLine} />
-        </TextLine1>
-        <LinkText
-          content="계정이 없으신가요 ?"
-          onPress={onLinkButton}
-          style={linkTextStyle}
-        />
-      </Box>
-      <OAuthIcons style={oauthStyle} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Box>
+          <HeaderWrapper>
+            <Header>안녕하세요</Header>
+            <CarrotImage source={BeezicLogo} />
+          </HeaderWrapper>
+          <TextInput
+            onChangeText={onChangeEmail}
+            placeholder="이메일을 입력해 주세요"
+            textInputStyle={emailInputStyle}
+            email
+          />
+          <TextInput
+            labelStyle={{ fontSize: 0 }}
+            onChangeText={onChangePassword}
+            placeholder="비밀번호를 입력해 주세요"
+            textInputStyle={passwordInputStyle}
+            password
+          />
+
+          <Button
+            title="비직 시작하기"
+            background={buttonStyle}
+            onPress={onSignInButton}
+            disabled={!(UserStore.email && UserStore.password)}
+          />
+          {(!ErrorStore.error && UserStore.isLogin) && (
+          // FIXME 모달
+            <Text>로그인 성공</Text>
+          )}
+          {!!ErrorStore.error && (
+            <Text style={errorTextStyle}>{ErrorStore.short}</Text>
+          )}
+          <TextLine1>
+            <Image source={Line} style={TextLine} />
+            <Text style={GrayText}>  또는  </Text>
+            <Image source={Line} style={TextLine} />
+          </TextLine1>
+          <LinkText
+            content="계정이 없으신가요 ?"
+            onPress={onLinkButton}
+            style={linkTextStyle}
+          />
+        </Box>
+        <OAuthIcons style={oauthStyle} />
+      </ScrollView>
     </View>
   ));
 };

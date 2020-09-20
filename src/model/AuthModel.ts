@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth';
-import { AuthModelTypes, UserTypes } from './@types/AuthModel';
+import { AuthModelTypes } from './@types/AuthModel';
 
 const AuthModel: AuthModelTypes = {
   async signIn(email, password) {
@@ -15,13 +15,8 @@ const AuthModel: AuthModelTypes = {
   },
 
   async deleteCurrentUser() {
-    const user: UserTypes = auth().currentUser;
-    if (user) {
-      await user.delete();
-      console.log(`${user.email} deleted`);
-    } else {
-      console.warn('No user is signed in.');
-    }
+    const user = AuthModel.getCurrentUser();
+    return user.delete();
   },
 
   async updateEmail(email) {
@@ -33,7 +28,6 @@ const AuthModel: AuthModelTypes = {
   },
 
   async updateUserProfile(displayName) {
-    // profile: { displayName }
     return auth().currentUser.updateProfile({ displayName });
   },
 

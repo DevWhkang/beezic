@@ -1,9 +1,9 @@
 import { observable } from 'mobx';
 import AuthModel from '../model/AuthModel';
 import ErrorStore from './ErrorStore';
-import { UserStoreStates, UserCredentialTypes, UserTypes } from './@types/UserStore';
+import { UserStoreTypes } from './@types/UserStore';
 
-const UserStore: UserStoreStates = observable({
+const UserStore: UserStoreTypes = observable({
 
   /* States */
 
@@ -66,7 +66,7 @@ const UserStore: UserStoreStates = observable({
   async in(callback) {
     try {
       const { email, password } = UserStore;
-      const { user }: UserCredentialTypes = await AuthModel.signIn(email, password);
+      const { user } = await AuthModel.signIn(email, password);
       const { emailVerified } = user;
       // TODO 이메일 인증 기능 추가
       // if (emailVerified) {
@@ -120,17 +120,10 @@ const UserStore: UserStoreStates = observable({
 
   async updateUsername(displayName) {
     try {
-      const beforeUser: UserTypes = AuthModel.getCurrentUser();
       await AuthModel.updateUserProfile(displayName);
       UserStore.setPreviousInfo({ username: displayName });
-      const user: UserTypes = AuthModel.getCurrentUser();
+      const user = AuthModel.getCurrentUser();
       UserStore.set(user);
-      console.log(
-        (`Updating Username
-        Before: ${beforeUser.displayName}
-        After: ${user.displayName}
-        `).replace(/  +/g, ''),
-      );
     } catch (error) {
       ErrorStore.handle(error);
     }
@@ -138,17 +131,10 @@ const UserStore: UserStoreStates = observable({
 
   async updateEmail(email) {
     try {
-      const beforeUser: UserTypes = AuthModel.getCurrentUser();
       await AuthModel.updateEmail(email);
       UserStore.setPreviousInfo({ email });
-      const user: UserTypes = AuthModel.getCurrentUser();
+      const user = AuthModel.getCurrentUser();
       UserStore.set(user);
-      console.log(
-        (`Updating Email
-        Before: ${beforeUser.email}
-        After: ${user.email}
-        `).replace(/ +/g, ''),
-      );
     } catch (error) {
       ErrorStore.handle(error);
     }
@@ -157,9 +143,8 @@ const UserStore: UserStoreStates = observable({
   async updatePassword(password) {
     try {
       await AuthModel.updatePassword(password);
-      const user: UserTypes = AuthModel.getCurrentUser();
+      const user = AuthModel.getCurrentUser();
       UserStore.set(user);
-      console.log('Updating Password');
     } catch (error) {
       ErrorStore.handle(error);
     }
@@ -175,12 +160,12 @@ const UserStore: UserStoreStates = observable({
 
   async sendLink(callback) {
     try {
-      const userCredential: UserCredentialTypes = await AuthModel.signUp(
+      const userCredential = await AuthModel.signUp(
         UserStore.email,
         'beezic-temporary-password',
       );
       const { user } = userCredential;
-      user.sendEmailVerification();
+      await user.sendEmailVerification();
       ErrorStore.reset();
       console.log(`Verification email is sent to ${UserStore.email}`);
       if (callback) callback();
@@ -193,7 +178,6 @@ const UserStore: UserStoreStates = observable({
     try {
       // 현재 sign in 상태인 유저의 verification 여부를 확인한다.
       UserStore.user = await AuthModel.checkUserAuthentication();
-      console.log(UserStore.user);
     } catch {
       UserStore.user = null;
     }

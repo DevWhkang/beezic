@@ -1,9 +1,10 @@
 import { observable } from 'mobx';
 import { GiftedChat } from 'react-native-gifted-chat';
 import ChatbotModel from '../model/ChatbotModel';
-import { ChatbotStoreStates } from './@types/ChatBotStore';
+import ErrorStore from './ErrorStore';
+import { ChatbotStoreTypes } from './@types/ChatBotStore';
 
-const ChatBotStore: ChatbotStoreStates = observable({
+const ChatBotStore: ChatbotStoreTypes = observable({
   // State
   // address state
   isModalShown: false,
@@ -92,7 +93,6 @@ const ChatBotStore: ChatbotStoreStates = observable({
     try {
       const dataArray = await ChatbotModel.getReservationListDoc();
       // userFinalData 만들기
-      console.log(dataArray);
       ChatBotStore.setUserFinalData({
         id: dataArray.length + 1,
         user,
@@ -108,7 +108,7 @@ const ChatBotStore: ChatbotStoreStates = observable({
       await ChatbotModel.setReservationListDoc(dataArray);
       ChatBotStore.toggleIsSetReservation();
     } catch (error) {
-      console.log(error);
+      ErrorStore.handle(error);
     }
   },
 

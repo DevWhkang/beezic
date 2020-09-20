@@ -1,11 +1,13 @@
-export interface CheckListStoreStates {
-  description: string;
-  newCheckItem: Record<string, unknown>;
-  checkItems: [];
+import { CheckListTypes } from './DataListModel';
 
-  setDescription: (text: string) => void;
-  setNewCheckItem: () => void;
-  addCheckItems: () => void;
-  removeCheckItem: (id: number) => void;
-  initCheckListState: () => void;
+export interface CheckListStoreTypes {
+  description: string;
+  newCheckItem: CheckListTypes;
+  checkItems: Array<CheckListTypes>;
+
+  initCheckListState(): void;
+  setDescription(text: string): void;
+  setNewCheckItem(): void;
+  addCheckItems(): Promise<void>;
+  removeCheckItem(id: number): Promise<void>;
 }
