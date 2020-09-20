@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useObserver } from 'mobx-react';
-import MyInfoHeader from '../components/MyInfo/MyInfoHeader';
+import MyInfoNewHeader from '../components/MyInfo/MyInfoNewHeader';
 import MyInfoMainBody from '../components/MyInfo/MyInfoMainBody';
-import { UserStore, DetailInfoStore } from '../../viewModel';
 
 const MyInfo = (): JSX.Element => {
   const isLastPage = false;
   return useObserver(() => (
     <>
-      <MyInfoHeader isLastPage={isLastPage} />
+      <MyInfoNewHeader isLastPage={isLastPage} />
       <MyInfoMainBody />
     </>
   ));
