@@ -12,6 +12,7 @@ import UserSpecSection from './UserSpecSection';
 
 const HeaderWrapper = styled.View`
   margin-bottom: 30px;
+  padding: 10px 10px 10px 10px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: #dfdFdF;

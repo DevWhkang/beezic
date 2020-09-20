@@ -29,16 +29,18 @@ const HeaderBottomWrapper = styled.View`
 
 const ProfileTitle = styled.Text`
   font-size: 30px;
-  font-weight: bold;
+  font-family: 'Jua-Regular';
 `;
 
 const UserName = styled.Text`
   font-size: 30px;
   flex-shrink: 1;
+  font-family: 'Jua-Regular';
 `;
 
 const UserNameCss = css`
   font-size: 30px;
+  font-family: 'Jua-Regular';
 `;
 
 const UserIconWrapper = styled.TouchableOpacity`
@@ -62,7 +64,7 @@ const MyInfoHeader = ({
       <UserName>
         {` | ${UserStore.user.displayName}`}
       </UserName>
-      <Text style={UserNameCss}>님 </Text>
+      <Text style={UserNameCss}> 님 </Text>
       <UserIconWrapper>
         <FontAwesomeIcon
           color="#fc8a3d"
