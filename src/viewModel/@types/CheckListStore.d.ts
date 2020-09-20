@@ -1,13 +1,15 @@
-export interface CheckListStoreStates {
+import { CheckListTypes } from './DataListModel';
+
+export interface CheckListStoreTypes {
   isModalShown: boolean;
   description: string;
-  newCheckItem: Record<string, unknown>;
-  checkItems: [];
+  newCheckItem: CheckListTypes;
+  checkItems: Array<CheckListTypes>;
 
-  toggleModal: () => void;
-  setDescription: (text: string) => void;
-  setNewCheckItem: () => void;
-  addCheckItems: () => void;
-  removeCheckItem: (id: number) => void;
-  initCheckListState: () => void;
+  toggleModal(): void;
+  initCheckListState(): void;
+  setDescription(text: string): void;
+  setNewCheckItem(): void;
+  addCheckItems(): Promise<void>;
+  removeCheckItem(id: number): Promise<void>;
 }

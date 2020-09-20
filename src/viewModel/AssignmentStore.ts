@@ -2,21 +2,22 @@
 import { observable } from 'mobx';
 import { AssignmentModel } from '../model';
 import UserStore from './UserStore';
+import ErrorStore from './ErrorStore';
 import ChatBotStore from './ChatBotStore';
-import { AssignmentStoreStates } from './@types/AssignmentStore';
+import { AssignmentStoreTypes } from './@types/AssignmentStore';
 
-const AssignmentStore: AssignmentStoreStates = observable({
+const AssignmentStore: AssignmentStoreTypes = observable({
+  isTimer: false,
   isModalShown: false,
   isUpdateBoth: false,
-  isTimer: false,
   isGetStaffList: false,
   staffs: [],
-  ReservationList: [],
-  currentReservation: {},
   selectedStaff: {},
+  reservationList: [],
+  currentReservation: {},
 
   toggleModal() {
-    this.isModalShown = !this.isModalShown;
+    AssignmentStore.isModalShown = !AssignmentStore.isModalShown;
   },
   // 임시로 랜덤하게 배정
   initAssignmentState() {
@@ -24,7 +25,7 @@ const AssignmentStore: AssignmentStoreStates = observable({
     AssignmentStore.isTimer = false;
     AssignmentStore.isGetStaffList = true;
     AssignmentStore.staffs = [];
-    AssignmentStore.ReservationList = [];
+    AssignmentStore.reservationList = [];
     AssignmentStore.currentReservation = {};
     AssignmentStore.selectedStaff = {};
   },
@@ -42,34 +43,33 @@ const AssignmentStore: AssignmentStoreStates = observable({
       await AssignmentStore.setAssignment();
       AssignmentStore.toggleIsUpdateBoth();
     } catch (error) {
-      console.log(error);
+      ErrorStore.handle(error);
     }
   },
 
   async setAssignment() {
     try {
-      const ReservationList = await AssignmentModel.getReservationDoc();
-      AssignmentStore.ReservationList = ReservationList;
-
-      AssignmentStore.ReservationList.forEach((reservation) => {
+      AssignmentStore.reservationList = await AssignmentModel.getReservationDoc();
+      AssignmentStore.reservationList.forEach((reservation) => {
         if (reservation.user.uid === UserStore.user.uid
           && reservation.id === ChatBotStore.userFinalData.id) {
-          reservation.assignmentStaff = AssignmentStore.selectedStaff.staffProfile; // 배정시키기
+          reservation.assignmentStaffProfile = AssignmentStore.selectedStaff.staffProfile; // 배정시키기
           AssignmentStore.currentReservation = reservation; // 배정시킨 Reservation 상태에 저장
         }
       });
       AssignmentStore.staffs.forEach((staff) => {
-        if (staff.staffProfile.id === AssignmentStore.currentReservation.assignmentStaff.id) {
+        if (staff.staffProfile.id
+          === AssignmentStore.currentReservation.assignmentStaffProfile.id) {
           staff.assignmentTransaction.push(AssignmentStore.currentReservation);
         }
       });
     } catch (error) {
-      console.log(error);
+      ErrorStore.handle(error);
     }
   },
 
   async updateDoc() {
-    await AssignmentModel.setReservationDoc(AssignmentStore.ReservationList);
+    await AssignmentModel.setReservationDoc(AssignmentStore.reservationList);
     await AssignmentModel.setStaffDoc(AssignmentStore.staffs);
   },
 
@@ -79,7 +79,7 @@ const AssignmentStore: AssignmentStoreStates = observable({
       AssignmentStore.staffs = staffList;
       AssignmentStore.setSelectedStaff();
     } catch (error) {
-      console.log(error);
+      ErrorStore.handle(error);
     }
   },
 

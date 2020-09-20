@@ -17,7 +17,7 @@ import logo from '../../assets/Beezic_Logo.png';
 
 const HeaderWrapper = styled.View`
 position: relative;
-padding: 10px;
+padding-left: 10px;
 bottom: -10;
 width: 100%;
 height: 50px;

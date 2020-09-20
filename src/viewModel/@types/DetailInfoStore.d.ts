@@ -1,7 +1,7 @@
 export interface DetailInfoStoreStates {
-  transactionDetailInfo: Array<string, unknown>,
-  transactionCheckList: Array<string, unknown>,
-  userTransactionList: Array<string, unknown>,
+  transactionDetailInfo: Array<unknown>,
+  transactionCheckList: Array<unknown>,
+  userTransactionList: Array<unknown>,
 
   getUserTransactionList(userId: number): void,
 }

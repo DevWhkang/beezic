@@ -27,7 +27,7 @@ const LinkText = ({
   };
 
   return (
-    <TouchableButton onPress={linkHandler} activeOpacity={0.6}>
+    <TouchableButton onPress={linkHandler} activeOpacity={0.6} style={style}>
       <Text editable={false} value={content} style={style} />
     </TouchableButton>
   );

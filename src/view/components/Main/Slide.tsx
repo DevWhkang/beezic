@@ -105,8 +105,8 @@ function Slide({ Username }: props): JSX.Element {
             {Username}
             {' '}
             님
-            {' '}
-            <SaysHello> 안녕하세요.</SaysHello>
+            {'\n'}
+            <SaysHello>안녕하세요.</SaysHello>
           </ProfileTitle>
           <MiddleText>중고 직거래가 잡히셨나요 ?</MiddleText>
           <LowText>비직하기를 클릭해서</LowText>

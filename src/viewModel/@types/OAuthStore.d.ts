@@ -1,18 +1,5 @@
-export interface OAuthStoreStates {
+export interface OAuthStoreTypes {
   init: () => void,
-  google: () => Promise<unknown>,
-  facebook: () => Promise<unknown>,
-}
-
-export interface UserCredentialTypes {
-  user: UserTypes,
-}
-
-export interface UserTypes {
-  uid: string,
-  displayName: string,
-  email: string,
-  emailVerified: boolean,
-  sendEmailVerification: () => void,
-  delete: () => void,
+  google: () => Promise<void>,
+  facebook: () => Promise<void>,
 }
