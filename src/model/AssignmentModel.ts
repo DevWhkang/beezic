@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import firestore from '@react-native-firebase/firestore';
 import '@react-native-firebase/app';
-import { AssignmentStore } from '../viewModel';
-import { AssignmentModelTypes, StaffListDocTypes } from './@types/AssignmentModel';
+import { AssignmentModelTypes } from './@types/AssignmentModel';
+import { StaffListDocTypes, ReservationListDocTypes } from './@types/DataListModel';
 
 const AssignmentModel: AssignmentModelTypes = {
   // get 요청 이후 필요한 부분만 가져오는걸로 수정될 수 있음. (현재 chatbotModel에서의 get요청과 동일)
@@ -12,7 +12,7 @@ const AssignmentModel: AssignmentModelTypes = {
       .doc('FJvffUXA8ZY4ivLwrpKD')
       .get()
       .then((item) => item.data())
-      .then((data) => data['staff-list']);
+      .then((data: StaffListDocTypes) => data['staff-list']);
   },
 
   async setStaffDoc(updateData) {
@@ -28,7 +28,7 @@ const AssignmentModel: AssignmentModelTypes = {
       .doc('IBrKfuVZdkesTwqcZHna')
       .get()
       .then((item) => item.data())
-      .then((data) => data['reservation-list']);
+      .then((data: ReservationListDocTypes) => data['reservation-list']);
   },
   async setReservationDoc(updateData) {
     return firestore()
