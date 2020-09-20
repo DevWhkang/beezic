@@ -7,10 +7,14 @@ import ErrorStore from './ErrorStore';
 import { CheckListStoreTypes } from './@types/CheckListStore';
 
 const CheckListStore: CheckListStoreTypes = observable({
+  isModalShown: false,
   description: '',
   newCheckItem: {},
   checkItems: [],
 
+  toggleModal() {
+    this.isModalShown = !this.isModalShown;
+  },
   initCheckListState() {
     CheckListStore.description = '';
     CheckListStore.newCheckItem = {};

@@ -21,13 +21,13 @@ const EditMyInfoDetail = ({
   const route = useRoute();
   const { screenForId, textInputSettings, userName } = route.params;
   const cases = {
-    username: (
+    Username: (
       <EditUsername textInputSettings={textInputSettings} />
     ),
-    email: (
+    Email: (
       <EditEmail textInputSettings={textInputSettings} />
     ),
-    password: (
+    Password: (
       <EditPassword textInputSettings={textInputSettings} />
     ),
   };

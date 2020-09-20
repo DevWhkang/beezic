@@ -16,7 +16,7 @@ const Navigator = ():JSX.Element => {
       )
       : (
         <NavigationContainer>
-          {UserStore.isLogin
+          {UserStore.isLogin && !!UserStore.user
             ? <MainDrawerNavigator />
             : <SignInStackNavigator /> }
         </NavigationContainer>
