@@ -122,13 +122,13 @@ const SignIn = (): JSX.Element => {
         </HeaderWrapper>
         <TextInput
           onChangeText={onChangeEmail}
-          placeholder="Enter your email address"
+          placeholder="이메일을 입력해 주세요"
           textInputStyle={emailInputStyle}
           email
         />
         <TextInput
           onChangeText={onChangePassword}
-          placeholder="Enter your password"
+          placeholder="비밀번호를 입력해 주세요"
           textInputStyle={passwordInputStyle}
           password
         />
@@ -151,7 +151,7 @@ const SignIn = (): JSX.Element => {
           <Image source={Line} style={TextLine} />
         </TextLine1>
         <LinkText
-          content="Create an account"
+          content="계정이 없으신가요 ?"
           onPress={onLinkButton}
           style={linkTextStyle}
         />
