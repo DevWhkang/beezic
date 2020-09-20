@@ -1,10 +1,10 @@
 // App.js
 import React, { useEffect } from 'react';
 import {
-  GiftedChat, Send, InputToolbar, Time,
+  GiftedChat, Send, InputToolbar,
 } from 'react-native-gifted-chat';
 import {
-  Alert, BackHandler, View, Text,
+  BackHandler, View, Text,
 } from 'react-native';
 import { useObserver } from 'mobx-react';
 import { css } from '@emotion/native';
@@ -12,6 +12,7 @@ import { Dialogflow_V2 } from 'react-native-dialogflow';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import Modal, { ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { ChatBotStore, UserStore } from '../../viewModel';
 import dialogflowConfig from '../../../dialogflowENV';
 import {
@@ -227,40 +228,70 @@ const TransactionInfo = (): JSX.Element => {
   const renderTime = () => {
     // 이렇게 해야... 메시지에서 시간 없어짐...;;
   };
-
+  const modalContentStyle = css`
+    font-family: 'BMHANNAPro';
+    color: black;
+    font-size: 20px;
+  `;
+  const modalCancleBtnStyle = css`
+    color: black;
+    font-family: 'BMHANNAPro';
+    font-size: 20px;
+  `;
+  const modalOkBtnStyle = css`
+    color: #EF904C;
+    font-family: 'BMHANNAPro';
+    font-size: 20px;
+  `;
   const navigation = useNavigation();
   useFocusEffect(() => {
-    const onBackPress = async () => {
-      const result = new Promise(() => (
-        Alert.alert('경고', '리셋됩니다', [
-          {
-            text: '다시하기',
-            onPress: () => {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'Main' }],
-              });
-              return true;
-            },
-          }, {
-            text: '계속하기',
-            onPress: () => true,
-          },
-        ])))
-        .then((e) => e);
-      return result;
+    const onBackPress = () => {
+      ChatBotStore.toggleModal();
+      return true;
     };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   });
   return useObserver(() => (
     <View style={chatbotStyles}>
+      <Modal
+        useNativeDriver
+        width={300}
+        visible={ChatBotStore.isModalShown}
+        footer={(
+          <ModalFooter>
+            <ModalButton
+              textStyle={modalCancleBtnStyle}
+              text="나중에하기"
+              onPress={() => {
+                ChatBotStore.toggleModal();
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Main' }],
+                });
+              }}
+            />
+            <ModalButton
+              textStyle={modalOkBtnStyle}
+              text="계속하기"
+              onPress={() => {
+                ChatBotStore.toggleModal();
+              }}
+            />
+          </ModalFooter>
+        )}
+      >
+        <ModalContent>
+          <Text style={modalContentStyle}>
+            나중에 하시겠어요?
+          </Text>
+        </ModalContent>
+      </Modal>
       <GiftedChat
         renderBubble={renderBubble}
         messages={ChatBotStore.messages.slice()}
         onSend={(sendMessages) => onSend(sendMessages)}
-        // showUserAvatar
-        user={{ // 로그인 유저
+        user={{
           _id: UserStore.user.uid,
           name: UserStore.user.displayName,
         }}

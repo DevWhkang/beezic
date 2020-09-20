@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { css } from '@emotion/native';
 import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import EditMyInfoDetail from '../../screens/EditMyInfoDetail';
 
 const UserSpecSectionWrapper = styled.View`
   margin: 0 0 10px 5px;
@@ -39,7 +38,7 @@ const UserSpecSection = ({
   onPress,
   style,
 }: UserSpecProps): JSX.Element => {
-  const screenFor = title.split(' ')[1].toLowerCase();
+  const screenFor = title.split(' ')[1];
   const textInputSettings = {
     labelStyle: css``,
     textInputStyle: css``,

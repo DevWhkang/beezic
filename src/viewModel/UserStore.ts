@@ -97,7 +97,7 @@ const UserStore: UserStoreTypes = observable({
       const { email, password, username: displayName } = UserStore;
       await AuthModel.signUp(email, password);
       await AuthModel.updateUserProfile(displayName);
-      const { user } = AuthModel.getCurrentUser();
+      const user = AuthModel.getCurrentUser();
       UserStore.set(user);
       UserStore.setPreviousInfo({ email, password, username: displayName });
       console.log('Sign Up: ', UserStore.user);
