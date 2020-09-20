@@ -8,7 +8,6 @@ import { UserStore, ErrorStore } from '../../viewModel';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import LinkText from '../components/LinkText';
-import OAuthIcons from '../components/OAuthIcons';
 import BeezicLogo from '../../assets/Beezic_Logo_carrot.png';
 
 const BackGround = css`
@@ -67,9 +66,6 @@ const linkStyle = css`
   margin-bottom: 30px;
 `;
 
-const oauthStyle = css`
-  margin-bottom: 30px;
-`;
 const CarrotImage = styled.Image`
   margin-top: 10px;
 `;
@@ -89,9 +85,9 @@ const SignUp = (): JSX.Element => {
     UserStore.passwordCheck = passwordCheck;
   };
 
-  const onSignUpButton = () => {
+  const onSignUpButton = async () => {
     ErrorStore.reset();
-    UserStore.up();
+    await UserStore.up();
   };
 
   const onLinkButton = () => {
@@ -137,9 +133,9 @@ const SignUp = (): JSX.Element => {
             onChangeText={onChangePasswordCheck}
             placeholder="한 번 더 작성해주세요!"
             message={((UserStore.password && UserStore.passwordCheck))
-          && (UserStore.checkPassword()
-            ? '제대로 작성하셨네요!'
-            : '음... 다시 한 번 작성해주실래요?')}
+            && (UserStore.checkPassword()
+              ? '제대로 작성하셨네요!'
+              : '음... 다시 한 번 작성해주실래요?')}
             password
           />
           <Button
@@ -147,8 +143,9 @@ const SignUp = (): JSX.Element => {
             background={buttonStyle}
             onPress={onSignUpButton}
             disabled={
-          !UserStore.checkIfAllValuesFilled()
-          || !UserStore.checkPassword()
+              !UserStore.email.match(/^\w+\.?\w+@\w+\.\w+\.?\w+$/g)
+              || !(UserStore.checkIfAllValuesFilled()
+              && UserStore.checkPassword())
         }
           />
         </Box>
