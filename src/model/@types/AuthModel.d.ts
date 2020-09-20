@@ -1,24 +1,13 @@
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+
 export interface AuthModelTypes {
-  signIn(email: string, password: string): Promise<UserCredentialTypes>,
-  signUp(email: string, password: string): Promise<UserCredentialTypes>,
-  signOut(): Promise<UserCredentialTypes>,
-  deleteCurrentUser(): Promise<unknown>,
+  signIn(email: string, password: string): Promise<FirebaseAuthTypes.UserCredential>,
+  signUp(email: string, password: string): Promise<FirebaseAuthTypes.UserCredential>,
+  signOut(): Promise<FirebaseAuthTypes.UserCredential>,
+  deleteCurrentUser(): Promise<void>,
   updateEmail(email: string): Promise<void>,
   updatePassword(password: string): Promise<void>,
-  updateUserProfile(profile: Record<string, string>): Promise<void>,
-  checkUserAuthentication(): Promise<UserTypes>,
-  getCurrentUser(): UserTypes,
-}
-
-export interface UserTypes {
-  uid: string,
-  displayName: string,
-  email: string,
-  emailVerified: boolean,
-  sendEmailVerification: () => void,
-  delete: () => Promise<unknown>,
-}
-
-export interface UserCredentialTypes {
-  user: UserTypes
+  updateUserProfile(profile: { displayName: string }): Promise<void>,
+  checkUserAuthentication(): Promise<FirebaseAuthTypes.User>,
+  getCurrentUser(): FirebaseAuthTypes.User | null,
 }
