@@ -42,6 +42,10 @@ const HeaderProfileWrapper = styled.View`
   flex-direction: row;
   padding: 15px 15px 10px 15px;
   align-items: center;  
+  overflow: hidden;
+  flex-shrink:1;
+  width: 100%;
+  height:50%;
 `;
 const HeaderUserNameText = styled.Text`
   font-size: 30px;
