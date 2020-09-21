@@ -179,8 +179,6 @@ const Camera = (): JSX.Element => {
     };
 
     ImagePicker.launchCamera(options, (response) => {
-      // console.log('Response = ', response);
-
       if (response.didCancel) {
         // console.log('User cancelled image picker');
       } else if (response.error) {
@@ -193,7 +191,7 @@ const Camera = (): JSX.Element => {
           // 너무 무거워서 주석
           // filePath: response,
           // fileData: response.data,
-          fileUri: response.uri,
+          fileUri: response.data,
         });
       }
     });
@@ -207,21 +205,15 @@ const Camera = (): JSX.Element => {
       },
     };
     ImagePicker.launchImageLibrary(options, (response) => {
-      // console.log('Response = ', response);
-
       if (response.didCancel) {
         // console.log('User cancelled image picker');
       } else if (response.error) {
         // console.log('ImagePicker Error: ', response.error);
       } else {
         // const source = { uri: response.uri };
-        // console.log('response', JSON.stringify(response));
         ChatBotStore.setCurrentImage({
           key: `${ChatBotStore.itemImages.length + 1}`,
-          // 너무 무거워서 주석
-          // filePath: response,
-          // fileData: response.data,
-          fileUri: response.uri,
+          fileUri: response.data,
         });
       }
     });
@@ -241,7 +233,7 @@ const Camera = (): JSX.Element => {
             data={ChatBotStore.itemImages}
             renderItem={({ item }) => (
               <View>
-                <Image style={itemImageStyle} source={{ uri: item.fileUri }} />
+                <Image style={itemImageStyle} source={{ uri: `data:image/png;base64,${item.fileUri}` }} />
                 <TouchableOpacity
                   onPress={() => removeImageInList(item.key)}
                   style={minusTouchStyle}
@@ -261,9 +253,8 @@ const Camera = (): JSX.Element => {
             <CarrotImage source={carrotLogo} />
             <QuestionRegisterText>선택한 이미지를 등록 하시겠어요?</QuestionRegisterText>
           </QuestionRegisterTitle>
-
           <Image
-            source={{ uri: ChatBotStore.currentImage.fileUri }}
+            source={{ uri: `data:image/png;base64,${ChatBotStore.currentImage.fileUri}` }}
             style={images}
           />
         </>
