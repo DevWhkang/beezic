@@ -17,15 +17,16 @@ const BackGround = css`
   background-color: #ECECEC;
   height: 100%;
   width: 100%;
+  align-items: center;
 `;
 
 const Box = styled.View`
-  margin: 20px 0px 20px 0px;
   background-color: white;
   border-color: #c8c8c8;
   border-width: 2px;
   border-radius: 10px;
   width:350px;
+  align-self: center;
 `;
 
 const HeaderWrapper = styled.View`
@@ -108,7 +109,10 @@ const SignIn = (): JSX.Element => {
     ErrorStore.reset();
     await UserStore.in();
   };
-
+  const scrollViewCss = css`
+  flex-grow: 1;
+  justify-content: center;
+  `;
   const onLinkButton = async (): void => {
     await UserStore.checkSignIn(async (isSignedIn): void => {
       if (isSignedIn) await UserStore.out();
@@ -118,7 +122,7 @@ const SignIn = (): JSX.Element => {
 
   return useObserver(() => (
     <View style={BackGround}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={scrollViewCss} showsVerticalScrollIndicator={false}>
         <Box>
           <HeaderWrapper>
             <Header>안녕하세요</Header>
