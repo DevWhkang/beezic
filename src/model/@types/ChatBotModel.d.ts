@@ -1,12 +1,6 @@
-export interface ChatbotModelTypes {
-  getReservationListDoc(callback: (items: Array<ReservationDocTypes>) => void): void,
-  setReservationListDoc(updateData: Array<ReservationDocTypes>): void,
-}
+import { ReservationDocTypes } from './DataListModel';
 
-export interface ReservationDocTypes {
-  id: number,
-  checklist: Array<Record<string, unknown>>
-  user: {
-    id: number,
-  }
+export interface ChatbotModelTypes {
+  getReservationListDoc(): Promise<Array<ReservationDocTypes>>,
+  setReservationListDoc(updateData: Array<ReservationDocTypes>): Promise<void>,
 }

@@ -65,11 +65,12 @@ const CompleteAssignment = (): JSX.Element => {
 
   useEffect(() => {
     ChatBotStore.falseIsReservation();
+    AssignmentStore.updateDoc();
   }, []);
 
   setTimeout(() => {
     navigation.navigate('CheckList');
-  }, 20000);
+  }, 5000);
 
   return useObserver(() => (
     <View>

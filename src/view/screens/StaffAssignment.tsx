@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import {
-  Alert, Animated, BackHandler, Easing,
+  Animated, BackHandler, Easing, Text,
 } from 'react-native';
 import styled, { css } from '@emotion/native';
 import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useObserver } from 'mobx-react';
+import { ChatbotModel, AssignmentModel } from 'src/model';
+import Modal, { ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { ChatBotStore, AssignmentStore } from '../../viewModel';
 import logo from '../../assets/Beezic_Logo_carrot.png'; // TODO svg 파일로 변경
 import LinkText from '../components/LinkText';
@@ -68,15 +70,33 @@ const spin = () => {
     toValue: 1, duration: 1000, easing: Easing.linear, useNativeDriver: true,
   }).start(spin);
 };
-
+const modalContentStyle = css`
+font-family: 'BMHANNAPro';
+color: black;
+font-size: 20px;
+`;
+const modalCancleBtnStyle = css`
+color: black;
+font-family: 'BMHANNAPro';
+font-size: 20px;
+`;
+const modalOkBtnStyle = css`
+color: #EF904C;
+font-family: 'BMHANNAPro';
+font-size: 20px;
+`;
 const StaffAssignment = (): JSX.Element => {
   const navigation = useNavigation();
-  const { isSetReservation } = ChatBotStore;
+
+  setTimeout(() => {
+    AssignmentStore.toggleIsTimer();
+  }, 5000);
+
   useEffect(() => {
-    if (isSetReservation) {
-      AssignmentStore.setAssignmentStaff();
+    if (ChatBotStore.isSetReservation && AssignmentStore.isGetStaffList) {
+      AssignmentStore.assignmentStaff();
     }
-  }, [isSetReservation]);
+  }, [ChatBotStore.isSetReservation, AssignmentStore.isGetStaffList]);
 
   useEffect(() => {
     spin();
@@ -84,44 +104,55 @@ const StaffAssignment = (): JSX.Element => {
   }, []);
 
   useFocusEffect(() => {
-    const onBackPress = async () => {
-      const result = new Promise(() => (
-        Alert.alert('경고', ' 배정 취소 하시면 담당 직원 배정 없이 중고 직거래가 예약 됩니다. 배정이 안된 직거래는 비직에서 검토 후 연락드립니다.', [
-          {
-            text: '배정 취소',
-            onPress: () => {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'Main' }],
-              });
-              return true;
-            },
-          }, {
-            text: '계속하기',
-            onPress: () => true,
-          },
-        ])))
-        .then((e) => e);
-      return result;
+    const onBackPress = () => {
+      AssignmentStore.toggleModal();
+      return true;
     };
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   }, []);
 
-  const startAssignment = () => {
-    if (ChatBotStore.isSetReservation) {
-      AssignmentStore.setAssignmentStaff();
-    }
-  };
-
   return useObserver(() => (
     <>
-      {AssignmentStore.isAssignment
+      <Modal
+        useNativeDriver
+        width={300}
+        visible={AssignmentStore.isModalShown}
+        footer={(
+          <ModalFooter>
+            <ModalButton
+              textStyle={modalCancleBtnStyle}
+              text="나중에하기"
+              onPress={() => {
+                AssignmentStore.toggleModal();
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Main' }],
+                });
+              }}
+            />
+            <ModalButton
+              textStyle={modalOkBtnStyle}
+              text="계속하기"
+              onPress={() => {
+                AssignmentStore.toggleModal();
+              }}
+            />
+          </ModalFooter>
+        )}
+      >
+        <ModalContent>
+          <Text style={modalContentStyle}>
+            나중에 하시겠어요?
+          </Text>
+        </ModalContent>
+      </Modal>
+      {AssignmentStore.isUpdateBoth && AssignmentStore.isTimer
         ? <CompleteAssignment />
         : (
           <Container>
-            {ChatBotStore.isSetReservation
-          && startAssignment()}
+            {ChatBotStore.isSetReservation}
+            {AssignmentStore.isGetStaffList}
             <Logo source={logo} />
             <Header>담당 거래 직원을 배정 중입니다.</Header>
             <Animated.View style={{ transform: [{ rotate }, { scale }] }}>

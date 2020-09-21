@@ -1,18 +1,23 @@
-export interface AssignmentStoreStates {
-  isAssignment: boolean;
-  isUpdateStaffsList: boolean,
-  selectedStaff: Record<string, Record<string, unknown>>;
-  staffs: Array<StaffTypes>;
+import { ReservationDocTypes, StaffDocTypes } from './DataListModel';
 
-  setSelectedStaff: () => void;
-  setAssignmentStaff: () => void;
-  initAssignmentState: () => void;
-  toggleIsAssignment(): void,
-  toggleIsUpdateStaffsList(): void,
-}
+export interface AssignmentStoreTypes {
+  isModalShown: boolean;
+  isTimer: boolean;
+  isModalShown: boolean;
+  isUpdateBoth: boolean;
+  staffs: Array<StaffDocTypes>;
+  selectedStaff: StaffDocTypes;
+  reservationList: Array<ReservationDocTypes>;
+  currentReservation: ReservationDocTypes;
 
-export interface StaffTypes {
-  staffProfile: {
-    id: number
-  }
+  toggleModal(): void;
+  initAssignmentState(): void;
+  toggleIsTimer(): void;
+  toggleIsGetStaffList(): void;
+  assignmentStaff(): Promise<void>;
+  setAssignment(): Promise<void>;
+  updateDoc(): Promise<void>
+  getStaffList(): Promise<void>;
+  setSelectedStaff(): void;
+  toggleIsUpdateBoth(): void;
 }
