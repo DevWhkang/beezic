@@ -1,18 +1,15 @@
-import React, { useEffect } from 'react';
-
-import {
-  View,
-  Dimensions, BackHandler,
-  // TouchableOpacityBase,
-} from 'react-native';
+import React from 'react';
+import { View, Dimensions, BackHandler } from 'react-native';
 import { useObserver } from 'mobx-react';
 import styled, { css } from '@emotion/native';
-import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
+import {
+  CommonActions, useFocusEffect, useNavigation, useRoute,
+} from '@react-navigation/native';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
 import UserTransactionList from '../components/DetailInfo/UserTransactionList';
 import TransactionCheckList from '../components/DetailInfo/TransactionCheckList';
 import DetailInfoSwiper from '../components/DetailInfo/DetailInfoSwiper';
-import { UserStore, DetailInfoStore, CheckListStore } from '../../viewModel';
+import { UserStore, DetailInfoStore, ChatBotStore } from '../../viewModel';
 
 const Container = styled.View`
   flex: 1;
@@ -47,21 +44,11 @@ const Greetings = styled.Text`
   margin-top: 5px;
 `;
 
-const ProfileImageNotification = css`
-  height: 12;
-  width: 12;
-  background-color: #32F1FF;
-  border-radius: 6px;
-  position: absolute;
-  right: 6;
-  border-width: 2px;
-  border-color: #000;
-  opacity: 1;
-`;
-
 const DetailInfo = (): JSX.Element => {
   const { width, height } = Dimensions.get('window');
   const navigation = useNavigation();
+  const route = useRoute();
+  const { alias, id } = route.params;
 
   useFocusEffect(() => {
     const onBackPress = () => {
@@ -76,6 +63,7 @@ const DetailInfo = (): JSX.Element => {
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   });
+
   return useObserver(() => (
     <Container>
       <ContentsForm>
@@ -86,17 +74,16 @@ const DetailInfo = (): JSX.Element => {
             {UserStore.user.displayName}
             님,
           </Greetings>
-          <Greetings>비직하기 상세 정보 입니다.</Greetings>
+          <Greetings>{`"${alias}"의 상세 정보 입니다.`}</Greetings>
         </View>
         <UserImageForm>
           <UserImage source={carrotLogo} />
-          {/* <View style={ProfileImageNotification} /> */}
         </UserImageForm>
       </ContentsForm>
       {/* <TransactionDetailInfo propWidth={width} /> */}
-      <DetailInfoSwiper />
+      <DetailInfoSwiper id={id} />
       <UserTransactionList />
-      <TransactionCheckList propHeight={height} />
+      <TransactionCheckList id={id} propHeight={height} />
     </Container>
   ));
 };

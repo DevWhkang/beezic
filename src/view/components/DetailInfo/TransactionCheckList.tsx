@@ -7,7 +7,7 @@ import {
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { CheckListStore } from '../../../viewModel';
+import { CheckListStore, DetailInfoStore } from '../../../viewModel';
 import Carrot from '../../../assets/Beezic_Logo_carrot.png';
 import Bee from '../../../assets/bee.png';
 import Logo from '../../../assets/Beezic_Logo.png';
@@ -112,45 +112,7 @@ const propsTextViewStyle = css`
 
 `;
 
-const userTransactionList = ({ propHeight }): JSX.Element => {
-  const userTransactions = [
-    {
-      key: '1',
-      userImage: Logo,
-      userName: 'bee',
-      transactionDate: 'Date here',
-      amount: 'Amount here',
-    },
-    {
-      key: '2',
-      userImage: Bee,
-      userName: 'logo',
-      transactionDate: 'Date here',
-      amount: 'Amount here',
-    },
-    {
-      key: '3',
-      userImage: Carrot,
-      userName: 'carrot',
-      transactionDate: 'Date here',
-      amount: 'Amount here',
-    },
-    {
-      key: '4',
-      userImage: Bee,
-      userName: 'carrot',
-      transactionDate: 'Date here',
-      amount: 'Amount here',
-    },
-    {
-      key: '5',
-      userImage: Carrot,
-      userName: 'carrot',
-      transactionDate: 'Date here',
-      amount: 'Amount here',
-    },
-  ];
-
+const userTransactionList = ({ id, propHeight }): JSX.Element => {
   const draggedValue = new Animated.Value(90);
 
   const ModalRef = useRef(null);
@@ -181,13 +143,14 @@ const userTransactionList = ({ propHeight }): JSX.Element => {
           />
           <View style={{ height: 500, paddingBottom: 10 }}>
             <CheckedList />
-            {/* <FlatList
-              data={CheckListStore.checkItems}
+            {console.log(DetailInfoStore.targetTransaction.checklist)}
+            <FlatList
+              data={DetailInfoStore.targetTransaction.checklist}
               keyExtractor={(item) => String(item.id)}
               renderItem={({ item }) => (
                 <CheckedListItem id={item.id} description={item.description} />
               )}
-            /> */}
+            />
           </View>
 
         </TransactionCheckListView>

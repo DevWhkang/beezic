@@ -100,7 +100,7 @@ const ChatBotStore: ChatbotStoreTypes = observable({
         checklist: [],
         itemImages: ChatBotStore.itemImages,
         alias: ChatBotStore.confirmAlias,
-        assignmentStaff: {},
+        assignmentStaffProfile: {},
       });
       // db에서 가져온 예약 db에 붙이기
       dataArray.push(ChatBotStore.userFinalData);

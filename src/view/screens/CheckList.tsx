@@ -5,7 +5,7 @@ import {
 import styled, { css } from '@emotion/native';
 
 import { useObserver } from 'mobx-react';
-import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
+import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import Modal, { ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
@@ -86,11 +86,8 @@ const CheckList = (): JSX.Element => {
       CheckListStore.toggleModal();
     } else {
       navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'Main' }],
-        }),
-        navigation.navigate('MyInfoStackNavigator', { screen: 'DetailInfo' }),
+        StackActions.popToTop(),
+        navigation.navigate('MyInfoStackNavigator', { screen: 'MyInfo' }),
       );
     }
   };
