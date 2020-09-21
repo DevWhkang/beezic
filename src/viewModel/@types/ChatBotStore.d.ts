@@ -61,6 +61,7 @@ export interface ChatbotStoreTypes {
   confirmAlias: string,
   alias: string,
 
+  toggleModal(): void;
   setModalVisible(): void,
   setInput(): void,
   setMessages(messages: MessageTypes): void,

@@ -1,18 +1,20 @@
 import React from 'react';
 import styled, { css } from '@emotion/native';
-import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import EditMyInfoDetail from '../../screens/EditMyInfoDetail';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const UserSpecSectionWrapper = styled.View`
   margin: 0 0 10px 5px;
 `;
 const UserInfoTitle = styled.Text`
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   font-size: 22px;
+  font-family: 'Jua-Regular';
 `;
 const UserInfoBody = styled.Text`
   font-size: 18px;
+  font-family: 'Jua-Regular';
 `;
 const EditUserInfoBtn = styled.TouchableOpacity`
   position: absolute;
@@ -21,9 +23,6 @@ const EditUserInfoBtn = styled.TouchableOpacity`
   width: 30px;
   height: 30px;
   margin-top: 20px;
-`;
-const EditBtnStyle = css`
-  font-size: 20px;
 `;
 
 type UserSpecProps = {
@@ -39,7 +38,7 @@ const UserSpecSection = ({
   onPress,
   style,
 }: UserSpecProps): JSX.Element => {
-  const screenFor = title.split(' ')[1].toLowerCase();
+  const screenFor = title.split(' ')[1];
   const textInputSettings = {
     labelStyle: css``,
     textInputStyle: css``,
@@ -68,7 +67,11 @@ const UserSpecSection = ({
               });
             })}
             >
-              <Text style={EditBtnStyle}>{' 📝 '}</Text>
+              <FontAwesomeIcon
+                color="#888"
+                size={20}
+                icon={faChevronRight}
+              />
             </EditUserInfoBtn>
           )
           : null}

@@ -104,17 +104,18 @@ const SignIn = (): JSX.Element => {
     UserStore.password = password;
   };
 
-  const onSignInButton = (): void => {
+  const onSignInButton = async (): void => {
     ErrorStore.reset();
-    UserStore.in();
+    await UserStore.in();
   };
 
-  const onLinkButton = (): void => {
-    UserStore.checkSignIn((isSignedIn) => {
-      if (isSignedIn) UserStore.out();
+  const onLinkButton = async (): void => {
+    await UserStore.checkSignIn(async (isSignedIn): void => {
+      if (isSignedIn) await UserStore.out();
       navigation.navigate('SignUp');
     });
   };
+
   return useObserver(() => (
     <View style={BackGround}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -125,31 +126,24 @@ const SignIn = (): JSX.Element => {
           </HeaderWrapper>
           <TextInput
             onChangeText={onChangeEmail}
-            placeholder="이메일을 입력해 주세요"
+            placeholder="이메일을 입력해 주세요!"
             textInputStyle={emailInputStyle}
             email
           />
           <TextInput
             labelStyle={{ fontSize: 0 }}
             onChangeText={onChangePassword}
-            placeholder="비밀번호를 입력해 주세요"
+            placeholder="비밀번호를 입력해 주세요!"
             textInputStyle={passwordInputStyle}
+            message={ErrorStore.message('password', '비밀번호가 틀려요!')}
             password
           />
-
           <Button
             title="비직 시작하기"
             background={buttonStyle}
             onPress={onSignInButton}
-            disabled={!(UserStore.email && UserStore.password)}
+            disabled={!(UserStore.email.match(/^\w+\.?\w+@\w+\.\w+\.?\w+$/g) && UserStore.password)}
           />
-          {(!ErrorStore.error && UserStore.isLogin) && (
-          // FIXME 모달
-            <Text>로그인 성공</Text>
-          )}
-          {!!ErrorStore.error && (
-            <Text style={errorTextStyle}>{ErrorStore.short}</Text>
-          )}
           <TextLine1>
             <Image source={Line} style={TextLine} />
             <Text style={GrayText}>  또는  </Text>

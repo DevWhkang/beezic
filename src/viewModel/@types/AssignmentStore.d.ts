@@ -1,6 +1,7 @@
 import { ReservationDocTypes, StaffDocTypes } from './DataListModel';
 
 export interface AssignmentStoreTypes {
+  isModalShown: boolean;
   isTimer: boolean;
   isModalShown: boolean;
   isUpdateBoth: boolean;
