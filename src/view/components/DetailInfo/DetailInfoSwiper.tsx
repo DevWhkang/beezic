@@ -4,6 +4,7 @@ import styled, { css } from '@emotion/native';
 import Swiper from 'react-native-swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import { useObserver } from 'mobx-react';
 import Maps from './Maps';
 /*
  * TODO: Props로 username, location, 거래시간 등 받아서 표기할게 많음 Component DDTSlide.tsx 파일도 포함
@@ -67,12 +68,12 @@ const mapViewTitleStyle = css`
   align-self: center;
 `;
 
-function DetailInfoSwiper({ username, beezicler }: IProps): JSX.Element {
+function DetailInfoSwiper({ id }): JSX.Element {
   return (
     <SwiperWrapper>
       <Swiper
         showsButtons
-        loop
+        // loop
         dot={(<View style={dotStyle} />)}
         activeDot={(<View style={dotActiveStyle} />)}
         prevButton={(
@@ -85,17 +86,15 @@ function DetailInfoSwiper({ username, beezicler }: IProps): JSX.Element {
         <View style={mapViewWrapperStyle}>
           <Text style={mapViewTitleStyle}>여기서 직거래 할게요.</Text>
           <View style={mapViewStyle}>
-            <Maps />
+            <Maps type="직거래" id={id} />
           </View>
         </View>
         <View style={mapViewWrapperStyle}>
           <Text style={mapViewTitleStyle}>여기로 픽업하러 갈게요.</Text>
           <View style={mapViewStyle}>
-            <Maps />
+            <Maps type="픽업지" id={id} />
           </View>
         </View>
-        <View><Text>zzzz</Text></View>
-        <View><Text>zzzz</Text></View>
       </Swiper>
     </SwiperWrapper>
   );

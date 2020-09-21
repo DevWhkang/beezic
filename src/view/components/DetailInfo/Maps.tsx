@@ -1,33 +1,38 @@
-import * as React from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import WebView from 'react-native-webview';
-import Geocoder from 'react-native-geocoding';
+import { useObserver } from 'mobx-react';
 import { DetailInfoStore } from '../../../viewModel';
 import htmlFunction from './MapsHtml';
 
 const Maps = (props): JSX.Element => {
-  const Latitude = 0;
-  const longitude = 0;
-
-  Geocoder.init('AIzaSyBjoxJeM36SDKuiG5cR_cBAhWeBLNUwles');
-
-  Geocoder.from(DetailInfoStore.targetTransaction.address.location.roadAddress)
-    .then((json) => {
-      const { location } = json.results[0].geometry;
-      console.log(location);
-      // Latitude = location.lat;
-      // longitude = location.lon;
-    })
-    .catch((error) => console.warn(error));
-
-  // const html = htmlFunction(props.address, Latitude, longitude);
-  const html = htmlFunction('제주시 월산남길 7', 37.537187, 127.005476);
+  useEffect(() => {
+    DetailInfoStore.filterTargetTransaction(props.id);
+    (async () => {
+      if (props.type === '직거래') {
+        await DetailInfoStore.setAddressLocation();
+        DetailInfoStore.setMapLocationHTML(htmlFunction(
+          DetailInfoStore.targetTransaction.address.location.roadAddress,
+          DetailInfoStore.location.lat,
+          DetailInfoStore.location.lng,
+        ));
+      }
+      if (props.type === '픽업지') {
+        await DetailInfoStore.setAddressPickup();
+        DetailInfoStore.setMapPickupHTML(htmlFunction(
+          DetailInfoStore.targetTransaction.address.pickup.roadAddress,
+          DetailInfoStore.pickup.lat,
+          DetailInfoStore.pickup.lng,
+        ));
+      }
+    })();
+  }, []);
 
   const {
     jsOptions, onSelected, onError, ...otherProps
   } = props;
-  const injectedJavaScript = React.useMemo(() => `initOnReady(${JSON.stringify(jsOptions)});void(0);`, [jsOptions]);
+  const injectedJavaScript = useMemo(() => `initOnReady(${JSON.stringify(jsOptions)});void(0);`, [jsOptions]);
 
-  const onMessage = React.useCallback(({ nativeEvent }) => {
+  const onMessage = useCallback(({ nativeEvent }) => {
     try {
       nativeEvent.data && onSelected && onSelected(JSON.parse(nativeEvent.data));
     } catch (e) {
@@ -35,17 +40,33 @@ const Maps = (props): JSX.Element => {
     }
   }, [onSelected]);
 
-  return (
-    <WebView
-      {...otherProps}
-      source={{ html, baseUrl: 'https://github.com' }}
-      onMessage={onMessage}
-      injectedJavaScript={injectedJavaScript}
-      mixedContentMode="compatibility"
-      useWebKit
-      onShouldStartLoadWithRequest={() => true}
-    />
-  );
+  return useObserver(() => (
+    <>
+      {props.type === '직거래'
+        ? (
+          <WebView
+            {...otherProps}
+            source={{ html: DetailInfoStore.locationHtml, baseUrl: 'https://github.com' }}
+            onMessage={onMessage}
+            injectedJavaScript={injectedJavaScript}
+            mixedContentMode="compatibility"
+            useWebKit
+            onShouldStartLoadWithRequest={() => true}
+          />
+        )
+        : (
+          <WebView
+            {...otherProps}
+            source={{ html: DetailInfoStore.pickupHtml, baseUrl: 'https://github.com' }}
+            onMessage={onMessage}
+            injectedJavaScript={injectedJavaScript}
+            mixedContentMode="compatibility"
+            useWebKit
+            onShouldStartLoadWithRequest={() => true}
+          />
+        )}
+    </>
+  ));
 };
 
 export default Maps;

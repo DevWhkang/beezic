@@ -96,9 +96,7 @@ const MyInfoMainBody = (): JSX.Element => {
           {DetailInfoStore.renderUserTransactionList.map(({ alias, id }) => (
             <MyTransactionBtn
               key={id}
-              onPress={() => navigation.navigate('DetailInfo', {
-                alias, id,
-              })}
+              onPress={() => navigation.navigate('DetailInfo', { alias, id })}
             >
               <MyTransactionTitle>
                 {alias}
