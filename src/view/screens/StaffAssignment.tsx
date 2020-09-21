@@ -98,7 +98,7 @@ const StaffAssignment = (): JSX.Element => {
     }
   }, [ChatBotStore.isSetReservation, AssignmentStore.isGetStaffList]);
 
-  useEffect(() => {
+  useFocusEffect(() => {
     spin();
     pulse();
   }, []);
