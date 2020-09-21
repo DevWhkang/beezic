@@ -1,0 +1,40 @@
+{
+  "id": "직거래 아이디",
+  "address": {
+    "location": {
+      "detailAddress": "직거래 상세 주소",
+      "jibunAddress": "직거래 지번 주소",
+      "roadAddress": "직거래 도로명 주소"
+    },
+    "pickup": { // 픽업지 장소
+      "detailAddress": "픽업 상세 주소",
+      "jibunAddress": "픽업 지번 주소",
+      "roadAddress": "픽업 도로명 주소"
+    }
+  },
+  "alias": "직거래 별명",
+  "assignmentStaffProfile": {
+    "id": "스태프 아이디",
+    "name": "스태프 이름",
+    "email": "스태프 이메일",
+    "image": "스태프 사진",
+    "introduce": "스태프 자기소개",
+    "phone": "스태프 전화번호"
+  },
+  "checklist": [
+    {
+      "id": "체크리스트 아이디",
+      "description": "체크리스트 설명"
+    }
+  ],
+  "itemImage": [
+    {
+      "id": "이미지 아이디",
+      "fileUri": "파일 경로"
+    }
+  ],
+  "user": {
+    "displayName": "유저 이름",
+    "uid": "유저 키"
+  }
+}
