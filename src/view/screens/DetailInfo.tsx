@@ -1,10 +1,5 @@
-import React, { useEffect } from 'react';
-
-import {
-  View,
-  Dimensions, BackHandler,
-  // TouchableOpacityBase,
-} from 'react-native';
+import React from 'react';
+import { View, Dimensions, BackHandler } from 'react-native';
 import { useObserver } from 'mobx-react';
 import styled, { css } from '@emotion/native';
 import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
