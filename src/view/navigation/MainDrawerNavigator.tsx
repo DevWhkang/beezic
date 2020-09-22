@@ -13,7 +13,7 @@ const drawerCss = css`
 
 `;
 const MainDrawerNavigator = ():JSX.Element => (
-  <Drawer.Navigator drawerStyle={drawerCss} initialRouteName="MainStackNavigator" drawerContent={MainMenu}>
+  <Drawer.Navigator drawerStyle={drawerCss} initialRouteName="MainStackNavigator" drawerContent={MainMenu} screenOptions={{ unmountOnBlur: true }}>
     <Drawer.Screen name="MainMenu" component={MainMenu} />
     <Drawer.Screen name="MainStackNavigator" component={MainStackNavigator} />
     <Drawer.Screen name="MyInfoStackNavigator" component={MyInfoStackNavigator} />

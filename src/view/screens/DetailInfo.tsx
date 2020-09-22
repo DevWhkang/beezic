@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Dimensions, BackHandler } from 'react-native';
 import { useObserver } from 'mobx-react';
 import styled from '@emotion/native';
@@ -50,10 +50,11 @@ const DetailInfo = (): JSX.Element => {
   const route = useRoute();
   const { alias, id } = route.params;
 
+  useEffect(() => {
+    DetailInfoStore.filterTargetTransaction(id);
+  });
   useFocusEffect(() => {
-    const onBackPress = async () => {
-      const { user } = UserStore;
-      await DetailInfoStore.getUserTransactionList(user.uid);
+    const onBackPress = () => {
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
@@ -84,7 +85,9 @@ const DetailInfo = (): JSX.Element => {
       </ContentsForm>
       {/* <TransactionDetailInfo propWidth={width} /> */}
       <DetailInfoSwiper id={id} />
-      <UserTransactionList />
+      {
+        DetailInfoStore.targetTransaction.itemImages && <UserTransactionList />
+      }
       <TransactionCheckList id={id} propHeight={height} />
     </Container>
   ));
