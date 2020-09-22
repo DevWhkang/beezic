@@ -9,9 +9,10 @@ import { DetailInfoStore, UserStore } from '../../../viewModel';
 
 const SectionTitle = css`
   margin-top: 60px;
+  font-family: 'Jua-Regular';
   margin-left: 10px;
+  margin-bottom: 10px;
   font-size: 30px;
-  font-weight: bold;
 `;
 
 const MyTransactionSectionWrapper = styled.View`
@@ -26,7 +27,7 @@ const MyTransactionList = styled.ScrollView`
 
 const MyTransaction = styled.View`
   margin: 0 10px;
-  border-bottom-color: #ff8a3d;
+  border-bottom-color: #8c8c8c;
   border-bottom-width:2px;
   flex-direction: row;
 `;

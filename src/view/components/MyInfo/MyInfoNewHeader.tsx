@@ -106,7 +106,14 @@ const MyInfoNewHeader = ({
           <Text style={EmailCss}>Email</Text>
           <Text style={UserEmailCss}>{`${UserStore.user.email}`}</Text>
           <EditMyInfoBtn onPress={() => navigation.navigate('EditMyInfo')}>
-            <Text style={{ fontSize: 19, color: 'black' }}>내 정보 수정하기</Text>
+            <Text style={{
+              fontSize: 19,
+              color: 'black',
+              fontFamily: 'Jua-Regular',
+            }}
+            >
+              내 정보 수정하기
+            </Text>
           </EditMyInfoBtn>
         </HeaderBottomWrapper>
       </ProfileBox>
