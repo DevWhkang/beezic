@@ -83,7 +83,6 @@ const DetailInfo = (): JSX.Element => {
           <UserImage source={carrotLogo} />
         </UserImageForm>
       </ContentsForm>
-      {/* <TransactionDetailInfo propWidth={width} /> */}
       <DetailInfoSwiper id={id} />
       {
         DetailInfoStore.targetTransaction.itemImages && <UserTransactionList />
