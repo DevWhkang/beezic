@@ -87,7 +87,6 @@ function MainMenu({ navigation }:MainMenuPropTypes): JSX.Element {
     navigation.navigate('MainStackNavigator', { screen: 'Main' });
   };
   const navigateToMyInfo = async () => {
-    await DetailInfoStore.getUserTransactionList(user.uid);
     navigation.navigate('MyInfoStackNavigator', { screen: 'MyInfo' });
   };
   const navigateToEditMyInfo = () => {
