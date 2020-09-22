@@ -60,7 +60,8 @@ const UserEmailCss = css`
 `;
 
 const UserIconWrapper = styled.TouchableOpacity`
-  margin-left: 10px;
+  margin: 20px 10px 20px 40px;
+  border-radius: 40px;
 `;
 
 const EditMyInfoBtn = styled.TouchableOpacity`
@@ -90,8 +91,11 @@ const MyInfoNewHeader = ({
       <ProfileBox>
         <UserIconWrapper>
           <FontAwesomeIcon
-            color="#fc8a3d"
-            size={100}
+            color="#8c8c8c"
+            style={{
+              opacity: 0.6,
+            }}
+            size={80}
             icon={faUserCircle}
           />
         </UserIconWrapper>
