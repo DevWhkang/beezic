@@ -85,7 +85,6 @@ const CheckList = (): JSX.Element => {
     if (CheckListStore.checkItems.length === 0) {
       CheckListStore.toggleModal();
     } else {
-      await DetailInfoStore.getUserTransactionList(user.uid);
       navigation.dispatch(
         StackActions.popToTop(),
         navigation.navigate('MyInfoStackNavigator', { screen: 'MyInfo' }),
