@@ -3,15 +3,14 @@ import {
   View, Text, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard, BackHandler,
 } from 'react-native';
 import styled, { css } from '@emotion/native';
-
 import { useObserver } from 'mobx-react';
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native';
-import Modal from 'react-native-modal';
 import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
 import CheckListStore from '../../viewModel/CheckListStore';
 import ContinueModal from '../components/ContinueModal';
+import { DetailInfoStore, UserStore } from '../../viewModel';
 
 const TitleText = styled.Text`
   font-size: 50;
@@ -66,11 +65,12 @@ const completeTextStyle = css`
 `;
 const CheckList = (): JSX.Element => {
   const navigation = useNavigation();
-
-  const handleCompleteButton = () => {
+  const handleCompleteButton = async () => {
+    const { user } = UserStore;
     if (CheckListStore.checkItems.length === 0) {
       CheckListStore.toggleModal();
     } else {
+      await DetailInfoStore.getUserTransactionList(user.uid);
       navigation.dispatch(
         StackActions.popToTop(),
         navigation.navigate('MyInfoStackNavigator', { screen: 'MyInfo' }),
