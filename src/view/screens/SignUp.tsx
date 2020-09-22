@@ -69,7 +69,10 @@ const linkStyle = css`
 const CarrotImage = styled.Image`
   margin-top: 10px;
 `;
-
+const scrollViewCss = css`
+  flex-grow: 1;
+  justify-content: center;
+`;
 const SignUp = (): JSX.Element => {
   const navigation = useNavigation();
   const onChangeEmail = (email: string) => {
@@ -98,7 +101,7 @@ const SignUp = (): JSX.Element => {
 
   return useObserver(() => (
     <View style={BackGround}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={scrollViewCss} showsVerticalScrollIndicator={false}>
         <Box>
           <Container>
             <TitleText>회원 가입</TitleText>

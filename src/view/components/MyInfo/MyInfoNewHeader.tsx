@@ -69,6 +69,7 @@ const EditMyInfoBtn = styled.TouchableOpacity`
   border-bottom-style: solid;
   border-bottom-width: 1px;
   margin: 5px;
+  z-index: 999;
 `;
 
 type MyInfoPropTypes = {

@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">beezic</string>
+  <string name="app_name">Beezic</string>
   <string name="facebook_app_id">265234187852645</string>
   <string name="fb_login_protocol_scheme">fb265234187852645</string>
 </resources>

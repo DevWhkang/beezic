@@ -6,11 +6,14 @@ import {
 } from 'react-native';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import Carrot from '../../../assets/Beezic_Logo_carrot.png';
 import Bee from '../../../assets/bee.png';
 import Logo from '../../../assets/Beezic_Logo.png';
 import DetailInfoStore from '../../../viewModel/DetailInfoStore';
+import {
+  AssignmentStore, ChatBotStore, CheckListStore, UserStore,
+} from '../../../viewModel';
 
 const AddTransactionStyle = css`
   height: 100;
@@ -66,15 +69,21 @@ const AddText = styled.Text`
 `;
 
 const userTransactionList = (): JSX.Element => {
+  const { user } = UserStore;
   useEffect(() => {
-    DetailInfoStore.getUserTransactionList(1); // TODO: userId 파라미터로 넘기기
+    DetailInfoStore.getUserTransactionList(user.uid);
   }, []);
   const navigation = useNavigation();
-  const userTransactions = [];
+  const userTransactions = DetailInfoStore.renderUserTransactionList;
 
   const navigationChatbot = () => {
-    // TODO: Chatbot screen으로 가기
-    navigation.navigate('MainStackNavigator', { screen: 'TransactionInfo' });
+    ChatBotStore.initChatbotState();
+    AssignmentStore.initAssignmentState();
+    CheckListStore.initCheckListState();
+    navigation.dispatch(
+      StackActions.popToTop(),
+      navigation.navigate('MainStackNavigator', { screen: 'TransactionInfo' }),
+    );
   };
 
   return useObserver(() => (
@@ -91,10 +100,10 @@ const userTransactionList = (): JSX.Element => {
           inverted
           horizontal
           data={userTransactions}
-          renderItem={({ item }) => (
+          renderItem={({ item: { alias, itemImages, id } }) => (
             <View>
-              <Image style={TansactionsStyle} source={item.userImage} />
-              <Text style={{ color: '#fff' }}>{item.userName}</Text>
+              <Image style={TansactionsStyle} source={{ uri: `data:image/png;base64,${itemImages[0].fileUri}` }} />
+              <Text style={{ color: 'black', textAlign: 'center' }}>{alias}</Text>
             </View>
           )}
         />

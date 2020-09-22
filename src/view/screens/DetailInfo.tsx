@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Dimensions, BackHandler } from 'react-native';
 import { useObserver } from 'mobx-react';
-import styled, { css } from '@emotion/native';
+import styled from '@emotion/native';
 import {
   CommonActions, useFocusEffect, useNavigation, useRoute,
 } from '@react-navigation/native';
@@ -9,7 +9,7 @@ import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
 import UserTransactionList from '../components/DetailInfo/UserTransactionList';
 import TransactionCheckList from '../components/DetailInfo/TransactionCheckList';
 import DetailInfoSwiper from '../components/DetailInfo/DetailInfoSwiper';
-import { UserStore, DetailInfoStore, ChatBotStore } from '../../viewModel';
+import { UserStore, DetailInfoStore } from '../../viewModel';
 
 const Container = styled.View`
   flex: 1;
@@ -51,7 +51,9 @@ const DetailInfo = (): JSX.Element => {
   const { alias, id } = route.params;
 
   useFocusEffect(() => {
-    const onBackPress = () => {
+    const onBackPress = async () => {
+      const { user } = UserStore;
+      await DetailInfoStore.getUserTransactionList(user.uid);
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
