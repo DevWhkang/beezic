@@ -12,7 +12,6 @@ import { Dialogflow_V2 } from 'react-native-dialogflow';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import Modal, { ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { ChatBotStore, UserStore } from '../../viewModel';
 import dialogflowConfig from '../../../dialogflowENV';
 import {
@@ -23,6 +22,7 @@ import AddressSearchModal from '../components/Chatbot/AddressSearchModal';
 import Finish from '../components/Chatbot/Finish';
 import UploadImageModal from '../components/Chatbot/UploadImageModal';
 import InputAlias from '../components/Chatbot/InputAlias';
+import ContinueModal from '../components/ContinueModal';
 
 const chatbotStyles = css`
   flex: 1;
@@ -228,21 +228,6 @@ const TransactionInfo = (): JSX.Element => {
   const renderTime = () => {
     // 이렇게 해야... 메시지에서 시간 없어짐...;;
   };
-  const modalContentStyle = css`
-    font-family: 'BMHANNAPro';
-    color: black;
-    font-size: 20px;
-  `;
-  const modalCancleBtnStyle = css`
-    color: black;
-    font-family: 'BMHANNAPro';
-    font-size: 20px;
-  `;
-  const modalOkBtnStyle = css`
-    color: #EF904C;
-    font-family: 'BMHANNAPro';
-    font-size: 20px;
-  `;
   const navigation = useNavigation();
   useFocusEffect(() => {
     const onBackPress = () => {
@@ -252,41 +237,26 @@ const TransactionInfo = (): JSX.Element => {
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   });
+
+  const onLaterHandler = () => {
+    ChatBotStore.toggleModal();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Main' }],
+    });
+  };
+
+  const onContinueHandler = () => {
+    ChatBotStore.toggleModal();
+  };
+
   return useObserver(() => (
     <View style={chatbotStyles}>
-      <Modal
-        useNativeDriver
-        width={300}
-        visible={ChatBotStore.isModalShown}
-        footer={(
-          <ModalFooter>
-            <ModalButton
-              textStyle={modalCancleBtnStyle}
-              text="나중에하기"
-              onPress={() => {
-                ChatBotStore.toggleModal();
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: 'Main' }],
-                });
-              }}
-            />
-            <ModalButton
-              textStyle={modalOkBtnStyle}
-              text="계속하기"
-              onPress={() => {
-                ChatBotStore.toggleModal();
-              }}
-            />
-          </ModalFooter>
-        )}
-      >
-        <ModalContent>
-          <Text style={modalContentStyle}>
-            나중에 하시겠어요?
-          </Text>
-        </ModalContent>
-      </Modal>
+      <ContinueModal
+        isVisible={ChatBotStore.isModalShown}
+        onLaterPress={onLaterHandler}
+        onContinuePress={onContinueHandler}
+      />
       <GiftedChat
         renderBubble={renderBubble}
         messages={ChatBotStore.messages.slice()}

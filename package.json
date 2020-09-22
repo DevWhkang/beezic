@@ -9,6 +9,7 @@
     "link-voice": "react-native link react-native-voice",
     "ios": "react-native run-ios",
     "start": "react-native start --reset-cache",
+    "build": "cd android && ./gradlew app:assembleRelease",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "postinstall": "patch-package",
     "firestore": "firebase emulators:start --only firestore"
@@ -43,7 +44,6 @@
     "react-native-image-picker": "^2.3.3",
     "react-native-maps": "^0.27.1",
     "react-native-modal": "^11.5.6",
-    "react-native-modals": "^0.19.9",
     "react-native-paper": "^4.1.0",
     "react-native-reanimated": "^1.13.0",
     "react-native-safe-area-context": "^3.1.7",
