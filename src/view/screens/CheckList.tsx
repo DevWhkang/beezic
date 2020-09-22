@@ -5,11 +5,11 @@ import {
 import styled, { css } from '@emotion/native';
 import { useObserver } from 'mobx-react';
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native';
-import Modal, { ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import CheckedInsert from '../components/CheckList/CheckedInsert';
 import CheckedList from '../components/CheckList/CheckedList';
 import carrotLogo from '../../assets/Beezic_Logo_carrot.png';
 import CheckListStore from '../../viewModel/CheckListStore';
+import ContinueModal from '../components/ContinueModal';
 import { DetailInfoStore, UserStore } from '../../viewModel';
 
 const TitleText = styled.Text`
@@ -63,21 +63,6 @@ const completeTextStyle = css`
   text-align: center;
   margin-top: 2px;
 `;
-const modalContentStyle = css`
-font-family: 'BMHANNAPro';
-color: black;
-font-size: 20px;
-`;
-const modalCancleBtnStyle = css`
-color: black;
-font-family: 'BMHANNAPro';
-font-size: 20px;
-`;
-const modalOkBtnStyle = css`
-color: #EF904C;
-font-family: 'BMHANNAPro';
-font-size: 20px;
-`;
 const CheckList = (): JSX.Element => {
   const navigation = useNavigation();
   const handleCompleteButton = async () => {
@@ -100,43 +85,27 @@ const CheckList = (): JSX.Element => {
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   });
 
+  const onLaterHandler = () => {
+    CheckListStore.toggleModal();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Main' }],
+    });
+  };
+
+  const onContinueHandler = () => {
+    CheckListStore.toggleModal();
+  };
+
   return useObserver(() => (
     <>
-      <Modal
-        useNativeDriver
-        width={300}
-        visible={CheckListStore.isModalShown}
-        footer={(
-          <ModalFooter>
-            <ModalButton
-              textStyle={modalCancleBtnStyle}
-              text="나중에하기"
-              onPress={() => {
-                CheckListStore.toggleModal();
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: 'Main' }],
-                });
-              }}
-            />
-            <ModalButton
-              textStyle={modalOkBtnStyle}
-              text="계속하기"
-              onPress={() => {
-                CheckListStore.toggleModal();
-              }}
-            />
-          </ModalFooter>
-        )}
-      >
-        <ModalContent>
-          <Text style={modalContentStyle}>
-            나중에 작성하실껀가요?
-            {'\n'}
-            상세페이지에서 수정할 수 있어요
-          </Text>
-        </ModalContent>
-      </Modal>
+      <ContinueModal
+        content="나중에 작성하실껀가요?"
+        description="상세페이지에서 수정할 수 있어요!"
+        isVisible={CheckListStore.isModalShown}
+        onLaterPress={onLaterHandler}
+        onContinuePress={onContinueHandler}
+      />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView>
           <TitleText>
