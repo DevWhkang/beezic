@@ -8,11 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useObserver } from 'mobx-react';
 import { ChatbotModel, AssignmentModel } from 'src/model';
-import Modal, { ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { ChatBotStore, AssignmentStore } from '../../viewModel';
 import logo from '../../assets/Beezic_Logo_carrot.png'; // TODO svg 파일로 변경
 import LinkText from '../components/LinkText';
 import CompleteAssignment from '../components/Chatbot/CompleteAssignment';
+import ContinueModal from '../components/ContinueModal';
 
 const Container = styled.View`
   font-family: 'BMYEONSUNG';
@@ -112,41 +112,25 @@ const StaffAssignment = (): JSX.Element => {
     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   }, []);
 
+  const onLaterHandler = () => {
+    AssignmentStore.toggleModal();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Main' }],
+    });
+  };
+
+  const onContinueHandler = () => {
+    AssignmentStore.toggleModal();
+  };
+
   return useObserver(() => (
     <>
-      <Modal
-        useNativeDriver
-        width={300}
-        visible={AssignmentStore.isModalShown}
-        footer={(
-          <ModalFooter>
-            <ModalButton
-              textStyle={modalCancleBtnStyle}
-              text="나중에하기"
-              onPress={() => {
-                AssignmentStore.toggleModal();
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: 'Main' }],
-                });
-              }}
-            />
-            <ModalButton
-              textStyle={modalOkBtnStyle}
-              text="계속하기"
-              onPress={() => {
-                AssignmentStore.toggleModal();
-              }}
-            />
-          </ModalFooter>
-        )}
-      >
-        <ModalContent>
-          <Text style={modalContentStyle}>
-            나중에 하시겠어요?
-          </Text>
-        </ModalContent>
-      </Modal>
+      <ContinueModal
+        isVisible={AssignmentStore.isModalShown}
+        onLaterPress={onLaterHandler}
+        onContinuePress={onContinueHandler}
+      />
       {AssignmentStore.isUpdateBoth && AssignmentStore.isTimer
         ? <CompleteAssignment />
         : (
