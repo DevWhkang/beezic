@@ -1,9 +1,10 @@
 ---
-name: "Task"
-about: "Task 관리 템플릿입니다."
+name: Task
+about: Task 관리 템플릿입니다.
 title: "[Task] "
 labels: ''
-assignees: 
+assignees: ''
+
 ---
 
 # Assignee : (이름)
