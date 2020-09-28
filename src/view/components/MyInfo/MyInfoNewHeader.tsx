@@ -60,7 +60,8 @@ const UserEmailCss = css`
 `;
 
 const UserIconWrapper = styled.TouchableOpacity`
-  margin-left: 10px;
+  margin: 20px 10px 20px 40px;
+  border-radius: 40px;
 `;
 
 const EditMyInfoBtn = styled.TouchableOpacity`
@@ -90,8 +91,11 @@ const MyInfoNewHeader = ({
       <ProfileBox>
         <UserIconWrapper>
           <FontAwesomeIcon
-            color="#fc8a3d"
-            size={100}
+            color="#8c8c8c"
+            style={{
+              opacity: 0.6,
+            }}
+            size={80}
             icon={faUserCircle}
           />
         </UserIconWrapper>
@@ -102,7 +106,14 @@ const MyInfoNewHeader = ({
           <Text style={EmailCss}>Email</Text>
           <Text style={UserEmailCss}>{`${UserStore.user.email}`}</Text>
           <EditMyInfoBtn onPress={() => navigation.navigate('EditMyInfo')}>
-            <Text style={{ fontSize: 19, color: 'black' }}>내 정보 수정하기</Text>
+            <Text style={{
+              fontSize: 19,
+              color: 'black',
+              fontFamily: 'Jua-Regular',
+            }}
+            >
+              내 정보 수정하기
+            </Text>
           </EditMyInfoBtn>
         </HeaderBottomWrapper>
       </ProfileBox>

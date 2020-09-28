@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from '@emotion/native';
 import { Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useObserver } from 'mobx-react';
-import { DetailInfoStore } from '../../../viewModel';
+import { DetailInfoStore, UserStore } from '../../../viewModel';
 
 const SectionTitle = css`
   margin-top: 60px;
+  font-family: 'Jua-Regular';
   margin-left: 10px;
+  margin-bottom: 10px;
   font-size: 30px;
-  font-weight: bold;
 `;
 
 const MyTransactionSectionWrapper = styled.View`
@@ -26,7 +27,7 @@ const MyTransactionList = styled.ScrollView`
 
 const MyTransaction = styled.View`
   margin: 0 10px;
-  border-bottom-color: #ff8a3d;
+  border-bottom-color: #8c8c8c;
   border-bottom-width:2px;
   flex-direction: row;
 `;
@@ -61,6 +62,12 @@ const SeeAllTransaction = styled.TouchableOpacity`
 
 const MyInfoMainBody = (): JSX.Element => {
   const navigation = useNavigation();
+  const { user } = UserStore;
+  useEffect(() => {
+    (async () => {
+      await DetailInfoStore.getUserTransactionList(user.uid);
+    })();
+  }, []);
   return useObserver(() => (
     <>
       <MyTransaction>

@@ -45,7 +45,6 @@ const Finish = (): JSX.Element => {
 
   return useObserver(() => (
     <Container>
-      <FinishImage source={bee} />
       <FinishView>
         <FinishText onPress={onFinish}>
           Finish

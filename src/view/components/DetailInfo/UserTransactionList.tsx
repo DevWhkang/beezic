@@ -30,7 +30,7 @@ const plusIconStyle = css`
   align-self: center;
 `;
 
-const TansactionsStyle = css`
+const TransactionListItem = styled.Image`
   width: 70;
   height: 70;
   background-color: #fff;
@@ -39,6 +39,23 @@ const TansactionsStyle = css`
   justify-content: center;
   margin-top: 10px;
   margin-right: 10px;
+`;
+
+const NoImage = styled.View`
+  width: 70;
+  height: 70;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 10;
+  justify-content: center;
+  margin-top: 10px;
+  margin-right: 10px;
+  border: 1px solid #c8c8c8;
+`;
+const EmptyText = styled.Text`
+  font-size: 20px;
+  font-family: 'Jua-Regular';
+  text-align: center;
 `;
 
 const AddTranscationIcon = styled.View`
@@ -68,14 +85,18 @@ const AddText = styled.Text`
   font-family: 'Jua-Regular';
 `;
 
-const userTransactionList = (): JSX.Element => {
-  const { user } = UserStore;
-  useEffect(() => {
-    DetailInfoStore.getUserTransactionList(user.uid);
-  }, []);
-  const navigation = useNavigation();
-  const userTransactions = DetailInfoStore.renderUserTransactionList;
+const emptyImageStyle = css`
+  margin-left: 13%;
+  align-self: center; 
+`;
+const emptyTextStyle = css`
+  font-size: 30px;
+  color: #c8c8c8;
+  font-family: 'Jua-Regular';
+`;
 
+const userTransactionList = (): JSX.Element => {
+  const navigation = useNavigation();
   const navigationChatbot = () => {
     ChatBotStore.initChatbotState();
     AssignmentStore.initAssignmentState();
@@ -96,17 +117,28 @@ const userTransactionList = (): JSX.Element => {
           </AddTranscationIcon>
           <AddText>비직 추가</AddText>
         </TouchableOpacity>
-        <FlatList
-          inverted
-          horizontal
-          data={userTransactions}
-          renderItem={({ item: { alias, itemImages, id } }) => (
-            <View>
-              <Image style={TansactionsStyle} source={{ uri: `data:image/png;base64,${itemImages[0].fileUri}` }} />
-              <Text style={{ color: 'black', textAlign: 'center' }}>{alias}</Text>
-            </View>
-          )}
-        />
+        {
+         DetailInfoStore.targetTransaction.itemImages.length !== 0
+           ? (
+             <FlatList
+               horizontal
+               data={DetailInfoStore.targetTransaction.itemImages}
+               renderItem={({ item }) => (
+                 <View>
+                   <TransactionListItem source={{ uri: `data:image/png;base64,${item.fileUri}` }} />
+                 </View>
+               )}
+             />
+           )
+           : (
+             <View style={emptyImageStyle}>
+               <Text style={emptyTextStyle}>
+                 사 진 없 음...
+               </Text>
+             </View>
+           )
+}
+
       </UserTransaction>
     </View>
   ));

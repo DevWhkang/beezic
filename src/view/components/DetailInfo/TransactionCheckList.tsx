@@ -142,8 +142,6 @@ const userTransactionList = ({ id, propHeight }): JSX.Element => {
             propsButtonTextStyle={propsButtonTextStyle}
           />
           <View style={{ height: 500, paddingBottom: 10 }}>
-            <CheckedList />
-            {console.log(DetailInfoStore.targetTransaction.checklist)}
             <FlatList
               data={DetailInfoStore.targetTransaction.checklist}
               keyExtractor={(item) => String(item.id)}

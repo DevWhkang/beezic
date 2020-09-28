@@ -3,6 +3,7 @@ import { useObserver } from 'mobx-react';
 import { css } from '@emotion/native';
 import { View, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import WebView from 'react-native-webview';
 import { AssignmentStore, ChatBotStore } from '../../../viewModel';
 
 const assignmentTitleStyle = css`
@@ -21,14 +22,14 @@ const assignmentStaffAreaStyle = css`
 
 const assignmentStaffImageAreaStyle = css`
   height: 300px;
-  background-color: #fff;
+  background-color: #c8c8c8;
   margin: 30px;
   border-radius: 20px;
 
 `;
 
 const introduceAreaStyle = css`
-
+  margin: 40px;
 `;
 
 const introduceTextStyle = css`
@@ -57,9 +58,13 @@ const emptyImageStyle = css`
   font-size: 25;
   color: #8c8c8c;
   opacity: 0.6;
-
 `;
 
+const staffProfileImageStyle = css`
+  height: 330px;
+  width: 200px;
+  align-self: center;
+`;
 const CompleteAssignment = (): JSX.Element => {
   const navigation = useNavigation();
 
@@ -78,7 +83,12 @@ const CompleteAssignment = (): JSX.Element => {
       <View style={assignmentStaffAreaStyle}>
         <View style={assignmentStaffImageAreaStyle}>
           {AssignmentStore.selectedStaff.staffProfile.image
-            ? <Image source={AssignmentStore.selectedStaff.staffProfile.image} />
+            ? (
+              <WebView
+                style={staffProfileImageStyle}
+                source={{ uri: AssignmentStore.selectedStaff.staffProfile.image }}
+              />
+            )
             : (
               <View>
                 <Text style={emptyImageStyle}>
