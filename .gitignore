@@ -62,5 +62,8 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-#add
+# add
 yarn.lock
+
+# firebase
+android/app/google-services.json
