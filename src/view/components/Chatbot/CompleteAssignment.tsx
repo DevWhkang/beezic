@@ -73,9 +73,9 @@ const CompleteAssignment = (): JSX.Element => {
     AssignmentStore.updateDoc();
   }, []);
 
-  // setTimeout(() => {
-  //   navigation.navigate('CheckList');
-  // }, 5000);
+  setTimeout(() => {
+    navigation.navigate('CheckList');
+  }, 5000);
 
   return useObserver(() => (
     <View>
