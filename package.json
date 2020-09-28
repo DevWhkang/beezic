@@ -37,6 +37,7 @@
     "react-native": "0.63.2",
     "react-native-daum-postcode": "^1.0.9",
     "react-native-dialogflow": "^3.2.2",
+    "react-native-dotenv": "^2.4.0",
     "react-native-fbsdk": "^2.0.0",
     "react-native-geocoding": "^0.4.0",
     "react-native-gesture-handler": "^1.8.0",

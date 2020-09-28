@@ -40,6 +40,9 @@
       "@emotion/native": [
         "./src/@types/emotions.d.ts"
       ],
+      "react-native-dotenv": [
+        "src/@types/dotenv.d.ts"
+      ],
       "./src/model/@types/*": [
         "./src/model/@types/*"
       ],

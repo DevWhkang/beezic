@@ -65,5 +65,8 @@ buck-out/
 # add
 yarn.lock
 
+# dotenv
+.env
+
 # firebase
 android/app/google-services.json

@@ -1,12 +1,13 @@
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import { OAUTH_CLIENT_ID } from '@dotenv';
 import { OAuthModelTypes } from './@types/OAuthModel';
 
 const OAuthModel: OAuthModelTypes = {
   // webClientId:
   // 'client/oauth_client/client_id' in 'android/app/google-services.json'
-  webClientId: '400584270881-rnuvks426b8gpfmqqlebmb7soig3f3dr.apps.googleusercontent.com',
+  webClientId: OAUTH_CLIENT_ID,
 
   initGoogleConfigure() {
     console.log('Initalizing Google Sign In');

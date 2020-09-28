@@ -1,3 +1,5 @@
+import { KAKAO_MAPS_KEY } from '@dotenv';
+
 const htmlFunction = (Address, Latitude, longitude) => `
   <!DOCTYPE html>
   <html lang="ko">
@@ -15,11 +17,11 @@ const htmlFunction = (Address, Latitude, longitude) => `
   </head>
   <body>
     <div id="map" style="width:100%; min-height: 100%;"></div>
-  
+
 	  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	  <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=42d0c0a67103c462ace3539d5d298ffc&libraries=services">
+	  <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAPS_KEY}&libraries=services">
     </script>
-  
+
 	  <script type="text/javascript">
 		  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
           mapOption = {
@@ -29,14 +31,14 @@ const htmlFunction = (Address, Latitude, longitude) => `
 
       //지도를 미리 생성
 			var map = new kakao.maps.Map(mapContainer, mapOption);
-			
-      
+
+
       //마커를 생성
       var marker = new kakao.maps.Marker({
           position: new kakao.maps.LatLng(${Latitude}, ${longitude}),
           map: map
 			});
-			
+
 			// 마커가 지도 위에 표시되도록 설정합니다
 			marker.setMap(map);
 
@@ -49,11 +51,11 @@ const htmlFunction = (Address, Latitude, longitude) => `
 				<a href="https://map.kakao.com/link/map/${Address}, ${Latitude},${longitude}" style="color:#D2691E" target="_blank">큰지도보기</a>\
 			</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
     	iwPosition = new kakao.maps.LatLng(${Latitude}, ${longitude}); //인포윈도우 표시 위치입니다
-		
+
       // 인포윈도우를 생성합니다
 			var infowindow = new kakao.maps.InfoWindow({
-    		position : iwPosition, 
-    		content : iwContent 
+    		position : iwPosition,
+    		content : iwContent
 			});
 			infowindow.open(map, marker);
 	  </script>
