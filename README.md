@@ -57,7 +57,7 @@
 - Beezic 직원 정보, checkList display
 
 ### 💡 비직은 어떤 기술로 제작되었나요?
-
+#### [세부 구현 및 기술 영상 보러가기](https://bit.ly/2GcNGLN)
 #### [React Native](https://reactnative.dev/) <!-- omit in toc -->
 
 - [React Native Navigation](https://reactnavigation.org/)
