@@ -7,24 +7,13 @@ import htmlFunction from './MapsHtml';
 const Maps = (props): JSX.Element => {
   useEffect(() => {
     DetailInfoStore.filterTargetTransaction(props.id);
-    (async () => {
-      if (props.type === '직거래') {
-        await DetailInfoStore.setAddressLocation();
-        DetailInfoStore.setMapLocationHTML(htmlFunction(
-          DetailInfoStore.targetTransaction.address.location.roadAddress,
-          DetailInfoStore.location.lat,
-          DetailInfoStore.location.lng,
-        ));
-      }
-      if (props.type === '픽업지') {
-        await DetailInfoStore.setAddressPickup();
-        DetailInfoStore.setMapPickupHTML(htmlFunction(
-          DetailInfoStore.targetTransaction.address.pickup.roadAddress,
-          DetailInfoStore.pickup.lat,
-          DetailInfoStore.pickup.lng,
-        ));
-      }
-    })();
+
+    if (props.type === '직거래') {
+      DetailInfoStore.setMapLocationHTML(htmlFunction(DetailInfoStore.targetTransaction.address.location.roadAddress));
+    }
+    if (props.type === '픽업지') {
+      DetailInfoStore.setMapPickupHTML(htmlFunction(DetailInfoStore.targetTransaction.address.pickup.roadAddress));
+    }
   }, []);
 
   const {
