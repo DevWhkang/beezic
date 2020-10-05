@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
 import firestore from '@react-native-firebase/firestore';
-import Geocoder from 'react-native-geocoding';
-import { GEOCODING_API_KEY } from '@dotenv';
 import { DetailInfoModelTypes } from './@types/DetailInfoModel';
 import { ReservationListDocTypes } from './@types/DataListModel';
 
@@ -15,15 +13,6 @@ const DetailInfoModel: DetailInfoModelTypes = {
       .then((item) => item.data())
       .then((data: ReservationListDocTypes) => data['reservation-list']);
   },
-
-  getGeocoding(address) {
-    Geocoder.init(GEOCODING_API_KEY);
-
-    return Geocoder
-      .from(address)
-      .then((json) => json.results[0].geometry.location);
-  },
-
 };
 
 export default DetailInfoModel;

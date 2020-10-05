@@ -5,8 +5,6 @@ import { DetailInfoStoreTypes } from './@types/DetailInfoStore';
 const DetailInfoStore: DetailInfoStoreTypes = observable({
   renderUserTransactionList: [],
   targetTransaction: {},
-  location: {},
-  pickup: {},
   pickupHtml: '',
   locationHtml: '',
 
@@ -32,17 +30,6 @@ const DetailInfoStore: DetailInfoStoreTypes = observable({
         DetailInfoStore.targetTransaction = transaction;
       }
     });
-  },
-  async setAddressLocation() {
-    const { targetTransaction: { address: { location: { roadAddress } } } } = DetailInfoStore;
-    const location = await DetailInfoModel.getGeocoding(roadAddress);
-    DetailInfoStore.location = location;
-  },
-
-  async setAddressPickup() {
-    const { targetTransaction: { address: { pickup: { roadAddress } } } } = DetailInfoStore;
-    const pickup = await DetailInfoModel.getGeocoding(roadAddress);
-    DetailInfoStore.pickup = pickup;
   },
 
   setMapLocationHTML(locationHtml) {

@@ -46,8 +46,3 @@ export interface UserFinalDataTypes {
 export interface TransactionTypes {
   address: TotalAddressTypes,
 }
-
-export interface LocationTypes {
-  lat: string,
-  lng: string,
-}

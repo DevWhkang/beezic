@@ -32,7 +32,7 @@ const chatbotStyles = css`
 const sendStyle = css`
   color: #EF904C;
   margin-right: 5px;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 `;
 
 const inputDownStyle = css`
@@ -266,10 +266,17 @@ const TransactionInfo = (): JSX.Element => {
           name: UserStore.user.displayName,
         }}
         alwaysShowSend
-        placeholder="  Beezic Bot에게 말해주세요."
+        placeholder=" Beezic Bot에게 말해주세요."
         renderSend={renderSend}
         textInputProps={{
           autoCorrect: false,
+          style: {
+            fontSize: 16,
+            fontFamily: 'Jua-Regular',
+            color: '#8c8c8c',
+            width: '85%',
+            marginLeft: 10,
+          },
         }}
         renderInputToolbar={(props) => renderInputToolbar(props)}
         renderTime={renderTime}
