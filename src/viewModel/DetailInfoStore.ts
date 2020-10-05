@@ -1,10 +1,8 @@
 import { observable } from 'mobx';
 import DetailInfoModel from '../model/DetailInfoModel';
-import { DetailInfoStoreStates } from './@types';
+import { DetailInfoStoreTypes } from './@types/DetailInfoStore';
 
-const DetailInfoStore: DetailInfoStoreStates = observable({
-  transactionDetailInfo: [],
-  transactionCheckList: [],
+const DetailInfoStore: DetailInfoStoreTypes = observable({
   renderUserTransactionList: [],
   targetTransaction: {},
   pickupHtml: '',
